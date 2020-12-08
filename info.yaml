@@ -1,0 +1,17 @@
+--- 
+project: 
+  description: "Open Source Hardware Processor"
+  foundry: "SkyWater"
+  git_url: "https://github.com/hsc-latte/caravel-hs32core.git"
+  organization: "HomebrewSiliconClub"
+  organization_url: "https://github.com/hsc-latte"
+  owner: "HomebrewSiliconClub"
+  process: "SKY130"
+  project_name: "HS32Core"
+  tags: 
+    - "Open MPW"
+  category: "CPU"
+  top_level_netlist: "verilog/rtl/caravel.v"
+  user_level_netlist: "verilog/rtl/hs32cpu/top.v"
+  version: "1.00"
+  cover_image: "doc/ciic_harness.png"
