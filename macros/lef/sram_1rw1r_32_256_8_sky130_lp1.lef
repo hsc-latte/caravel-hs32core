@@ -1138,8 +1138,6 @@ MACRO sram_1rw1r_32_256_8_sky130
        RECT 5.000 5.000 381.480 451.235 ;
      LAYER met4 ;
        RECT 5.000 5.000 381.480 451.235 ;
-     LAYER met5 ;
-       RECT 5.000 5.000 381.480 451.235 ;
   END
 END sram_1rw1r_32_256_8_sky130
 END LIBRARY
