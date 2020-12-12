@@ -1,6 +1,7 @@
 # Power nets
 set ::power_nets $::env(_VDD_NET_NAME)
 set ::ground_nets $::env(_GND_NET_NAME)
+set ::halo [list 20 20 20 20]
 
 pdngen::specify_grid stdcell {
     name grid
@@ -27,11 +28,20 @@ pdngen::specify_grid macro {
     connect {}
 }
 
-
 pdngen::specify_grid macro {
     power_pins $::env(_VDD_NET_NAME)
     ground_pins $::env(_GND_NET_NAME)
     blockages ""
+    straps { 
+    } 
+    connect {}
+}
+
+pdngen::specify_grid macro {
+    macro "sram_1rw1r_32_256_8_sky130"
+    power_pins "vdd"
+    ground_pins "gnd"
+    blockages "met4"
     straps { 
     } 
     connect {}

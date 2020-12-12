@@ -36,7 +36,10 @@ module hs32_bram_ctl (
     output wire [1:0] cpu_wen_n,
     output wire [1:0] cpu_wen_e,
     output wire [31:0] wbuf,
-    input  wire [31:0] dbuf
+    input  wire [31:0] dbuf0,
+    input  wire [31:0] dbuf1,
+    input  wire [31:0] dbuf2,
+    input  wire [31:0] dbuf3
 );
     parameter addr_width = 12;
     parameter data0 = "bram0.hex";
@@ -107,6 +110,25 @@ module hs32_bram_ctl (
 
     // SRAM signal generation :(
 
+    wire[31:0] dbuf;
+
+    assign dbuf[7:0] =
+        a3[1:0] == 2'b00 ? dbuf0[7:0] :
+        a3[1:0] == 2'b01 ? dbuf0[15:8] :
+        a3[1:0] == 2'b11 ? dbuf0[31:24] : dbuf0[23:16];
+    assign dbuf[15:8] =
+        a2[1:0] == 2'b00 ? dbuf1[7:0] :
+        a2[1:0] == 2'b01 ? dbuf1[15:8] :
+        a2[1:0] == 2'b11 ? dbuf1[31:24] : dbuf1[23:16];
+    assign dbuf[23:16] =
+        a1[1:0] == 2'b00 ? dbuf2[7:0] :
+        a1[1:0] == 2'b01 ? dbuf2[15:8] :
+        a1[1:0] == 2'b11 ? dbuf2[31:24] : dbuf2[23:16];
+    assign dbuf[31:24] =
+        a0[1:0] == 2'b00 ? dbuf3[7:0] :
+        a0[1:0] == 2'b01 ? dbuf3[15:8] :
+        a0[1:0] == 2'b11 ? dbuf3[31:24] : dbuf3[23:16];
+
     assign cpu_mask_n[7:4] =
         a0[1:0] == 2'b00 ? 4'b0001 :
         a0[1:0] == 2'b01 ? 4'b0010 :
@@ -125,5 +147,5 @@ module hs32_bram_ctl (
         a3[1:0] == 2'b11 ? 4'b1000 : 4'b0100;
     assign { cpu_wen_n, cpu_wen_e } = { 4{!i_rw} };
     assign cpu_addr_n = { a0[9:2], a1[9:2] };
-    assign cpu_addr_n = { a0[9:2], a1[9:2] };
+    assign cpu_addr_e = { a2[9:2], a3[9:2] };
 endmodule

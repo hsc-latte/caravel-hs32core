@@ -42,16 +42,18 @@ module hs32_core1 (
     output wire [`MPRJ_IO_PADS-1:0] io_oeb,*/
     
     // Output (north and east faces)
-    output wire [7:0] cpu_mask_n,
-    output wire [7:0] cpu_mask_e,
-    output wire [1:0] cpu_wen_n,
-    output wire [1:0] cpu_wen_e,
+    output wire [7:0]  cpu_mask_n,
+    output wire [7:0]  cpu_mask_e,
+    output wire [1:0]  cpu_wen_n,
+    output wire [1:0]  cpu_wen_e,
     output wire [15:0] cpu_addr_n,
     output wire [15:0] cpu_addr_e,
     output wire [15:0] cpu_dtw_n,
     output wire [15:0] cpu_dtw_e,
-    input  wire [15:0] cpu_dtr_n,
-    input  wire [15:0] cpu_dtr_e
+    input  wire [31:0] cpu_dtr_n0,
+    input  wire [31:0] cpu_dtr_n1,
+    input  wire [31:0] cpu_dtr_e0,
+    input  wire [31:0] cpu_dtr_e1
 );
     // Clock and reset
     // wire clk = (~la_oen[64])? la_data_in[64] : wb_clk_i;
@@ -110,9 +112,9 @@ module hs32_core1 (
         .sstb(ram_stb), .sack(ram_ack), .srw(ram_rw),
         .saddr(ram_addr), .sdtw(ram_dwrite), .sdtr(ram_dread),
         // Interrupt controller
-        .interrupts(inte), .handler(isr), .intrq(irq), .vec(ivec), .nmi(nmi),
+        .interrupts(inte), .handler(isr), .intrq(irq), .vec(ivec), .nmi(nmi)
         // More registers
-        .aict_r(), .aict_w()
+        //.aict_r(), .aict_w()
     );
 
     //===============================//
@@ -136,7 +138,10 @@ module hs32_core1 (
         .cpu_wen_e(cpu_wen_e),
         .cpu_addr_n(cpu_addr_n),
         .cpu_addr_e(cpu_addr_e),
-        .dbuf({ cpu_dtr_n, cpu_dtr_e }),
-        .wbuf({ cpu_dtw_n, cpu_dtw_e })
+        .wbuf({ cpu_dtw_n, cpu_dtw_e }),
+        .dbuf0(cpu_dtr_n0),
+        .dbuf1(cpu_dtr_n1),
+        .dbuf2(cpu_dtr_e0),
+        .dbuf3(cpu_dtr_e1)
     );
 endmodule
