@@ -3,9 +3,9 @@ RTL_PATH = ../../../../rtl
 IP_PATH = ../../../../ip
 BEHAVIOURAL_MODELS = ../../ 
 
-GCC_PATH?=/ef/apps/bin
+GCC_PATH?=/opt/riscv32i/bin
 GCC_PREFIX?=riscv32-unknown-elf
-PDK_PATH?=/ef/tech/SW/sky130A
+PDK_PATH?=$(PDK_ROOT)/sky130A
 
 .SUFFIXES:
 
@@ -16,7 +16,7 @@ all:  ${PATTERN:=.vcd}
 hex:  ${PATTERN:=.hex}
 
 %.vvp: %_tb.v %.hex
-	iverilog -DFUNCTIONAL -I $(BEHAVIOURAL_MODELS) \
+	iverilog -DSIM -DFUNCTIONAL -I $(BEHAVIOURAL_MODELS) \
 	-I $(PDK_PATH) -I $(IP_PATH) -I $(RTL_PATH) \
 	-o $@ $<
 

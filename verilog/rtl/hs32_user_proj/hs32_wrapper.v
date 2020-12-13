@@ -1,7 +1,7 @@
 `ifdef verilator
     `include "defines.v"
     `include "hs32_user_proj/hs32_core1.v"
-    `include "sram_1rw1r_32_256_8_sky130.v"
+    `include "../../macros/bm/sram_1rw1r_32_256_8_sky130.v"
 `endif
 
 `default_nettype none
