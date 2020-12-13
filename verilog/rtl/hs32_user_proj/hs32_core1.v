@@ -53,8 +53,15 @@ module hs32_core1 (
     input  wire [31:0] cpu_dtr_n0,
     input  wire [31:0] cpu_dtr_n1,
     input  wire [31:0] cpu_dtr_e0,
-    input  wire [31:0] cpu_dtr_e1
+    input  wire [31:0] cpu_dtr_e1,
+
+    // Can't have constants in wrapper
+    output wire zero,
+    output wire one
 );
+    assign zero = 1'b0;
+    assign one = 1'b1;
+
     // Clock and reset
     // wire clk = (~la_oen[64])? la_data_in[64] : wb_clk_i;
     // wire rst = (~la_oen[65])? la_data_in[65] : wb_rst_i;

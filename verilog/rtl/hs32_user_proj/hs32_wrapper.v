@@ -63,6 +63,9 @@ module user_project_wrapper (
     // Independent clock (on independent integer divider)
     input wire user_clock2
 );
+    wire zero, one;
+
+    hs32_core1 core0 ();
 
     hs32_core1 core1 (
 `ifdef USE_POWER_PINS
@@ -110,7 +113,11 @@ module user_project_wrapper (
         .cpu_dtr_n0(dtr_n0),
         .cpu_dtr_n1(dtr_n1),
         .cpu_dtr_e0(dtr_e0),
-        .cpu_dtr_e1(dtr_e1)
+        .cpu_dtr_e1(dtr_e1),
+
+        // Constants
+        .zero(zero),
+        .one(one)
     );
 
     wire [31:0] dtr_n0, dtr_n1, dtr_e0, dtr_e1;
@@ -119,51 +126,79 @@ module user_project_wrapper (
     wire [15:0] dtw_n, dtw_e, addr_n, addr_e;
 
     sram_1rw1r_32_256_8_sky130 sram0(
+`ifdef USE_POWER_PINS
+        .vdd(vccd1), .gnd(vssd1),
+`endif
         .clk0(wb_clk_i),
-        .csb0(0),
+        .csb0(zero),
         .web0(wen_n[1]),
         .wmask0(mask_n[7:4]),
         .addr0(addr_n[15:8]),
         .din0({ 4{dtw_n[15:8]} }),
         .dout0(dtr_n0),
         // Disabled port
-        .clk1(0), .csb1(1), .addr1(0), .dout1()
+        .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
     );
 
     sram_1rw1r_32_256_8_sky130 sram1(
+`ifdef USE_POWER_PINS
+        .vdd(vccd1), .gnd(vssd1),
+`endif
         .clk0(wb_clk_i),
-        .csb0(0),
+        .csb0(zero),
         .web0(wen_n[0]),
         .wmask0(mask_n[3:0]),
         .addr0(addr_n[7:0]),
         .din0({ 4{dtw_n[7:0]} }),
         .dout0(dtr_n1),
         // Disabled port
-        .clk1(0), .csb1(1), .addr1(0), .dout1()
+        .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
     );
 
     sram_1rw1r_32_256_8_sky130 sram2(
+`ifdef USE_POWER_PINS
+        .vdd(vccd1), .gnd(vssd1),
+`endif
         .clk0(wb_clk_i),
-        .csb0(0),
+        .csb0(zero),
         .web0(wen_e[1]),
         .wmask0(mask_e[7:4]),
         .addr0(addr_e[15:8]),
         .din0({ 4{dtw_e[15:8]} }),
         .dout0(dtr_e0),
         // Disabled port
-        .clk1(0), .csb1(1), .addr1(0), .dout1()
+        .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
     );
 
     sram_1rw1r_32_256_8_sky130 sram3(
+`ifdef USE_POWER_PINS
+        .vdd(vccd1), .gnd(vssd1),
+`endif
         .clk0(wb_clk_i),
-        .csb0(0),
+        .csb0(zero),
         .web0(wen_e[0]),
         .wmask0(mask_e[3:0]),
         .addr0(addr_e[7:0]),
         .din0({ 4{dtw_e[7:0]} }),
         .dout0(dtr_e1),
         // Disabled port
-        .clk1(0), .csb1(1), .addr1(0), .dout1()
+        .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
+    );
+
+    sram_1rw1r_32_256_8_sky130 sram4(
+`ifdef USE_POWER_PINS
+        .vdd(vccd1), .gnd(vssd1),
+`endif
+        .clk0(wb_clk_i),
+        .clk1(wb_clk_i)
+    );
+
+    sram_1rw1r_32_256_8_sky130 sram5(
+`ifdef USE_POWER_PINS
+        .vdd(vccd1), .gnd(vssd1),
+`endif
+        .clk0(wb_clk_i),
+        .clk1(wb_clk_i)
     );
 
 endmodule // user_project_wrapper

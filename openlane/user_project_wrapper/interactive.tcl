@@ -14,23 +14,16 @@ set ::env(FP_DEF_TEMPATE) $script_dir/../../def/user_project_wrapper_empty.def
 
 apply_def_template
 
-#add_macro_placement core1 323 1349 N
-#add_macro_placement sram0 303 2602 N
-#add_macro_placement sram1 1014 2602 N
-#add_macro_placement sram2 1600 2060 E
-#add_macro_placement sram3 1600 1389 E
+add_macro_placement core0 1550  400 N
+add_macro_placement core1  300 1600 N
+add_macro_placement sram0  300 2800 N
+add_macro_placement sram1  950 2800 N
+add_macro_placement sram2 1550 2800 N
+add_macro_placement sram3 2200 2800 N
 
-add_macro_placement core1  350 1600 N
-add_macro_placement sram0  400 2850 N
-add_macro_placement sram1  950 2850 N
-add_macro_placement sram2 1600 2200 E
-add_macro_placement sram3 1600 1600 E
+add_macro_placement sram4 1550 1600 S;  # RX buffer for core1
+add_macro_placement sram5 2200 1600 N;  # RX buffer for core0
 
-#add_macro_placement core1  350 1600 N
-#add_macro_placement sram0  600 2850 W
-#add_macro_placement sram1 1600 2850 E
-#add_macro_placement sram2 1600 2200 E
-#add_macro_placement sram3 1600 1600 E
 
 manual_macro_placement f
 
