@@ -116,8 +116,7 @@ module hs32_core1 (
     assign cpu_ack = bus_hold ? 0: ack;
 
     reg bsy;
-    assign ram_ce = ~bsy;
-`ifdef SIM
+    assign ram_ce = ~(stb | bsy);
     always @(posedge clk) if(rst)
         bsy <= 0;
     else begin
@@ -125,13 +124,15 @@ module hs32_core1 (
             bsy <= 1;
         end else if(ack && bsy) begin
             bsy <= 0;
-        end
-        /*if(!stb && !rw)
-            $display($time, " Reading %X %X", addr, dread);
-        if(!stb && rw)
-            $display($time, " Writing %X %X", addr, dwrite);*/
-    end
+`ifndef DBG1
+            if(rw) begin
+                $display($time, " Writing %X %X", addr, dwrite);
+            end else begin
+                $display($time, " Reading %X %X", addr, dread);
+            end
 `endif
+        end
+    end
 
     //===============================//
     // MMIO and Interrupts

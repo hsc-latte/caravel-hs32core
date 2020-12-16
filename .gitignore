@@ -6,3 +6,4 @@ checks/
 *.elf
 *.bin
 *.vvp
+*.idx

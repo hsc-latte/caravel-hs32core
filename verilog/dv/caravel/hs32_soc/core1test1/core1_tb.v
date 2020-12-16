@@ -1,3 +1,5 @@
+`define DBG1
+
 `default_nettype none
 
 `timescale 1 ns / 1 ns

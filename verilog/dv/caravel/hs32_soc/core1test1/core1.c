@@ -1,11 +1,5 @@
 #include "../../defs.h"
 
-/*
-	IO Test:
-		- Configures MPRJ lower 8-IO pins as outputs
-		- Observes counter value through the MPRJ lower 8 IO pins (in the testbench)
-*/
-
 void main()
 {
 	// Reset
@@ -13,6 +7,8 @@ void main()
 	reg_la1_ena = 0xFFFFFFFF;    // [63:32]
 	reg_la2_ena = 0xFFFFFFFF;    // [95:64]
 	reg_la3_ena = 0xFFFFFFFF;    // [127:96]
+	
+	// Reset and control bus
 	reg_la0_data = 0b01;
 	reg_la0_data = 0b00;
 
@@ -23,6 +19,10 @@ void main()
 	((volatile uint32_t*) 0x30000000)[3] = 0x24101234;
 	((volatile uint32_t*) 0x30000000)[4] = 0x22010000;
 	((volatile uint32_t*) 0x30000000)[5] = 0x21200000;
+
+	// Release control
+	reg_la0_data = 0b11;
+	reg_la0_data = 0b10;
 
 	// Configure lower 8-IOs as user output
 	// Observe counter value in the testbench
