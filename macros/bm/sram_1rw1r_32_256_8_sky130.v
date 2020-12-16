@@ -4,7 +4,7 @@
 // Word size: 32
 // Write size: 8
 
-module sram_1rw1r_32_256_8_sky130(
+module sram_1rw1r_32_256_8_sky130_dbg(
 `ifdef USE_POWER_PINS
 	vdd,
 	gnd,
@@ -54,12 +54,12 @@ module sram_1rw1r_32_256_8_sky130(
     addr0_reg <= addr0;
     din0_reg <= din0;
     dout0 <= 32'bx;
-`ifdef DBG
+//`ifdef DBG
     if ( !csb0_reg && web0_reg ) 
       $display($time," Reading %m addr0=%b dout0=%b",addr0_reg,mem[addr0_reg]);
     if ( !csb0_reg && !web0_reg )
       $display($time," Writing %m addr0=%b din0=%b wmask0=%b",addr0_reg,din0_reg,wmask0_reg);
-`endif 
+//`endif 
    end
 
   reg  csb1_reg;
@@ -74,7 +74,7 @@ module sram_1rw1r_32_256_8_sky130(
 `ifdef DBG
     if (!csb0 && !web0 && !csb1 && (addr0 == addr1))
          $display($time," WARNING: Writing and reading addr0=%b and addr1=%b simultaneously!",addr0,addr1);
-    dout1 = 32'bx;
+    dout1 <= 32'bx;
     if ( !csb1_reg ) 
       $display($time," Reading %m addr1=%b dout1=%b",addr1_reg,mem[addr1_reg]);
 `endif  

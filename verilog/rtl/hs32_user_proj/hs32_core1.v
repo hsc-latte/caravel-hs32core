@@ -57,39 +57,40 @@ module hs32_core1 (
 
     // Can't have constants in wrapper
     output wire zero,
-    output wire one
+    output wire one,
+
+    // Chip enable
+    output wire ram_ce
 );
+    // Output constants
     assign zero = 1'b0;
     assign one = 1'b1;
 
     // Clock and reset
     // wire clk = (~la_oen[64])? la_data_in[64] : wb_clk_i;
-    // wire rst = (~la_oen[65])? la_data_in[65] : wb_rst_i;
     wire clk = wb_clk_i;
-    wire rst = wb_rst_i;
+    wire rst = (~la_oen[0]) ? la_data_in[0] : wb_rst_i;
+    wire bus_hold = !(~la_oen[1] & la_data_in[1]);
 
     // Wishbone logic
-    wire valid;
-    wire [3:0] wstrb;
-    assign valid = wbs_cyc_i && wbs_stb_i; 
-    assign wstrb = wbs_sel_i & { 4 { wbs_we_i } };
-    // TODO
+    wire wb_stb = wbs_cyc_i && wbs_stb_i; 
+    wire wb_rw = |wbs_sel_i & wbs_we_i;
     
     //===============================//
     // Main CPU core
     //===============================//
 
-    wire[31:0] addr, dread, dwrite;
-    wire rw, stb, ack, flush;
+    wire[31:0] cpu_addr, cpu_dread, cpu_dwrite;
+    wire cpu_rw, cpu_stb, cpu_ack, flush;
 
     hs32_cpu #(
         .IMUL(1), .BARREL_SHIFTER(1), .PREFETCH_SIZE(3)
     ) core1 (
         .i_clk(clk), .reset(rst),
 
-        .addr(addr), .rw(rw),
-        .din(dread), .dout(dwrite),
-        .stb(stb), .ack(ack),
+        .addr(cpu_addr), .rw(cpu_rw),
+        .din(cpu_dread), .dout(cpu_dwrite),
+        .stb(cpu_stb), .ack(cpu_ack),
 
         .interrupts(inte),
         .iack(), .handler(isr),
@@ -98,6 +99,39 @@ module hs32_core1 (
 
         .flush(flush), .fault(), .userbit()
     );
+
+    //===============================//
+    // Caravel + CPU Memory Bus
+    //===============================//
+
+    wire[31:0] addr, dread, dwrite;
+    wire rw, stb, ack;
+    assign stb      = bus_hold ? wb_stb : cpu_stb;
+    assign addr     = bus_hold ? wbs_adr_i : cpu_addr;
+    assign dwrite   = bus_hold ? wbs_dat_i : cpu_dwrite;
+    assign rw       = bus_hold ? wb_rw : cpu_rw;
+    assign wbs_dat_o = dread;
+    assign cpu_dread = dread;
+    assign wbs_ack_o = bus_hold ? ack : 0;
+    assign cpu_ack = bus_hold ? 0: ack;
+
+    reg bsy;
+    assign ram_ce = ~bsy;
+`ifdef SIM
+    always @(posedge clk) if(rst)
+        bsy <= 0;
+    else begin
+        if(stb && !bsy) begin
+            bsy <= 1;
+        end else if(ack && bsy) begin
+            bsy <= 0;
+        end
+        /*if(!stb && !rw)
+            $display($time, " Reading %X %X", addr, dread);
+        if(!stb && rw)
+            $display($time, " Writing %X %X", addr, dwrite);*/
+    end
+`endif
 
     //===============================//
     // MMIO and Interrupts
@@ -109,7 +143,7 @@ module hs32_core1 (
     wire irq, nmi;
 
     mmio #(
-        .AICT_NUM_RE(0), .AICT_NUM_RI(0)
+        .AICT_NUM_RE(1), .AICT_NUM_RI(1)
     ) mmio_unit (
         .clk(clk), .reset(rst),
         // CPU
@@ -119,9 +153,9 @@ module hs32_core1 (
         .sstb(ram_stb), .sack(ram_ack), .srw(ram_rw),
         .saddr(ram_addr), .sdtw(ram_dwrite), .sdtr(ram_dread),
         // Interrupt controller
-        .interrupts(inte), .handler(isr), .intrq(irq), .vec(ivec), .nmi(nmi)
+        .interrupts(inte), .handler(isr), .intrq(irq), .vec(ivec), .nmi(nmi),
         // More registers
-        //.aict_r(), .aict_w()
+        .aict_r(), .aict_w()
     );
 
     //===============================//
@@ -145,7 +179,7 @@ module hs32_core1 (
         .cpu_wen_e(cpu_wen_e),
         .cpu_addr_n(cpu_addr_n),
         .cpu_addr_e(cpu_addr_e),
-        .wbuf({ cpu_dtw_n, cpu_dtw_e }),
+        .wbuf({ cpu_dtw_e, cpu_dtw_n }),
         .dbuf0(cpu_dtr_n0),
         .dbuf1(cpu_dtr_n1),
         .dbuf2(cpu_dtr_e0),

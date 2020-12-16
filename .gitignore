@@ -1,2 +1,8 @@
 checks/
 *.log
+.vscode/
+*.hex
+*.vcd
+*.elf
+*.bin
+*.vvp

@@ -20,7 +20,12 @@
  *-------------------------------------------------------------
  */
 
-module user_proj_example #(
+`include "cpu/hs32_cpu.v"
+`include "hs32_user_proj/hs32_bram_ctl.v"
+`include "frontend/mmio.v"
+`include "hs32_user_proj/hs32_core1.v"
+
+/*module user_proj_example #(
     parameter BITS = 32
 )(
 `ifdef USE_POWER_PINS
@@ -154,4 +159,4 @@ module counter #(
     endgenerate
 
 endmodule
-`default_nettype wire
+`default_nettype wire*/

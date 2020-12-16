@@ -1,7 +1,14 @@
 `ifdef verilator
     `include "defines.v"
     `include "hs32_user_proj/hs32_core1.v"
+    `include "sram_1rw1r_32_256_8_sky130.v"
+`endif
+
+`ifdef SIM
     `include "../../macros/bm/sram_1rw1r_32_256_8_sky130.v"
+    `define SRAM_MODULE sram_1rw1r_32_256_8_sky130_dbg
+`else
+    `define SRAM_MODULE sram_1rw1r_32_256_8_sky130
 `endif
 
 `default_nettype none
@@ -63,7 +70,7 @@ module user_project_wrapper (
     // Independent clock (on independent integer divider)
     input wire user_clock2
 );
-    wire zero, one;
+    wire zero, one, ce;
 
     hs32_core1 core0 ();
 
@@ -117,7 +124,10 @@ module user_project_wrapper (
 
         // Constants
         .zero(zero),
-        .one(one)
+        .one(one),
+
+        // Chip enable
+        .ram_ce(ce)
     );
 
     wire [31:0] dtr_n0, dtr_n1, dtr_e0, dtr_e1;
@@ -125,67 +135,67 @@ module user_project_wrapper (
     wire [7:0] mask_n, mask_e;
     wire [15:0] dtw_n, dtw_e, addr_n, addr_e;
 
-    sram_1rw1r_32_256_8_sky130 sram0(
+    `SRAM_MODULE sram0(
 `ifdef USE_POWER_PINS
         .vdd(vccd1), .gnd(vssd1),
 `endif
         .clk0(wb_clk_i),
-        .csb0(zero),
+        .csb0(ce),
         .web0(wen_n[1]),
         .wmask0(mask_n[7:4]),
         .addr0(addr_n[15:8]),
-        .din0({ 4{dtw_n[15:8]} }),
+        .din0({ 4{dtw_n[7:0]} }),
         .dout0(dtr_n0),
         // Disabled port
         .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
     );
 
-    sram_1rw1r_32_256_8_sky130 sram1(
+    `SRAM_MODULE sram1(
 `ifdef USE_POWER_PINS
         .vdd(vccd1), .gnd(vssd1),
 `endif
         .clk0(wb_clk_i),
-        .csb0(zero),
+        .csb0(ce),
         .web0(wen_n[0]),
         .wmask0(mask_n[3:0]),
         .addr0(addr_n[7:0]),
-        .din0({ 4{dtw_n[7:0]} }),
+        .din0({ 4{dtw_n[15:8]} }),
         .dout0(dtr_n1),
         // Disabled port
         .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
     );
 
-    sram_1rw1r_32_256_8_sky130 sram2(
+    `SRAM_MODULE sram2(
 `ifdef USE_POWER_PINS
         .vdd(vccd1), .gnd(vssd1),
 `endif
         .clk0(wb_clk_i),
-        .csb0(zero),
+        .csb0(ce),
         .web0(wen_e[1]),
         .wmask0(mask_e[7:4]),
         .addr0(addr_e[15:8]),
-        .din0({ 4{dtw_e[15:8]} }),
+        .din0({ 4{dtw_e[7:0]} }),
         .dout0(dtr_e0),
         // Disabled port
         .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
     );
 
-    sram_1rw1r_32_256_8_sky130 sram3(
+    `SRAM_MODULE sram3(
 `ifdef USE_POWER_PINS
         .vdd(vccd1), .gnd(vssd1),
 `endif
         .clk0(wb_clk_i),
-        .csb0(zero),
+        .csb0(ce),
         .web0(wen_e[0]),
         .wmask0(mask_e[3:0]),
         .addr0(addr_e[7:0]),
-        .din0({ 4{dtw_e[7:0]} }),
+        .din0({ 4{dtw_e[15:8]} }),
         .dout0(dtr_e1),
         // Disabled port
         .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
     );
 
-    sram_1rw1r_32_256_8_sky130 sram4(
+    `SRAM_MODULE sram4(
 `ifdef USE_POWER_PINS
         .vdd(vccd1), .gnd(vssd1),
 `endif
@@ -193,7 +203,7 @@ module user_project_wrapper (
         .clk1(wb_clk_i)
     );
 
-    sram_1rw1r_32_256_8_sky130 sram5(
+    `SRAM_MODULE sram5(
 `ifdef USE_POWER_PINS
         .vdd(vccd1), .gnd(vssd1),
 `endif
