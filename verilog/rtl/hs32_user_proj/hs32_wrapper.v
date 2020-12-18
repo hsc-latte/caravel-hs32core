@@ -144,7 +144,7 @@ module user_project_wrapper (
         .web0(wen_n[1]),
         .wmask0(mask_n[7:4]),
         .addr0(addr_n[15:8]),
-        .din0({ 4{dtw_n[7:0]} }),
+        .din0({ 4{dtw_n[15:8]} }),
         .dout0(dtr_n0),
         // Disabled port
         .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
@@ -159,7 +159,7 @@ module user_project_wrapper (
         .web0(wen_n[0]),
         .wmask0(mask_n[3:0]),
         .addr0(addr_n[7:0]),
-        .din0({ 4{dtw_n[15:8]} }),
+        .din0({ 4{dtw_n[7:0]} }),
         .dout0(dtr_n1),
         // Disabled port
         .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
@@ -174,7 +174,7 @@ module user_project_wrapper (
         .web0(wen_e[1]),
         .wmask0(mask_e[7:4]),
         .addr0(addr_e[15:8]),
-        .din0({ 4{dtw_e[7:0]} }),
+        .din0({ 4{dtw_e[15:8]} }),
         .dout0(dtr_e0),
         // Disabled port
         .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
@@ -189,7 +189,7 @@ module user_project_wrapper (
         .web0(wen_e[0]),
         .wmask0(mask_e[3:0]),
         .addr0(addr_e[7:0]),
-        .din0({ 4{dtw_e[15:8]} }),
+        .din0({ 4{dtw_e[7:0]} }),
         .dout0(dtr_e1),
         // Disabled port
         .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()

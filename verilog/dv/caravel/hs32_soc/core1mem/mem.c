@@ -9,19 +9,18 @@ void main()
 	reg_la3_ena = 0xFFFFFFFF;    // [127:96]
 	
 	// Reset and control bus
-	reg_la0_data = 0b01;
-	reg_la0_data = 0b00;
+	reg_la0_data = 0b01; // [0] is high means reset
+	reg_la0_data = 0b00; // [0] is low means stop reset
 
 	// Write
-	((volatile uint32_t*) 0x30000000)[0] = 0x24000003;
-	((volatile uint32_t*) 0x30000000)[1] = 0x64000001;
-	((volatile uint32_t*) 0x30000000)[2] = 0x7200FFFC;
-	((volatile uint32_t*) 0x30000000)[3] = 0x24101234;
-	((volatile uint32_t*) 0x30000000)[4] = 0x22010000;
-	((volatile uint32_t*) 0x30000000)[5] = 0x21200000;
+	((volatile uint32_t*) 0x30000000)[0] = 0x2400CAFE;
+	((volatile uint32_t*) 0x30000000)[1] = 0x24100005;
+	((volatile uint32_t*) 0x30000000)[2] = 0x34010001;
+	((volatile uint32_t*) 0x30000000)[3] = 0x14210001;
+	((volatile uint32_t*) 0x30000000)[4] = 0x50000000;
 
-	// Release control
-	reg_la0_data = 0b11;
+	// Release control and reset
+	reg_la0_data = 0b11; // [1] is high means release control back to hs32
 	reg_la0_data = 0b10;
 
 	// Configure lower 8-IOs as user output

@@ -9,12 +9,12 @@
 
 module tb();
 	reg clock;
-    reg RSTB;
+  reg RSTB;
 	reg power1, power2;
 	reg power3, power4;
 
-    	wire gpio;
-    	wire [37:0] mprj_io;
+  wire gpio;
+  wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
 
 	assign mprj_io_0 = mprj_io[7:0];
@@ -32,14 +32,13 @@ module tb();
 	initial begin
 		$dumpfile("tb.vcd");
 		$dumpvars(0, tb);
-
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (25) begin
 			repeat (1000) @(posedge clock);
 			// $display("+1000 cycles");
 		end
 		//$display("%c[1;31m",27);
-		//$display ("Monitor: Timeout, Test Mega-Project IO Ports (RTL) Failed");
+		//$display("Test 1: Failed (timed out)!");
 		//$display("%c[0m",27);
 		$finish;
 	end
@@ -50,7 +49,7 @@ module tb();
 		RSTB <= 1'b1;	    // Release reset
 	end
 
-	initial begin		// Power-up sequence
+	initial begin			// Power-up sequence
 		power1 <= 1'b0;
 		power2 <= 1'b0;
 		power3 <= 1'b0;
@@ -63,6 +62,15 @@ module tb();
 		power3 <= 1'b1;
 		#200;
 		power4 <= 1'b1;
+	end
+
+	initial begin
+	    // Some weak test cases
+	    wait(tb.uut.mprj.core1.core1.EXEC.regfile_s.regs[0] == 16'hCAFE);
+	    wait(tb.uut.mprj.core1.core1.EXEC.regfile_s.regs[1] == 16'h5);
+	    wait(tb.uut.mprj.core1.core1.EXEC.regfile_s.regs[2] == 16'hCAFE);
+	    $display("Test 1 [MOV, LDR, STR Variant 1] Passed Weak Cases");
+	    //$finish;
 	end
 
 	always @(mprj_io) begin
@@ -106,7 +114,7 @@ module tb();
 	);
 
 	spiflash #(
-		.FILENAME("core1.hex")
+		.FILENAME("test1.hex")
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),

@@ -54,7 +54,7 @@ module sram_1rw1r_32_256_8_sky130_dbg(
     addr0_reg <= addr0;
     din0_reg <= din0;
     dout0 <= 32'bx;
-`ifdef DBG1
+`ifdef DBG
     if ( !csb0_reg && web0_reg ) 
       $display($time," Reading %m addr0=%X dout0=%X",addr0_reg,mem[addr0_reg]);
     if ( !csb0_reg && !web0_reg )

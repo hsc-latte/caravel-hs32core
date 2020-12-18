@@ -88,23 +88,22 @@ module hs32_bram_ctl (
     assign addr = i_addr;
     assign dwrite = i_dwrite;
 
+    reg[31:0] r_dread;
     reg r_bsy;
-    assign o_dread = dout;
+    assign o_dread = r_bsy ? dout : r_dread;
     always @(posedge i_clk)
     if(i_reset) begin
         o_ack <= 0;
         r_bsy <= 0;
-        //we <= 0;
+        r_dread <= 0;
     end else begin
-        if(i_stb/* && !r_bsy*/) begin
+        if(i_stb && !r_bsy) begin
             o_ack <= 1;
             r_bsy <= 1;
-            //dwrite <= i_dwrite;
-            //addr <= i_addr;
-            //we <= i_rw;
-        end else/* if(r_bsy)*/ begin
+        end else if(r_bsy) begin
             o_ack <= 0;
             r_bsy <= 0;
+            r_dread <= dout;
         end
     end
 

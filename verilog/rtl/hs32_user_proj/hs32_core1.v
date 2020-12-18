@@ -180,10 +180,10 @@ module hs32_core1 (
         .cpu_wen_e(cpu_wen_e),
         .cpu_addr_n(cpu_addr_n),
         .cpu_addr_e(cpu_addr_e),
-        .wbuf({ cpu_dtw_e, cpu_dtw_n }),
-        .dbuf0(cpu_dtr_n0),
-        .dbuf1(cpu_dtr_n1),
-        .dbuf2(cpu_dtr_e0),
-        .dbuf3(cpu_dtr_e1)
+        .wbuf({ cpu_dtw_n, cpu_dtw_e }),
+        .dbuf3(cpu_dtr_n0),
+        .dbuf2(cpu_dtr_n1),
+        .dbuf1(cpu_dtr_e0),
+        .dbuf0(cpu_dtr_e1)
     );
 endmodule

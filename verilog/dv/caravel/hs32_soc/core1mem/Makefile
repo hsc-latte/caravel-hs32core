@@ -9,7 +9,7 @@ PDK_PATH?=$(PDK_ROOT)/sky130A
 
 .SUFFIXES:
 
-PATTERN = test1
+PATTERN = mem
 
 all:  ${PATTERN:=.vcd}
 
