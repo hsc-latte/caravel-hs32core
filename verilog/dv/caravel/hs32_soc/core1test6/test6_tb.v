@@ -8,13 +8,15 @@
 `include "spiflash.v"
 
 module tb();
+	parameter TEST_ID = 6;
+
 	reg clock;
-  reg RSTB;
+  	reg RSTB;
 	reg power1, power2;
 	reg power3, power4;
 
-  wire gpio;
-  wire [37:0] mprj_io;
+  	wire gpio;
+  	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
 
 	assign mprj_io_0 = mprj_io[7:0];
@@ -65,12 +67,16 @@ module tb();
 	end
 
 	initial begin
-	    // Some weak test cases
-	    wait(tb.uut.mprj.core1.core1.EXEC.regfile_s.regs[0] == 16'hCAFE);
-	    wait(tb.uut.mprj.core1.core1.EXEC.regfile_s.regs[1] == 16'h5);
-	    wait(tb.uut.mprj.core1.core1.EXEC.regfile_s.regs[2] == 16'hCAFE);
-	    $display("Test 1 [MOV, LDR, STR Variant 1] Passed Weak Cases");
-	    //$finish;
+	    // Test cases go here
+	end
+
+	always @(*) begin
+		if(tb.uut.mprj.core1.core.EXEC.fault) begin
+			$display("%c[1;31m",27);
+			$display("Test %d: Faulted!", TEST_ID);
+			$display("%c[0m",27);
+			$finish;
+		end
 	end
 
 	always @(mprj_io) begin
@@ -105,7 +111,7 @@ module tb();
 		.vssd2	  (VSS),
 		.clock	  (clock),
 		.gpio     (gpio),
-        .mprj_io  (mprj_io),
+    .mprj_io  (mprj_io),
 		.flash_csb(flash_csb),
 		.flash_clk(flash_clk),
 		.flash_io0(flash_io0),
@@ -114,7 +120,7 @@ module tb();
 	);
 
 	spiflash #(
-		.FILENAME("test1.hex")
+		.FILENAME("test6.hex")
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),

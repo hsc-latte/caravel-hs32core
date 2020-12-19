@@ -9,7 +9,7 @@ PDK_PATH?=$(PDK_ROOT)/sky130A
 
 .SUFFIXES:
 
-PATTERN = test1
+PATTERN = test4
 
 all:  ${PATTERN:=.vcd}
 
@@ -37,6 +37,6 @@ hex:  ${PATTERN:=.hex}
 # ---- Clean ----
 
 clean:
-	rm -f *.elf *.hex *.bin *.vvp *.vcd *.log
+	rm -f *.elf *.hex *.bin *.vvp *.vcd *.log *.idx
 
 .PHONY: clean hex all

@@ -57,6 +57,8 @@ module sram_1rw1r_32_256_8_sky130_dbg(
 `ifdef DBG
     if ( !csb0_reg && web0_reg ) 
       $display($time," Reading %m addr0=%X dout0=%X",addr0_reg,mem[addr0_reg]);
+`endif
+`ifdef SRAM_LOG
     if ( !csb0_reg && !web0_reg )
       $display($time," Writing %m addr0=%X din0=%X wmask0=%b",addr0_reg,din0_reg,wmask0_reg);
 `endif

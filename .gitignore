@@ -7,3 +7,5 @@ checks/
 *.bin
 *.vvp
 *.idx
+*.out
+*.out1

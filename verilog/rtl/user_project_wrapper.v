@@ -29,7 +29,9 @@
  *-------------------------------------------------------------
  */
 
-module user_project_wrapper #(
+`include "hs32_user_proj/hs32_wrapper.v"
+
+/*module user_project_wrapper #(
     parameter BITS = 32
 )(
 `ifdef USE_POWER_PINS
@@ -75,9 +77,9 @@ module user_project_wrapper #(
     input   user_clock2
 );
 
-    /*--------------------------------------*/
-    /* User project is instantiated  here   */
-    /*--------------------------------------*/
+    //--------------------------------------//
+    // User project is instantiated  here   //
+    //--------------------------------------//
 
     user_proj_example mprj (
     `ifdef USE_POWER_PINS
@@ -121,4 +123,6 @@ module user_project_wrapper #(
     );
 
 endmodule	// user_project_wrapper
+*/
+
 `default_nettype wire

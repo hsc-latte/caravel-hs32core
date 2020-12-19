@@ -8,13 +8,15 @@
 `include "spiflash.v"
 
 module tb();
+	parameter TEST_ID = 2;
+
 	reg clock;
-  reg RSTB;
+  	reg RSTB;
 	reg power1, power2;
 	reg power3, power4;
 
-  wire gpio;
-  wire [37:0] mprj_io;
+  	wire gpio;
+  	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
 
 	assign mprj_io_0 = mprj_io[7:0];
@@ -32,14 +34,13 @@ module tb();
 	initial begin
 		$dumpfile("tb.vcd");
 		$dumpvars(0, tb);
-
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (25) begin
 			repeat (1000) @(posedge clock);
 			// $display("+1000 cycles");
 		end
 		//$display("%c[1;31m",27);
-		//$display ("Monitor: Timeout, Test Mega-Project IO Ports (RTL) Failed");
+		//$display("Test 1: Failed (timed out)!");
 		//$display("%c[0m",27);
 		$finish;
 	end
@@ -50,7 +51,7 @@ module tb();
 		RSTB <= 1'b1;	    // Release reset
 	end
 
-	initial begin		// Power-up sequence
+	initial begin			// Power-up sequence
 		power1 <= 1'b0;
 		power2 <= 1'b0;
 		power3 <= 1'b0;
@@ -63,6 +64,19 @@ module tb();
 		power3 <= 1'b1;
 		#200;
 		power4 <= 1'b1;
+	end
+
+	initial begin
+	    // Test cases go here
+	end
+
+	always @(*) begin
+		if(tb.uut.mprj.core1.core.EXEC.fault) begin
+			$display("%c[1;31m",27);
+			$display("Test %d: Faulted!", TEST_ID);
+			$display("%c[0m",27);
+			$finish;
+		end
 	end
 
 	always @(mprj_io) begin
@@ -106,7 +120,7 @@ module tb();
 	);
 
 	spiflash #(
-		.FILENAME("test1.hex")
+		.FILENAME("test2.hex")
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),

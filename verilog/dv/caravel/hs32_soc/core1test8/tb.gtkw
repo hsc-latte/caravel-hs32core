@@ -1,26 +1,27 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Fri Dec 18 02:59:09 2020
+[*] Fri Dec 18 19:17:22 2020
 [*]
-[dumpfile] "/data/caravel-hs32core/verilog/dv/caravel/hs32_soc/core1test3/dump.vcd"
-[dumpfile_mtime] "Fri Dec 18 02:51:43 2020"
-[dumpfile_size] 334713122
-[savefile] "/data/caravel-hs32core/verilog/dv/caravel/hs32_soc/core1test3/tb.gtkw"
-[timestart] 177719800
-[size] 1536 801
-[pos] -9 -33
-*-16.106964 177900000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[dumpfile] "/data/caravel-hs32core/verilog/dv/caravel/hs32_soc/core1test6/dump.vcd"
+[dumpfile_mtime] "Fri Dec 18 18:47:04 2020"
+[dumpfile_size] 328739070
+[savefile] "/data/caravel-hs32core/verilog/dv/caravel/hs32_soc/core1test6/tb.gtkw"
+[timestart] 227809800
+[size] 1536 778
+[pos] -1 -1
+*-16.106964 227916000 230148000 228036000 227460000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb.
 [treeopen] tb.uut.
 [treeopen] tb.uut.mprj.
 [treeopen] tb.uut.mprj.core1.
 [treeopen] tb.uut.mprj.core1.core.
+[treeopen] tb.uut.mprj.core1.core.EXEC.
 [treeopen] tb.uut.mprj.sram0.
-[sst_width] 265
-[signals_width] 269
+[sst_width] 261
+[signals_width] 344
 [sst_expanded] 1
-[sst_vpaned_height] 301
-@c00200
+[sst_vpaned_height] 223
+@800200
 -WBS
 @28
 tb.uut.mprj.wb_clk_i
@@ -37,7 +38,7 @@ tb.uut.mprj.wbs_sel_i[3:0]
 @28
 tb.uut.mprj.wbs_stb_i
 tb.uut.mprj.wbs_we_i
-@1401200
+@1000200
 -WBS
 @28
 tb.uut.mprj.core1.ram_ce
@@ -60,6 +61,21 @@ tb.uut.mprj.core1.core.FETCH.\fifo[6][31:0]
 tb.uut.mprj.core1.core.FETCH.\fifo[7][31:0]
 @1401200
 -PQ
+@c00200
+-Fetch
+@28
+tb.uut.mprj.core1.core.FETCH.clk
+@22
+tb.uut.mprj.core1.core.FETCH.addr[31:0]
+tb.uut.mprj.core1.core.FETCH.dtr[31:0]
+@28
+tb.uut.mprj.core1.core.FETCH.ackm
+tb.uut.mprj.core1.core.FETCH.flush
+@22
+tb.uut.mprj.core1.core.FETCH.newpc[31:0]
+tb.uut.mprj.core1.core.FETCH.instd[31:0]
+@1401200
+-Fetch
 @c00200
 -BRAM CTL
 @22
@@ -100,7 +116,7 @@ tb.uut.mprj.core1.bram_ctl.dbuf2[31:0]
 tb.uut.mprj.core1.bram_ctl.dbuf3[31:0]
 @1401200
 -BRAM CTL
-@c00200
+@800200
 -Decode
 @28
 tb.uut.mprj.core1.core.DECODE.clk
@@ -119,7 +135,8 @@ tb.uut.mprj.core1.core.DECODE.rdyd
 tb.uut.mprj.core1.core.DECODE.reqe
 [color] 3
 tb.uut.mprj.core1.core.DECODE.rdye
-tb.uut.mprj.core1.core.DECODE.full
+@29
+tb.uut.mprj.core1.core.DECODE.r_hasnext
 @200
 -
 @22
@@ -137,7 +154,7 @@ tb.uut.mprj.core1.core.DECODE.rd[3:0]
 tb.uut.mprj.core1.core.DECODE.rm[3:0]
 tb.uut.mprj.core1.core.DECODE.rn[3:0]
 tb.uut.mprj.core1.core.DECODE.shift[4:0]
-@1401200
+@1000200
 -Decode
 @800200
 -Execute
@@ -152,7 +169,10 @@ tb.uut.mprj.core1.core.EXEC.state[3:0]
 @28
 tb.uut.mprj.core1.core.EXEC.fault
 tb.uut.mprj.core1.core.EXEC.int_inval
-@c00200
+@22
+tb.uut.mprj.core1.core.EXEC.control[54:0]
+tb.uut.mprj.core1.core.EXEC.r_control[54:0]
+@800200
 -Module I/O
 @28
 tb.uut.mprj.core1.core.EXEC.flush
@@ -190,7 +210,7 @@ tb.uut.mprj.core1.core.EXEC.rw_mem
 -
 @28
 tb.uut.mprj.core1.core.EXEC.intrq
-@1401200
+@1000200
 -Module I/O
 @c00200
 -Internal Bus
@@ -205,10 +225,8 @@ tb.uut.mprj.core1.core.EXEC.aluout[31:0]
 -ALU
 @22
 tb.uut.mprj.core1.core.EXEC.alu_nzcv[3:0]
-tb.uut.mprj.core1.core.EXEC.branch_conds[15:0]
-@29
-tb.uut.mprj.core1.core.EXEC.alu_nzcv_out[3:0]
 @28
+tb.uut.mprj.core1.core.EXEC.alu_nzcv_out[3:0]
 tb.uut.mprj.core1.core.EXEC.alu.carry
 @22
 tb.uut.mprj.core1.core.EXEC.alu.i_a[31:0]
@@ -230,6 +248,7 @@ tb.uut.mprj.core1.core.EXEC.pc_u[31:0]
 tb.uut.mprj.core1.core.EXEC.lr_i[31:0]
 tb.uut.mprj.core1.core.EXEC.sp_i[31:0]
 tb.uut.mprj.core1.core.EXEC.mcr_s[31:0]
+@28
 tb.uut.mprj.core1.core.EXEC.flags[31:0]
 @1000200
 -Special Registers

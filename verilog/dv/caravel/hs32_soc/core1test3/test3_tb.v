@@ -64,15 +64,6 @@ module tb();
 		power4 <= 1'b1;
 	end
 
-	initial begin
-	    // Some weak test cases
-	    wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[0] == 16'hCAFE);
-	    wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[1] == 16'h5);
-	    wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[2] == 16'hCAFE);
-	    $display("Test 1 [MOV, LDR, STR Variant 1] Passed Weak Cases");
-	    //$finish;
-	end
-
 	always @(mprj_io) begin
 		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
 	end
@@ -114,7 +105,7 @@ module tb();
 	);
 
 	spiflash #(
-		.FILENAME("mem.hex")
+		.FILENAME("test3.hex")
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),

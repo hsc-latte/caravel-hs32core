@@ -104,9 +104,8 @@ module user_project_wrapper (
 
 	    // Logic Analyzer
 
-	    .la_data_in(la_data_in),
-	    .la_data_out(la_data_out),
-	    .la_oen (la_oen),
+	    .la_data_in(la_data_in[1:0]),
+	    .la_oen (la_oen[1:0]),
 
         // SRAM meme :3
         .cpu_mask_n(mask_n),

@@ -27,7 +27,7 @@ module hs32_aic(
     // Memory interface in
     input   wire stb,
     output  wire ack,
-    input   wire[31:0] addr,
+    input   wire[9:0] addr,
     input   wire[31:0] dtw,
     output  wire[31:0] dtr,
     input   wire rw,
@@ -39,6 +39,7 @@ module hs32_aic(
     output  wire[4:0] vec,          // Interrupt vector
     output  wire nmi                // Non maskable interrupt
 );
+    assign ack = 1;
 
     // Advanced Interrupt Controller Table
     reg[31:0] aict[23:0];
@@ -78,10 +79,10 @@ module hs32_aic(
     assign handler = aict[vec] & (~32'b1111);
 
     // Calculate table index
-    wire[4:0] aict_idx = addr[4:0]-1;
+    wire[4:0] aict_idx = addr[6:2]-1;
 
     // 1 clock cycle
-    assign ack = stb;
+    // assign ack = stb;
     assign dtr = aict[aict_idx];
 
     // Reset and write
@@ -91,5 +92,8 @@ module hs32_aic(
             aict[i] <= 0;
     end else if(stb && rw) begin
         aict[aict_idx] <= dtw;
+        `ifdef SIM
+            $display($time, " AICT write %X <- %X", aict_idx, dtw);
+        `endif
     end
 endmodule

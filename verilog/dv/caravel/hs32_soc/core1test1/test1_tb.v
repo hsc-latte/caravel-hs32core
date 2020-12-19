@@ -8,13 +8,15 @@
 `include "spiflash.v"
 
 module tb();
+	parameter TEST_ID = 1;
+
 	reg clock;
-  reg RSTB;
+  	reg RSTB;
 	reg power1, power2;
 	reg power3, power4;
 
-  wire gpio;
-  wire [37:0] mprj_io;
+  	wire gpio;
+  	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
 
 	assign mprj_io_0 = mprj_io[7:0];
@@ -29,6 +31,8 @@ module tb();
 		clock = 0;
 	end
 
+	reg failed = 1;
+
 	initial begin
 		$dumpfile("tb.vcd");
 		$dumpvars(0, tb);
@@ -37,9 +41,11 @@ module tb();
 			repeat (1000) @(posedge clock);
 			// $display("+1000 cycles");
 		end
-		//$display("%c[1;31m",27);
-		//$display("Test 1: Failed (timed out)!");
-		//$display("%c[0m",27);
+		if(failed) begin
+			$display("%c[1;31m",27);
+			$display("Test 1: Failed (timed out)!");
+			$display("%c[0m",27);
+		end
 		$finish;
 	end
 
@@ -65,12 +71,22 @@ module tb();
 	end
 
 	initial begin
-	    // Some weak test cases
-	    wait(tb.uut.mprj.core1.core1.EXEC.regfile_s.regs[0] == 16'hCAFE);
-	    wait(tb.uut.mprj.core1.core1.EXEC.regfile_s.regs[1] == 16'h5);
-	    wait(tb.uut.mprj.core1.core1.EXEC.regfile_s.regs[2] == 16'hCAFE);
-	    $display("Test 1 [MOV, LDR, STR Variant 1] Passed Weak Cases");
-	    //$finish;
+	    // MOV r0 <- 0xCAFE
+		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[0] == 32'hCAFE);
+		// MOV r1 <- 5
+		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[1] == 32'h5);
+		// LDR r2 <- [r1+1]
+		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[2] == 32'hCAFE);
+		failed = 0;
+	end
+
+	always @(*) begin
+		if(tb.uut.mprj.core1.core.EXEC.fault) begin
+			$display("%c[1;31m",27);
+			$display("Test %d: Faulted!", TEST_ID);
+			$display("%c[0m",27);
+			$finish;
+		end
 	end
 
 	always @(mprj_io) begin
@@ -125,3 +141,14 @@ module tb();
 	);
 endmodule
 `default_nettype wire
+
+module assert(input clk, input test);
+    always @(posedge clk)
+    begin
+        if (test !== 1)
+        begin
+            $display("ASSERTION FAILED in %m");
+            $finish;
+        end
+    end
+endmodule

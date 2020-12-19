@@ -14,6 +14,19 @@
 // SPDX-License-Identifier: Apache-2.0
 
 `default_nettype none
+
+`ifdef SIM
+    `include "cpu/hs32_cpu.v"
+    
+    `include "hs32_user_proj/hs32_core1.v"
+
+    `include "hs32_user_proj/hs32_aic.v"
+    `include "hs32_user_proj/hs32_bram_ctl.v"
+    `include "hs32_user_proj/dev_filter.v"
+    `include "hs32_user_proj/dev_timer.v"
+    `include "hs32_user_proj/dev_intercon.v"
+`endif
+
 /*
  *-------------------------------------------------------------
  *
@@ -34,7 +47,8 @@
  *
  *-------------------------------------------------------------
  */
-
+`ifndef SIM 
+`ifndef verilator
 module user_proj_example #(
     parameter BITS = 32
 )(
@@ -170,3 +184,5 @@ module counter #(
 
 endmodule
 `default_nettype wire
+`endif
+`endif

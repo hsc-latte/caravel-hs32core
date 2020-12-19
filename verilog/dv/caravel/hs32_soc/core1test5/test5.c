@@ -13,17 +13,13 @@ void main()
 	reg_la0_data = 0b00; // [0] is low means stop reset
 
 	// Write
-  ((volatile uint32_t*) 0x30000000)[0] = 0x2400000F;
-  ((volatile uint32_t*) 0x30000000)[1] = 0x241000F0;
-  ((volatile uint32_t*) 0x30000000)[2] = 0x24200F00;
-  ((volatile uint32_t*) 0x30000000)[3] = 0x2430F000;
-  ((volatile uint32_t*) 0x30000000)[4] = 0x24400BAD;
-  ((volatile uint32_t*) 0x30000000)[5] = 0x24500B09;
-  ((volatile uint32_t*) 0x30000000)[6] = 0x30040000;
-  ((volatile uint32_t*) 0x30000000)[7] = 0x10640000;
-  ((volatile uint32_t*) 0x30000000)[8] = 0x31251100;
-  ((volatile uint32_t*) 0x30000000)[9] = 0x11751100;
-  ((volatile uint32_t*) 0x30000000)[10] = 0x50000000;
+  ((volatile uint32_t*) 0x30000000)[0] = 0x2400FF00;
+  ((volatile uint32_t*) 0x30000000)[1] = 0x10100000;
+  ((volatile uint32_t*) 0x30000000)[2] = 0x24205000;
+  ((volatile uint32_t*) 0x30000000)[3] = 0x20202800;
+  ((volatile uint32_t*) 0x30000000)[4] = 0x34200010;
+  ((volatile uint32_t*) 0x30000000)[5] = 0x14300010;
+  ((volatile uint32_t*) 0x30000000)[6] = 0x90000010;
 
 	// Release control and reset
 	reg_la0_data = 0b11; // [1] is high means release control back to hs32

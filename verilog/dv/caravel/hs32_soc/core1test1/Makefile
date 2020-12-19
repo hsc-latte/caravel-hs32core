@@ -37,6 +37,6 @@ hex:  ${PATTERN:=.hex}
 # ---- Clean ----
 
 clean:
-	rm -f *.elf *.hex *.bin *.vvp *.vcd *.log
+	rm -f *.elf *.hex *.bin *.vvp *.vcd *.log *.idx
 
 .PHONY: clean hex all

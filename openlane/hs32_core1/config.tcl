@@ -33,3 +33,6 @@ set ::env(FP_SIZING) absolute
 set ::env(FP_PDN_CORE_RING) 0
 set ::env(DIE_AREA) "0 0 1100 1100"
 set ::env(PL_TARGET_DENSITY) 0.40
+
+set ::env(VDD_NETS) [list {vccd1} {vccd2} {vdda1} {vdda2}]
+set ::env(GND_NETS) [list {vssd1} {vssd2} {vssa1} {vssa2}]
