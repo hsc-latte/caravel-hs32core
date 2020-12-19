@@ -87,12 +87,10 @@ module user_project_wrapper (
 `endif
 
 	    // MGMT core clock and reset
-
     	.wb_clk_i(wb_clk_i),
     	.wb_rst_i(wb_rst_i),
 
 	    // MGMT SoC Wishbone Slave
-
 	    .wbs_cyc_i(wbs_cyc_i),
 	    .wbs_stb_i(wbs_stb_i),
 	    .wbs_we_i(wbs_we_i),
@@ -103,9 +101,14 @@ module user_project_wrapper (
 	    .wbs_dat_o(wbs_dat_o),
 
 	    // Logic Analyzer
-
 	    .la_data_in(la_data_in[1:0]),
+        .la_data_out(la_data_out[2:0]),
 	    .la_oen (la_oen[1:0]),
+
+        // IO
+        .io_in(io_in),
+        .io_out(io_out),
+        .io_oeb(io_oeb),
 
         // SRAM meme :3
         .cpu_mask_n(mask_n),
@@ -121,6 +124,15 @@ module user_project_wrapper (
         .cpu_dtr_e0(dtr_e0),
         .cpu_dtr_e1(dtr_e1),
 
+        // Rx/Tx Buffers
+        .sr0_dtr(sr0_dtr),
+        .sr1_dtr(sr1_dtr),
+        .sr0_ce(sr0_ce),
+        .sr1_ce(sr1_ce),
+        .srx_addr(srx_addr),
+        .srx_we(srx_we),
+        .srx_dtw(srx_dtw),
+
         // Constants
         .zero(zero),
         .one(one),
@@ -128,6 +140,10 @@ module user_project_wrapper (
         // Chip enable
         .ram_ce(ce)
     );
+
+    wire[31:0] sr0_dtr, sr1_dtr, srx_dtw;
+    wire sr0_ce, sr1_ce, srx_we;
+    wire[9:0] srx_addr;
 
     wire [31:0] dtr_n0, dtr_n1, dtr_e0, dtr_e1;
     wire [1:0] wen_n, wen_e;
@@ -198,7 +214,15 @@ module user_project_wrapper (
 `ifdef USE_POWER_PINS
         .vdd(vccd1), .gnd(vssd1),
 `endif
+        // Core 1
         .clk0(wb_clk_i),
+        /*.csb0(sr0_ce),
+        .web0(srx_we),
+        .wmask0({4{ one }}),
+        .addr0(srx_addr[9:2]),
+        .din0(srx_dtw),
+        .dout0(sr0_dtr),*/
+
         .clk1(wb_clk_i)
     );
 
@@ -207,7 +231,12 @@ module user_project_wrapper (
         .vdd(vccd1), .gnd(vssd1),
 `endif
         .clk0(wb_clk_i),
-        .clk1(wb_clk_i)
+
+        // Core 1
+        .clk1(wb_clk_i),
+        /*.csb1(sr1_ce),
+        .addr1(srx_addr[9:2]),
+        .dout1(sr1_dtr)*/
     );
 
 endmodule // user_project_wrapper

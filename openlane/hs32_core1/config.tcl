@@ -19,8 +19,11 @@ set ::env(VERILOG_FILES) "\
 	$script_dir/../../verilog/rtl/defines.v \
 	$script_dir/../../verilog/rtl/hs32_user_proj/hs32_core1.v \
 	$script_dir/../../verilog/rtl/hs32_user_proj/hs32_bram_ctl.v \
-	$script_dir/../../verilog/rtl/hs32cpu/cpu/hs32_cpu.v \
-	$script_dir/../../verilog/rtl/hs32cpu/frontend/mmio.v"
+	$script_dir/../../verilog/rtl/hs32_user_proj/hs32_aic.v \
+	$script_dir/../../verilog/rtl/hs32_user_proj/dev_filter.v \
+	$script_dir/../../verilog/rtl/hs32_user_proj/dev_timer.v \
+	$script_dir/../../verilog/rtl/hs32_user_proj/dev_intercon.v \
+	$script_dir/../../verilog/rtl/hs32cpu/cpu/hs32_cpu.v"
 
 set	::env(VERILOG_INCLUDE_DIRS) "\
 	$script_dir/../../verilog/rtl/hs32cpu/"

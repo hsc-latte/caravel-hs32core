@@ -57,7 +57,7 @@ module hs32_core1 (
 
     // Logic Analyzer Signals
     input  wire [1:0] la_data_in,
-    // output wire [127:0] la_data_out,
+    output wire [2:0] la_data_out,
     input  wire [1:0] la_oen,
 
     // IOs
@@ -78,6 +78,15 @@ module hs32_core1 (
     input  wire [31:0] cpu_dtr_n1,
     input  wire [31:0] cpu_dtr_e0,
     input  wire [31:0] cpu_dtr_e1,
+
+    // 2 RX/TX Buffers
+    input wire[31:0] sr0_dtr,
+    input wire[31:0] sr1_dtr,
+    output wire sr0_ce,
+    output wire sr1_ce,
+    output wire[9:0] srx_addr,
+    output wire srx_we,
+    output wire[31:0] srx_dtw,
 
     // Can't have constants in wrapper
     output wire zero,
@@ -112,11 +121,11 @@ module hs32_core1 (
         .stb(cpu_stb), .ack(cpu_ack),
 
         .interrupts(inte),
-        .iack(), .handler(isr),
+        .iack(la_data_out[0]), .handler(isr),
         .intrq(irq), .vec(ivec),
         .nmi(nmi),
 
-        .flush(flush), .fault(), .userbit()
+        .flush(flush), .fault(la_data_out[1]), .userbit(la_data_out[2])
     );
 
     //===============================//
@@ -173,10 +182,10 @@ module hs32_core1 (
     // Memory bus interconnect
     //===============================//
 
-    wire [31:0] aic_dtr, sr0_dtr, sr1_dtr;
+    wire [31:0] aic_dtr;
     reg  [31:0] gpt_dtr;
-    wire aic_ack, gpt_ack, sr0_ack, sr1_ack;
-    wire aic_stb, gpt_stb, sr0_stb, sr1_stb;
+    wire aic_ack, gpt_ack;
+    wire aic_stb, gpt_stb;
     wire[9:0] mmio_addr;
     dev_intercon mmio_conn (
         .clk(clk), .reset(rst),
@@ -235,39 +244,6 @@ module hs32_core1 (
         .rise(io_in_rise),
         .fall(io_in_fall)
     );
-
-    assign gpt_ack = 1;
-    reg[75:0] io_int;
-    always @(posedge clk) if(rst) begin
-        io_out <= 0;
-        io_oeb <= 0;
-        io_int <= 0;
-    end else begin
-        if(gpt_stb && rw) case(mmio_addr)
-            0: begin end
-            1: io_out[31:0] <= dwrite;
-            2: io_out[37:32] <= dwrite[5:0];
-            3: io_oeb[31:0] <= dwrite;
-            4: io_oeb[37:32] <= dwrite[5:0];
-            5: io_int[31:0] <= dwrite;
-            6: io_int[63:32] <= dwrite;
-            7: io_int[75:64] <= dwrite[11:0];
-            default: begin end
-        endcase
-    end
-    always @(*) begin
-        case(mmio_addr)
-            0: begin end
-            1: gpt_dtr = io_out[31:0];
-            2: gpt_dtr = { 26'b0, io_out[37:32] };
-            3: gpt_dtr = io_oeb[31:0];
-            4: gpt_dtr = { 26'b0, io_oeb[37:32] };
-            5: gpt_dtr = io_int[31:0];
-            6: gpt_dtr = io_int[63:32];
-            7: gpt_dtr = { 20'b0, io_int[75:64] };
-            default: begin end
-        endcase
-    end
 
     //===============================//
     // Timer
@@ -338,7 +314,40 @@ module hs32_core1 (
     // UART
     //===============================//
 
+    //===============================//
+    // General config table decoder
+    //===============================//
 
+    assign gpt_ack = 1;
+    reg[75:0] io_int;
+    always @(posedge clk) if(rst) begin
+        io_out <= 0;
+        io_oeb <= 0;
+        io_int <= 0;
+    end else begin
+        if(gpt_stb && rw) case(mmio_addr)
+            1: io_out[31:0] <= dwrite;
+            2: io_out[37:32] <= dwrite[5:0];
+            3: io_oeb[31:0] <= dwrite;
+            4: io_oeb[37:32] <= dwrite[5:0];
+            5: io_int[31:0] <= dwrite;
+            6: io_int[63:32] <= dwrite;
+            7: io_int[75:64] <= dwrite[11:0];
+            default: begin end
+        endcase
+    end
+    always @(*) begin
+        case(mmio_addr)
+            1: gpt_dtr = io_out[31:0];
+            2: gpt_dtr = { 26'b0, io_out[37:32] };
+            3: gpt_dtr = io_oeb[31:0];
+            4: gpt_dtr = { 26'b0, io_oeb[37:32] };
+            5: gpt_dtr = io_int[31:0];
+            6: gpt_dtr = io_int[63:32];
+            7: gpt_dtr = { 20'b0, io_int[75:64] };
+            default: gpt_dtr = 0;
+        endcase
+    end
 
     //===============================//
     // Internal SRAM controller
@@ -367,4 +376,46 @@ module hs32_core1 (
         .dbuf1(cpu_dtr_e0),
         .dbuf0(cpu_dtr_e1)
     );
+
+    //===============================//
+    // SRAM RX/TX Controller
+    //===============================//
+
+    reg sr0_ack, sr1_ack;
+    wire sr0_stb, sr1_stb;
+    assign srx_addr = mmio_addr;
+    assign srx_we = rw;
+    assign srx_dtw = dwrite;
+
+    // Generate signals for sr0
+    reg srx_bsy0;
+    assign sr0_ce = ~(sr0_stb | srx_bsy0);
+    always @(posedge clk) if(rst) begin
+        srx_bsy0 <= 0;
+        sr0_ack <= 0;
+    end else begin
+        if(sr0_stb) begin
+            srx_bsy0 <= 1;
+            sr0_ack <= 1;
+        end else begin
+            srx_bsy0 <= 0;
+            sr0_ack <= 0;
+        end
+    end
+
+    // Generate signals for sr1
+    reg srx_bsy1;
+    assign sr1_ce = ~(sr1_stb | srx_bsy1);
+    always @(posedge clk) if(rst) begin
+        srx_bsy1 <= 0;
+        sr1_ack <= 0;
+    end else begin
+        if(sr1_stb) begin
+            srx_bsy1 <= 1;
+            sr1_ack <= 1;
+        end else begin
+            srx_bsy1 <= 0;
+            sr1_ack <= 0;
+        end
+    end
 endmodule
