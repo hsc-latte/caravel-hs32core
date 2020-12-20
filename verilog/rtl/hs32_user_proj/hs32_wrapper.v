@@ -72,11 +72,15 @@ module user_project_wrapper (
 );
     wire zero, one, ce;
 
-    hs32_core1 core0 ();
+    // hs32_core1 core0 ();
 
     hs32_core1 core1 (
 `ifdef USE_POWER_PINS
-	    .vdda1(vdda1),	// User area 1 3.3V power
+    `ifdef GL
+        .VPWR(1'b1),
+        .VGND(1'b0),
+    `else
+        .vdda1(vdda1),	// User area 1 3.3V power
 	    .vdda2(vdda2),	// User area 2 3.3V power
 	    .vssa1(vssa1),	// User area 1 analog ground
 	    .vssa2(vssa2),	// User area 2 analog ground
@@ -84,6 +88,7 @@ module user_project_wrapper (
 	    .vccd2(vccd2),	// User area 2 1.8V power
 	    .vssd1(vssd1),	// User area 1 digital ground
 	    .vssd2(vssd2),	// User area 2 digital ground
+    `endif
 `endif
 
 	    // MGMT core clock and reset
@@ -106,9 +111,9 @@ module user_project_wrapper (
 	    .la_oen (la_oen[1:0]),
 
         // IO
-        .io_in(),
-        .io_out(),
-        .io_oeb(),
+        .io_in(io_in),
+        .io_out(io_out),
+        .io_oeb(io_oeb),
 
         // SRAM meme :3
         .cpu_mask_n(mask_n),
@@ -125,13 +130,13 @@ module user_project_wrapper (
         .cpu_dtr_e1(dtr_e1),
 
         // Rx/Tx Buffers
-        .sr0_dtr(sr0_dtr),
-        .sr1_dtr(sr1_dtr),
-        .sr0_ce(sr0_ce),
-        .sr1_ce(sr1_ce),
-        .srx_addr(srx_addr),
-        .srx_we(srx_we),
-        .srx_dtw(srx_dtw),
+        .sr0_dtr(),//sr0_dtr),
+        .sr1_dtr(),//sr1_dtr),
+        .sr0_ce(),//sr0_ce),
+        .sr1_ce(),//sr1_ce),
+        .srx_addr(),//srx_addr),
+        .srx_we(),//srx_we),
+        .srx_dtw(),//srx_dtw),
 
         // Constants
         .zero(zero),
@@ -210,7 +215,7 @@ module user_project_wrapper (
         .clk1(zero), .csb1(one), .addr1({8{zero}}), .dout1()
     );
 
-    `SRAM_MODULE sram4(
+    /*`SRAM_MODULE sram4(
 `ifdef USE_POWER_PINS
         .vdd(vccd1), .gnd(vssd1),
 `endif
@@ -237,6 +242,6 @@ module user_project_wrapper (
         .csb1(sr1_ce),
         .addr1(srx_addr[9:2]),
         .dout1(sr1_dtr)
-    );
+    );*/
 
 endmodule // user_project_wrapper

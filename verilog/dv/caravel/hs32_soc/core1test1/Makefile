@@ -2,6 +2,7 @@ FIRMWARE_PATH = ../..
 RTL_PATH = ../../../../rtl
 IP_PATH = ../../../../ip
 BEHAVIOURAL_MODELS = ../../ 
+GL_PATH = ../../../../
 
 GCC_PATH?=/opt/riscv32i/bin
 GCC_PREFIX?=riscv32-unknown-elf
@@ -10,15 +11,16 @@ PDK_PATH?=$(PDK_ROOT)/sky130A
 .SUFFIXES:
 
 PATTERN = test1
+VERILOG_ATTRS = -DSIM -DFUNCTIONAL -DUSE_POWER_PINS 
 
 all:  ${PATTERN:=.vcd}
 
 hex:  ${PATTERN:=.hex}
 
 %.vvp: %_tb.v %.hex
-	iverilog -DSIM -DFUNCTIONAL -I $(BEHAVIOURAL_MODELS) \
+	iverilog $(VERILOG_ATTRS) $(GLSIM) -I $(BEHAVIOURAL_MODELS) \
 	-I $(PDK_PATH) -I $(IP_PATH) -I $(RTL_PATH) -I $(RTL_PATH)/hs32cpu \
-	-o $@ $<
+	-I $(GL_PATH) -o $@ $<
 
 %.vcd: %.vvp
 	vvp $<
@@ -37,6 +39,6 @@ hex:  ${PATTERN:=.hex}
 # ---- Clean ----
 
 clean:
-	rm -f *.elf *.hex *.bin *.vvp *.vcd *.log *.idx
+	rm -f *.elf *.hex *.bin *.vvp *.vcd *.log *.idx *.fst
 
 .PHONY: clean hex all

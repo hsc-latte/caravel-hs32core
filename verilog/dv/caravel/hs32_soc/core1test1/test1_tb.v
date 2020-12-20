@@ -51,8 +51,9 @@ module tb();
 
 	initial begin
 		RSTB <= 1'b0;
-		#2000;
+		#1000;
 		RSTB <= 1'b1;	    // Release reset
+		#2000;
 	end
 
 	initial begin			// Power-up sequence
@@ -70,6 +71,7 @@ module tb();
 		power4 <= 1'b1;
 	end
 
+`ifndef GL
 	initial begin
 	    // MOV r0 <- 0xCAFE
 		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[0] == 32'hCAFE);
@@ -88,6 +90,7 @@ module tb();
 			$finish;
 		end
 	end
+`endif
 
 	always @(mprj_io) begin
 		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
@@ -100,8 +103,8 @@ module tb();
 
 	wire VDD3V3 = power1;
 	wire VDD1V8 = power2;
-	wire USER_VDD3V3 = power3;
-	wire USER_VDD1V8 = power4;
+	wire USER_VDD3V3 = power1;
+	wire USER_VDD1V8 = power2;
 	wire VSS = 1'b0;
 
 	caravel uut (
