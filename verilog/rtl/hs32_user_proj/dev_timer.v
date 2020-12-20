@@ -13,6 +13,7 @@ module dev_timer (
     // Outputs
     output  reg  int_match,
     output  wire io,
+    output  wire io_oe,
 
     // Pulse for 1T if I/O risen/fallen
     input wire io_risen,
@@ -46,6 +47,7 @@ module dev_timer (
         timer_mode == `TIMER_MODE_SPWM ? io_spwm :
         timer_mode == `TIMER_MODE_DPWM ? io_dpwm : io_normal;
     assign io = output_mode == `TIMER_OUTPUT_INV ? ~io_output : io_output;
+    assign io_oe = timer_mode == 0;
     
     // Clock divider, drives: divider
     always @(posedge clk) if(reset) begin

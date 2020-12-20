@@ -1,4 +1,0 @@
-mag/mgmt_core.mag filter=lfs diff=lfs merge=lfs -text
-gds/caravel.gds.gz filter=lfs diff=lfs merge=lfs -text
-def/hs32_core1.def filter=lfs diff=lfs merge=lfs -text
-

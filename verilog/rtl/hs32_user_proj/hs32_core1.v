@@ -62,8 +62,8 @@ module hs32_core1 (
 
     // IOs
     input  wire [`MPRJ_IO_PADS-1:0] io_in,
-    output reg  [`MPRJ_IO_PADS-1:0] io_out,
-    output reg  [`MPRJ_IO_PADS-1:0] io_oeb,
+    output wire [`MPRJ_IO_PADS-1:0] io_out,
+    output reg  [`MPRJ_IO_PADS-1:0] io_oeb, // Active low
     
     // Output (north and east faces)
     output wire [7:0]  cpu_mask_n,
@@ -103,6 +103,10 @@ module hs32_core1 (
     // wire clk = (~la_oen[64])? la_data_in[64] : wb_clk_i;
     wire clk = wb_clk_i;
     wire rst = (~la_oen[0]) ? la_data_in[0] : wb_rst_i;
+
+    assign la_data_out[0] = iack;
+    assign la_data_out[1] = fault;
+    assign la_data_out[2] = userbit;
     
     //===============================//
     // Main CPU core
@@ -110,6 +114,7 @@ module hs32_core1 (
 
     wire[31:0] cpu_addr, cpu_dread, cpu_dwrite;
     wire cpu_rw, cpu_stb, cpu_ack, flush;
+    wire iack, fault, userbit;
 
     hs32_cpu #(
         .IMUL(1), .BARREL_SHIFTER(1), .PREFETCH_SIZE(3)
@@ -121,11 +126,11 @@ module hs32_core1 (
         .stb(cpu_stb), .ack(cpu_ack),
 
         .interrupts(inte),
-        .iack(la_data_out[0]), .handler(isr),
+        .iack(iack), .handler(isr),
         .intrq(irq), .vec(ivec),
         .nmi(nmi),
 
-        .flush(flush), .fault(la_data_out[1]), .userbit(la_data_out[2])
+        .flush(flush), .fault(fault), .userbit(userbit)
     );
 
     //===============================//
@@ -232,30 +237,60 @@ module hs32_core1 (
     // GPIO
     //===============================//
 
-    localparam NUM_IO = `MPRJ_IO_PADS;
-    wire[NUM_IO-1:0] io_in_sync, io_in_rise, io_in_fall;
+    localparam NUM_IO = 32;
 
     // Generate filter block
+    wire[NUM_IO-1:0] io_in_sync, io_in_rise, io_in_fall;
     dev_filter filter[NUM_IO-1:0](
         .clk(clk),
         .rst(rst),
-        .a(io_in),
+        .a(io_in[37:6]),
         .b(io_in_sync),
         .rise(io_in_rise),
         .fall(io_in_fall)
     );
+
+    // Assign outputs
+    reg[NUM_IO-1:0] io_dto;
+    assign io_out = {
+        6'b0,
+        io_dto[NUM_IO-1:T0_IO_NUM+3],
+        t2_io_oe ? t2_io_out : io_dto[T0_IO_NUM+2],
+        t1_io_oe ? t1_io_out : io_dto[T0_IO_NUM+1],
+        t0_io_oe ? t0_io_out : io_dto[T0_IO_NUM],
+        io_dto[T0_IO_NUM-1:0]
+    };
+
+    // Interrupt enables (rising/falling)
+    reg[NUM_IO-1:0] io_ienr, io_ienf;
+    
+    // Generate rising/falling interrupts
+    wire[NUM_IO-1:0] io_ir, io_if;
+    wire io_irqr = | io_ir;
+    wire io_irqf = | io_if;
+    genvar g_io;
+    generate
+        for(g_io = 0; g_io < NUM_IO; g_io = g_io+1) begin
+            assign io_ir[g_io] = io_ienr[g_io] & io_in_rise[g_io] & io_oeb[g_io];
+            assign io_if[g_io] = io_ienf[g_io] & io_in_fall[g_io] & io_oeb[g_io];
+        end
+    endgenerate
+
+    // Interrupt latches (TODO: set interrupt ack)
+    reg[NUM_IO-1:0] io_iltr, io_iltf;
+    always @(posedge clk) begin
+        if(io_irqr) io_iltr <= io_ir;
+        if(io_irqf) io_iltf <= io_if;
+    end
 
     //===============================//
     // Timer
     //===============================//
 
     localparam T0_IO_NUM = 15;
-    localparam T1_IO_NUM = 16;
-    localparam T2_IO_NUM = 17;
 
     // Timer 0 (there has to be a better way to do this)
-    wire t0_match_int;
-    wire t0_io_out;
+    wire t0_match_int, t0_io_out, t0_io_oe;
     reg[7:0] t0_config;
     reg[15:0] t0_match;
     dev_timer #(
@@ -268,13 +303,13 @@ module hs32_core1 (
         .match(t0_match),
         .int_match(t0_match_int),
         .io(t0_io_out),
+        .io_oe(t0_io_oe),
         .io_risen(io_in_rise[T0_IO_NUM]),
         .io_fallen(io_in_fall[T0_IO_NUM])
     );
 
     // Timer 1
-    wire t1_match_int;
-    wire t1_io_out;
+    wire t1_match_int, t1_io_out, t1_io_oe;
     reg[7:0] t1_config;
     reg[15:0] t1_match;
     dev_timer #(
@@ -287,13 +322,13 @@ module hs32_core1 (
         .match(t1_match),
         .int_match(t1_match_int),
         .io(t1_io_out),
-        .io_risen(io_in_rise[T1_IO_NUM]),
-        .io_fallen(io_in_fall[T1_IO_NUM])
+        .io_oe(t1_io_oe),
+        .io_risen(io_in_rise[T0_IO_NUM+1]),
+        .io_fallen(io_in_fall[T0_IO_NUM+1])
     );
 
     // Timer 2
-    wire t2_match_int;
-    wire t2_io_out;
+    wire t2_match_int, t2_io_out, t2_io_oe;
     reg[7:0] t2_config;
     reg[31:0] t2_match;
     dev_timer #(
@@ -306,8 +341,9 @@ module hs32_core1 (
         .match(t2_match),
         .int_match(t2_match_int),
         .io(t2_io_out),
-        .io_risen(io_in_rise[T2_IO_NUM]),
-        .io_fallen(io_in_fall[T2_IO_NUM])
+        .io_oe(t2_io_oe),
+        .io_risen(io_in_rise[T0_IO_NUM+2]),
+        .io_fallen(io_in_fall[T0_IO_NUM+2])
     );
 
     //===============================//
@@ -319,32 +355,28 @@ module hs32_core1 (
     //===============================//
 
     assign gpt_ack = 1;
-    reg[75:0] io_int;
     always @(posedge clk) if(rst) begin
-        io_out <= 0;
-        io_oeb <= 0;
-        io_int <= 0;
+        io_dto <= 0;
+        io_oeb <= 1;
+        io_ienr <= 0;
+        io_ienf <= 0;
     end else begin
         if(gpt_stb && rw) case(mmio_addr)
-            1: io_out[31:0] <= dwrite;
-            2: io_out[37:32] <= dwrite[5:0];
-            3: io_oeb[31:0] <= dwrite;
-            4: io_oeb[37:32] <= dwrite[5:0];
-            5: io_int[31:0] <= dwrite;
-            6: io_int[63:32] <= dwrite;
-            7: io_int[75:64] <= dwrite[11:0];
+        //  0: read only
+            1: io_dto <= dwrite;
+            2: io_oeb <= { 6'b1, dwrite };
+            3: io_ienr <= dwrite;
+            4: io_ienf <= dwrite;
             default: begin end
         endcase
     end
     always @(*) begin
         case(mmio_addr)
-            1: gpt_dtr = io_out[31:0];
-            2: gpt_dtr = { 26'b0, io_out[37:32] };
-            3: gpt_dtr = io_oeb[31:0];
-            4: gpt_dtr = { 26'b0, io_oeb[37:32] };
-            5: gpt_dtr = io_int[31:0];
-            6: gpt_dtr = io_int[63:32];
-            7: gpt_dtr = { 20'b0, io_int[75:64] };
+            0: gpt_dtr = io_in[31:0];
+            1: gpt_dtr = io_dto;
+            2: gpt_dtr = io_oeb[31:0];
+            3: gpt_dtr = io_ienr;
+            4: gpt_dtr = io_ienf;
             default: gpt_dtr = 0;
         endcase
     end
@@ -388,33 +420,33 @@ module hs32_core1 (
     assign srx_dtw = dwrite;
 
     // Generate signals for sr0
-    reg srx_bsy0;
-    assign sr0_ce = ~(sr0_stb | srx_bsy0);
+    reg sr0_bsy;
+    assign sr0_ce = ~(sr0_stb | sr0_bsy);
     always @(posedge clk) if(rst) begin
-        srx_bsy0 <= 0;
+        sr0_bsy <= 0;
         sr0_ack <= 0;
     end else begin
         if(sr0_stb) begin
-            srx_bsy0 <= 1;
+            sr0_bsy <= 1;
             sr0_ack <= 1;
         end else begin
-            srx_bsy0 <= 0;
+            sr0_bsy <= 0;
             sr0_ack <= 0;
         end
     end
 
     // Generate signals for sr1
-    reg srx_bsy1;
-    assign sr1_ce = ~(sr1_stb | srx_bsy1);
+    reg sr1_bsy;
+    assign sr1_ce = ~(sr1_stb | sr1_bsy);
     always @(posedge clk) if(rst) begin
-        srx_bsy1 <= 0;
+        sr1_bsy <= 0;
         sr1_ack <= 0;
     end else begin
         if(sr1_stb) begin
-            srx_bsy1 <= 1;
+            sr1_bsy <= 1;
             sr1_ack <= 1;
         end else begin
-            srx_bsy1 <= 0;
+            sr1_bsy <= 0;
             sr1_ack <= 0;
         end
     end

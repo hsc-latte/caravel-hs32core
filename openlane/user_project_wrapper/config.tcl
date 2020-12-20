@@ -24,8 +24,16 @@ set ::env(CLOCK_NET) "core1.wb_clk_i"
 
 set ::env(CLOCK_PERIOD) "20"
 
+#set ::env(GLB_RT_MINLAYER) 2
+#set ::env(GLB_RT_MAXLAYER) 4
+#set ::env(GLB_RT_OBS) "li1 0 0 2920 3520, met5 0 0 2920 3520"
 set ::env(PL_OPENPHYSYN_OPTIMIZATIONS) 0
-set ::env(DIODE_INSERTION_STRATEGY) 1
+set ::env(DIODE_INSERTION_STRATEGY) 0
+set ::env(SYNTH_TOP_LEVEL) 1
+set ::env(PL_RANDOM_GLB_PLACEMENT) 1
+set ::env(FILL_INSERTION) 0
+set ::env(TAP_DECAP_INSERTION) 0
+set ::env(CLOCK_TREE_SYNTH) 0
 
 # Because of sram
 set ::env(MAGIC_DRC_USE_GDS) 0

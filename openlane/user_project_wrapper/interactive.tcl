@@ -21,8 +21,8 @@ add_macro_placement sram1  950 2800 N
 add_macro_placement sram2 1550 2800 N
 add_macro_placement sram3 2200 2800 N
 
-add_macro_placement sram4 1550 1600 S;  # RX buffer for core1
-add_macro_placement sram5 2200 1600 N;  # RX buffer for core0
+add_macro_placement sram4 1700 1600 S;  # RX buffer for core1
+add_macro_placement sram5 2250 1600 N;  # RX buffer for core0
 
 
 manual_macro_placement f
@@ -30,7 +30,8 @@ manual_macro_placement f
 exec -ignorestderr openroad -exit $script_dir/gen_pdn.tcl
 set_def $::env(pdn_tmp_file_tag).def
 
-global_routing_or
+global_routing
+add_route_obs
 detailed_routing
 
 run_magic

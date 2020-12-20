@@ -106,9 +106,9 @@ module user_project_wrapper (
 	    .la_oen (la_oen[1:0]),
 
         // IO
-        .io_in(io_in),
-        .io_out(io_out),
-        .io_oeb(io_oeb),
+        .io_in(),
+        .io_out(),
+        .io_oeb(),
 
         // SRAM meme :3
         .cpu_mask_n(mask_n),
@@ -216,12 +216,12 @@ module user_project_wrapper (
 `endif
         // Core 1
         .clk0(wb_clk_i),
-        /*.csb0(sr0_ce),
+        .csb0(sr0_ce),
         .web0(srx_we),
         .wmask0({4{ one }}),
         .addr0(srx_addr[9:2]),
         .din0(srx_dtw),
-        .dout0(sr0_dtr),*/
+        .dout0(sr0_dtr),
 
         .clk1(wb_clk_i)
     );
@@ -234,9 +234,9 @@ module user_project_wrapper (
 
         // Core 1
         .clk1(wb_clk_i),
-        /*.csb1(sr1_ce),
+        .csb1(sr1_ce),
         .addr1(srx_addr[9:2]),
-        .dout1(sr1_dtr)*/
+        .dout1(sr1_dtr)
     );
 
 endmodule // user_project_wrapper
