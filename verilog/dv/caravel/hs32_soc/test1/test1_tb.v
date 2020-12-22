@@ -12,6 +12,7 @@
 
 module tb();
 	parameter TEST_ID = 1;
+	parameter FILENAME = "test1.hex";
 
 	reg clock;
   	reg RSTB;
@@ -47,7 +48,11 @@ module tb();
 `ifndef GL_SIM
 		if(failed) begin
 			$display("%c[1;31m",27);
-			$display("Test 1: Failed (timed out)!");
+			$display("Test %d: Failed (timed out)!", TEST_ID);
+			$display("%c[0m",27);
+		end else begin
+			$display("%c[1;32m",27);
+			$display("Test %d: Passed weak cases.", TEST_ID);
 			$display("%c[0m",27);
 		end
 `endif
@@ -86,7 +91,6 @@ module tb();
 		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[2] == 32'hCAFE);
 		failed = 0;
 	end
-
 	always @(*) begin
 		if(tb.uut.mprj.core1.core.EXEC.fault) begin
 			$display("%c[1;31m",27);
@@ -138,7 +142,7 @@ module tb();
 	);
 
 	spiflash #(
-		.FILENAME("test1.hex")
+		.FILENAME(FILENAME)
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),

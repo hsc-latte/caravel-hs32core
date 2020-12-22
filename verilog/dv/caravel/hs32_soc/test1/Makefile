@@ -1,6 +1,5 @@
-FIRMWARE_PATH = ../..
+FIRMWARE_PATH = ../../
 RTL_PATH = ../../../../rtl
-IP_PATH = ../../../../ip
 BEHAVIOURAL_MODELS = ../../ 
 VERILOG_PATH = ../../../../
 
@@ -21,16 +20,16 @@ hex:  ${PATTERN:=.hex}
 %.vvp: %_tb.v %.hex
 ifeq ($(SIM),RTL)
 	iverilog -DSIM -DFUNCTIONAL -I $(BEHAVIOURAL_MODELS) \
-	-I $(PDK_PATH) -I $(IP_PATH) -I $(RTL_PATH) \
+	-I $(PDK_PATH) -I $(RTL_PATH) \
 	-I $(RTL_PATH)/hs32cpu $< -o $@
 else
 	iverilog -DSIM -DFUNCTIONAL -DGL_SIM -I $(BEHAVIOURAL_MODELS) \
-	-I $(PDK_PATH) -I $(IP_PATH) -I $(RTL_PATH) \
+	-I $(PDK_PATH) -I $(RTL_PATH) \
 	-I $(RTL_PATH)/hs32cpu -I $(VERILOG_PATH) $< -o $@
 endif
 
 %.vcd: %.vvp
-	vvp $< -fst-speed
+	vvp $< -fst-speed $(OPT)
 
 %.elf: %.c $(FIRMWARE_PATH)/sections.lds $(FIRMWARE_PATH)/start.s
 	${GCC_PATH}/${GCC_PREFIX}-gcc -march=rv32imc -mabi=ilp32 -Wl,-Bstatic,-T,$(FIRMWARE_PATH)/sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ $(FIRMWARE_PATH)/start.s $<

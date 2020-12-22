@@ -1,28 +1,69 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Tue Dec 22 02:52:28 2020
+[*] Tue Dec 22 22:38:55 2020
 [*]
 [dumpfile] "/data/caravel-hs32core/verilog/dv/hs32_nocaravel/mmiotest/dump.fst"
-[dumpfile_mtime] "Tue Dec 22 02:49:24 2020"
-[dumpfile_size] 9941
+[dumpfile_mtime] "Tue Dec 22 22:34:50 2020"
+[dumpfile_size] 10579
 [savefile] "/data/caravel-hs32core/verilog/dv/hs32_nocaravel/mmiotest/tb.gtkw"
 [timestart] 0
-[size] 1000 600
-[pos] 318 63
-*-9.502302 370 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[size] 911 572
+[pos] 727 46
+*-7.502302 1660 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb.
 [treeopen] tb.mprj.
 [treeopen] tb.mprj.core1.
 [sst_width] 314
-[signals_width] 224
+[signals_width] 255
 [sst_expanded] 1
 [sst_vpaned_height] 151
 @28
 tb.mprj.core1.clk
 @22
 tb.mprj.core1.io_in[37:0]
-@28
+@c00028
 tb.mprj.core1.io_out[37:0]
+@28
+(0)tb.mprj.core1.io_out[37:0]
+(1)tb.mprj.core1.io_out[37:0]
+(2)tb.mprj.core1.io_out[37:0]
+(3)tb.mprj.core1.io_out[37:0]
+(4)tb.mprj.core1.io_out[37:0]
+(5)tb.mprj.core1.io_out[37:0]
+(6)tb.mprj.core1.io_out[37:0]
+(7)tb.mprj.core1.io_out[37:0]
+(8)tb.mprj.core1.io_out[37:0]
+(9)tb.mprj.core1.io_out[37:0]
+(10)tb.mprj.core1.io_out[37:0]
+(11)tb.mprj.core1.io_out[37:0]
+(12)tb.mprj.core1.io_out[37:0]
+(13)tb.mprj.core1.io_out[37:0]
+(14)tb.mprj.core1.io_out[37:0]
+(15)tb.mprj.core1.io_out[37:0]
+(16)tb.mprj.core1.io_out[37:0]
+(17)tb.mprj.core1.io_out[37:0]
+(18)tb.mprj.core1.io_out[37:0]
+(19)tb.mprj.core1.io_out[37:0]
+(20)tb.mprj.core1.io_out[37:0]
+(21)tb.mprj.core1.io_out[37:0]
+(22)tb.mprj.core1.io_out[37:0]
+(23)tb.mprj.core1.io_out[37:0]
+(24)tb.mprj.core1.io_out[37:0]
+(25)tb.mprj.core1.io_out[37:0]
+(26)tb.mprj.core1.io_out[37:0]
+(27)tb.mprj.core1.io_out[37:0]
+(28)tb.mprj.core1.io_out[37:0]
+(29)tb.mprj.core1.io_out[37:0]
+(30)tb.mprj.core1.io_out[37:0]
+(31)tb.mprj.core1.io_out[37:0]
+(32)tb.mprj.core1.io_out[37:0]
+(33)tb.mprj.core1.io_out[37:0]
+(34)tb.mprj.core1.io_out[37:0]
+(35)tb.mprj.core1.io_out[37:0]
+(36)tb.mprj.core1.io_out[37:0]
+(37)tb.mprj.core1.io_out[37:0]
+@1401200
+-group_end
 @200
 -
 @800200
@@ -86,15 +127,14 @@ tb.mprj.core1.t2_stb
 @28
 tb.mprj.core1.t0_io_oe
 tb.mprj.core1.t0_io_out
-tb.mprj.core1.t0_match_int
 tb.mprj.core1.t1_io_oe
 tb.mprj.core1.t1_io_out
-tb.mprj.core1.t1_match_int
 tb.mprj.core1.t2_io_oe
 tb.mprj.core1.t2_io_out
-tb.mprj.core1.t2_match_int
 @1401200
 -Timers
+@c00200
+-Timer0
 @28
 tb.mprj.core1.dev_timer0.clk
 @22
@@ -105,7 +145,20 @@ tb.mprj.core1.dev_timer0.we
 @22
 tb.mprj.core1.dev_timer0.tconfig[6:0]
 tb.mprj.core1.dev_timer0.match[15:0]
-@29
+@28
 tb.mprj.core1.dev_timer0.addr[1:0]
+@1401200
+-Timer0
+@800200
+-WB Device
+@22
+tb.mprj.core1.wb.r_adr[31:0]
+@28
+tb.mprj.core1.wb.r_cfg[1:0]
+@22
+tb.mprj.core1.wb.r_dtr[31:0]
+tb.mprj.core1.wb.r_dtw[31:0]
+@1000200
+-WB Device
 [pattern_trace] 1
 [pattern_trace] 0
