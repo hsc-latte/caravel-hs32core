@@ -10,16 +10,48 @@ Below is a list of HS32 Core Project Directories:
 | [hs32core-rtl](https://github.com/hsc-latte/hs32core-rtl)         | RTL Circuit Design      | ![License](https://img.shields.io/github/license/hsc-latte/hs32core-rtl)     | ![Issues](https://img.shields.io/github/issues/hsc-latte/hs32core-rtl)     | ![Stars](https://img.shields.io/github/stars/hsc-latte/hs32core-rtl)     | ![Contributors](https://img.shields.io/github/contributors/hsc-latte/hs32core-rtl)     |
 | [hs32core](https://github.com/hsc-latte/hs32core)                 | Main Project Repository | ![License](https://img.shields.io/github/license/hsc-latte/hs32core)         | ![Issues](https://img.shields.io/github/issues/hsc-latte/hs32core)         | ![Stars](https://img.shields.io/github/stars/hsc-latte/hs32core)         | ![Contributors](https://img.shields.io/github/contributors/hsc-latte/hs32core)         |
 
-## Content
-1. [Intro](#intro)
-2. [Docs](#docs)
-3. [Install](#install)
-4. [Usage](#usage)
-5. [Contributing](#contributing)
-6. [Security](#security)
-7. [License](#license)
+## Table of Contents
+- [HSC Latte HS32 Core](#hsc-latte-hs32-core)
+  * [Table of Contents](#table-of-contents)
+  * [Overview](#overview)
+    + [Block Diagram Overview](#block-diagram-overview)
+    + [Execution Unit Block Diagram](#execution-unit-block-diagram)
+  * [Project Structure](#project-structure)
+  * [General Documentation](#general-documentation)
+    + [Instructions](#instructions)
+    + [Encoding](#encoding)
+    + [System Details](#system-details)
+    + [Operation](#operation)
+    + [CPU Planned Pinout](#cpu-planned-pinout)
+    + [Devboard Block Diagram](#devboard-block-diagram)
+    + [Timing Waveforms](#timing-waveforms)
+      - [Read Cycle](#read-cycle)
+      - [Write Cycle](#write-cycle)
+  * [License](#license)
 
-## Intro
+## Overview
+
+HS32 is a RISC-type CPU. (...)
+
+### Block Diagram Overview
+
+![CPU Overview](images/CPU-Overview.png)
+
+### Execution Unit Block Diagram
+
+![Execution Unit](images/Execution-Overview.png)
+
+## Project Structure
+
+| Path | Description |
+|-|-|
+| `verilog/rtl/hs32cpu` | CPU Core Submodule |
+| `verilog/rtl/hs32_user_proj` | User project files and wrapper |
+| `verilog/rtl/hs32cpu/docs` | Detailed core documentation |
+| `verilog/dv/hs32_nocaravel` | No-caravel testbenches |
+| `verilog/dv/caravel/hs32_soc` | Caravel-integrated testbenches |
+
+## General Documentation
 
 ### Instructions
 
@@ -31,7 +63,7 @@ Below is a list of HS32 Core Project Directories:
 - [xxx] = Dereference pointer, address is stored in xxx
 - sh(Rn) shifts contents of Rn left or right by an 5-bits amount
 
-#### Encoding
+### Encoding
 
 These are the different encodings that instructions come in.
 All instructions are 32 bit.
@@ -109,7 +141,7 @@ Rd, Rm, Rn are always in the same position in the instruciton if present
 </tr>-->
 </tbody></table></div>
 
-#### System Details
+### System Details
 
 There are 16 (r0-r15) general-purpose registers plus 4 privileged registers.
 In supervisor mode, r12-15 is separate from user-mode r12-15. In all modes, r14 and r15 will be used as the link register and stack pointer respectively.
@@ -160,40 +192,24 @@ Legend:
  </tr>
 </table>
 
-##### Operation
+### Operation
 
 During a mode switch, the return address will be stored in the appropriate LR and the return stack pointer will be stored in the appropriate SP.
 
 For instance, an interrupt call from User mode will prompt a switch to IRQ mode. The return address and stack pointer of the caller will be stored in IRQ LR (r14) and IRQ SP (r15) respectively.
 
-### CPU
+### CPU Planned Pinout
 
-#### Planned Pinout
+WIP
 
-| Pin # | Name | Description |
-|-|-|-|
-| 0-15 | IO0-15 | **Address/Data Parallel Bus:** These lines contain the time-multiplexed address (T<sub>1</sub>, T<sub>2</sub>)<br>and data (T<sub>W</sub>, T<sub>4</sub>) buses. During the T<sub>1</sub> cycle, bits A<sub>0</sub>-A<sub>7</sub> of the address bus is outputted.<br>Bit A<sub>0</sub> is the BLE# signal. It is LOW during T<sub>1</sub> if only the low 8-bits is to be transferred<br>during memory or I/O operations. |
-| 16 | ALE0 | **Address Latch Enable (LOW):** HIGH during T<sub>1</sub> to signal for the latching of the low 8-bits<br>of the address signal. It is LOW otherwise. |
-| 17 | ALE1 | **Address Latch Enable (HIGH):** HIGH during T<sub>2</sub> to signal for the latching of the high 8-bits<br>of the address signal. It is LOW otherwise. |
-| 18 | WE# | **Write Enable:** Write strobe is LOW during T<sub>W</sub> to indicate that the processor is performing<br>an I/O or memory write operation. |
-| 19 | OE# | **Output Enable:** When LOW, indicates that the processor IO lines are ready<br>to accept/output data. It is held HIGH during T<sub>1</sub> and T<sub>2</sub>. |
-| 20 | BHE# | **Bus High Enable:** When LOW, signals for the high 8-bits to be transferred<br>during memory or I/O operations. |
-| 22 | PIO | **IO Mode:** When HIGH, indicates that the current operation is an I/O, not memory, operation.<br>This results in the omittance of cycle T<sub>2</sub>. |
-| 23, 24 | RX, TX | 9600 Baud UART Interface |
-| 25-... | GPIO0-... | General Purpose Input/Output |
-
-#### Overview
-
-![CPU Overview](/images/CPU-Overview.png)
-
-#### Devboard Block Diagram
+### Devboard Block Diagram
 ![](images/cpu-block.svg)
 
-#### Timing Waveforms
+### Timing Waveforms
 
 Various timing diagrams of the address and data buses
 
-##### Read Cycle
+#### Read Cycle
 
 Clock Cycles: 4 minimum
 
@@ -218,7 +234,7 @@ In the implementation, OE# is the AND of 2 signals, one leading edge and one fal
 
 ![](images/cpu-wave1.svg)
 
-##### Write Cycle
+#### Write Cycle
 
 Clock Cycles: 4 minimum
 
@@ -238,56 +254,6 @@ Timing Requirements:
   edge: [ '1<->2 T1', '2<->3 T2', '3<->4 TW', '4<->5 T3' ]
 } -->
 ![](images/cpu-wave2.svg)
-
-#### Execution Unit
-
-![Execution Unit](/images/Execution-Overview.png)
-
-## Docs
-
-### Directories
-
-**HS32 RTL** -- [`verilog/rtl/hs32cpu`](https://github.com/hsc-latte/hs32core-rtl)
-
-**Documentation** -- [`verilog/rtl/hs32cpu/docs`](https://github.com/hsc-latte/hs32core-rtl/tree/master/docs)
-
-**Testbenches** -- [`verilog/rtl/hs32cpu/bench`](https://github.com/hsc-latte/hs32core-rtl/tree/master/bench)
-
-**CPU Modules** -- [`verilog/rtl/hs32cpu/cpu`](https://github.com/hsc-latte/hs32core-rtl/tree/master/cpu)
-
-**Frontend Modules** -- [`verilog/rtl/hs32cpu/frontend`](https://github.com/hsc-latte/hs32core-rtl/tree/master/frontend)
-
-**SOC Modules** -- [`verilog/rtl/hs32cpu/soc`](https://github.com/hsc-latte/hs32core-rtl/tree/master/soc)
-
-**Third Party Modules** -- [`verilog/rtl/hs32cpu/third_party`](https://github.com/hsc-latte/hs32core-rtl/tree/master/third_party)
-
-**Programmer** -- [`verilog/rtl/hs32cpu/programmer`](https://github.com/hsc-latte/hs32core-rtl/tree/master/programmer)
-
-**Openlane** -- [`verilog/rtl/hs32cpu/openlane`](https://github.com/hsc-latte/hs32core-rtl/tree/master/openlane)
-
-**Skywater** -- [`verilog/rtl/hs32cpu/skywater`](https://github.com/hsc-latte/hs32core-rtl/tree/master/skywater)
-
-### Files
-
-**HS32 ISA** -- [`verilog/rtl/hs32cpu/docs/isa_formal.txt`](https://github.com/hsc-latte/hs32core-rtl/tree/master/docs/isa_formal.txt)
-
-**Top Level Module** -- [`verilog/rtl/hs32cpu/top.v`](https://github.com/hsc-latte/hs32core-rtl/tree/master/top.v)
-
-**HS32 Interrupts** -- [`verilog/rtl/hs32cpu/docs/interrupts.md`](https://github.com/hsc-latte/hs32core-rtl/tree/master/docs/interrupts.md)
-
-**HS32 MMIO** -- [`verilog/rtl/hs32cpu/docs/mmio.md`](https://github.com/hsc-latte/hs32core-rtl/tree/master/docs/mmio.md)
-
-## Install
-
-## Usage
-
-## Contributing
-
-Issues and pull requests are welcome! Please make sure to create them at the right repository :D
-
-## Security
-
-We take any security risks seriously, if you have found or suspected a vulnerability or anything that might compromise our security, we would very much appreciate it if you can report it to us.
 
 ## License
 
