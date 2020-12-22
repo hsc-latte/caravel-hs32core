@@ -15,7 +15,7 @@
 
 `default_nettype none
 
-`ifdef GL
+`ifdef GL_SIM
     `include "gl/hs32_core1.v"
 `else
     `include "cpu/hs32_cpu.v"
@@ -24,7 +24,9 @@
 
     `include "hs32_user_proj/hs32_aic.v"
     `include "hs32_user_proj/hs32_bram_ctl.v"
-    `include "hs32_user_proj/dev_filter.v"
+    `include "hs32_user_proj/io_filter.v"
     `include "hs32_user_proj/dev_timer.v"
+    `include "hs32_user_proj/dev_gpio.v"
+    `include "hs32_user_proj/dev_wb.v"
     `include "hs32_user_proj/dev_intercon.v"
 `endif

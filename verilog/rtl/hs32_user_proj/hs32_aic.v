@@ -27,7 +27,7 @@ module hs32_aic(
     // Memory interface in
     input   wire stb,
     output  wire ack,
-    input   wire[9:0] addr,
+    input   wire[4:0] addr,
     input   wire[31:0] dtw,
     output  wire[31:0] dtr,
     input   wire rw,
@@ -79,7 +79,7 @@ module hs32_aic(
     assign handler = aict[vec] & (~32'b1111);
 
     // Calculate table index
-    wire[4:0] aict_idx = addr[6:2]-1;
+    wire[4:0] aict_idx = addr-1;
 
     // 1 clock cycle
     // assign ack = stb;

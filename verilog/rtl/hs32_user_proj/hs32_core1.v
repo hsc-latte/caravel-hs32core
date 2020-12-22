@@ -24,8 +24,9 @@
 
     `include "hs32_user_proj/hs32_aic.v"
     `include "hs32_user_proj/hs32_bram_ctl.v"
-    `include "hs32_user_proj/dev_filter.v"
     `include "hs32_user_proj/dev_timer.v"
+    `include "hs32_user_proj/dev_gpio.v"
+    `include "hs32_user_proj/dev_wb.v"
     `include "hs32_user_proj/dev_intercon.v"
 `endif
 
@@ -63,7 +64,7 @@ module hs32_core1 (
     // IOs
     input  wire [`MPRJ_IO_PADS-1:0] io_in,
     output wire [`MPRJ_IO_PADS-1:0] io_out,
-    output reg  [`MPRJ_IO_PADS-1:0] io_oeb, // Active low
+    output wire [`MPRJ_IO_PADS-1:0] io_oeb, // Active low
     
     // Output (north and east faces)
     output wire [7:0]  cpu_mask_n,
@@ -78,15 +79,6 @@ module hs32_core1 (
     input  wire [31:0] cpu_dtr_n1,
     input  wire [31:0] cpu_dtr_e0,
     input  wire [31:0] cpu_dtr_e1,
-
-    // 2 RX/TX Buffers
-    input wire[31:0] sr0_dtr,
-    input wire[31:0] sr1_dtr,
-    output wire sr0_ce,
-    output wire sr1_ce,
-    output wire[9:0] srx_addr,
-    output wire srx_we,
-    output wire[31:0] srx_dtw,
 
     // Can't have constants in wrapper
     output wire zero,
@@ -149,9 +141,9 @@ module hs32_core1 (
     assign addr     = bus_hold ? wbs_adr_i : cpu_addr;
     assign dwrite   = bus_hold ? wbs_dat_i : cpu_dwrite;
     assign rw       = bus_hold ? wb_rw : cpu_rw;
-    assign wbs_dat_o = dread;
+    assign wbs_dat_o = bus_hold ? dread : wbs_dev_dtr;
     assign cpu_dread = dread;
-    assign wbs_ack_o = bus_hold ? ack : 0;
+    assign wbs_ack_o = bus_hold ? ack : wbs_dev_ack;
     assign cpu_ack = bus_hold ? 0: ack;
 
     reg ram_bsy;
@@ -167,13 +159,13 @@ module hs32_core1 (
     end
 
     `ifdef SIM
-        reg bsy;
-        always @(posedge clk) if(rst)
+        //reg bsy;
+        always @(posedge clk) /*if(rst)
             bsy <= 0;
         else if(stb && !bsy) begin
             bsy <= 1;
-        end else if(ack && bsy) begin
-            bsy <= 0;
+        end*/
+        if(ack && stb) begin
             `ifdef LOG_MEMORY_WRITE
                 if(rw) $display($time, " Writing [%X] <- %X", addr, dwrite);
             `endif
@@ -187,12 +179,27 @@ module hs32_core1 (
     // Memory bus interconnect
     //===============================//
 
-    wire [31:0] aic_dtr;
-    reg  [31:0] gpt_dtr;
-    wire aic_ack, gpt_ack;
-    wire aic_stb, gpt_stb;
-    wire[9:0] mmio_addr;
-    dev_intercon mmio_conn (
+    wire[7:0] mmio_addr;
+    dev_intercon #(
+        .NS(6),
+        .BASE({
+            { 1'b0, 7'b0 },
+            { 1'b1, 2'b00, 5'b0 },
+            { 1'b1, 2'b01, 1'b0, 4'b0 },
+            { 1'b1, 2'b01, 1'b1, 4'b0 },
+            { 1'b1, 2'b10, 1'b0, 4'b0 },
+            { 1'b1, 2'b10, 1'b1, 4'b0 }
+        }),
+        .MASK({
+            { 1'b1, 7'b0 },
+            { 1'b1, 2'b11, 5'b0 },
+            { 1'b1, 2'b11, 1'b1, 4'b0 },
+            { 1'b1, 2'b11, 1'b1, 4'b0 },
+            { 1'b1, 2'b11, 1'b1, 4'b0 },
+            { 1'b1, 2'b11, 1'b1, 4'b0 }
+        }),
+        .MASK_LEN(8)
+    ) mmio_conn (
         .clk(clk), .reset(rst),
         
         // Input
@@ -201,9 +208,9 @@ module hs32_core1 (
         .i_rw(rw), .i_dtw(dwrite),
 
         // Devices
-        .i_dtr({ sr1_dtr, sr0_dtr, gpt_dtr, aic_dtr }),
-        .i_ack({ sr1_ack, sr0_ack, gpt_ack, aic_ack }),
-        .o_stb({ sr1_stb, sr0_stb, gpt_stb, aic_stb }),
+        .i_dtr({ aic_dtr, gpt_dtr, t0_dtr, t1_dtr, t2_dtr, dwb_dtr }),
+        .i_ack({ aic_ack, gpt_ack, t0_ack, t1_ack, t2_ack, dwb_ack }),
+        .o_stb({ aic_stb, gpt_stb, t0_stb, t1_stb, t2_stb, dwb_stb }),
         .o_addr(mmio_addr),
 
         // SRAM
@@ -222,164 +229,152 @@ module hs32_core1 (
     wire [31:0] isr;
     wire irq, nmi;
 
+    wire [31:0] aic_dtr;
+    wire aic_ack, aic_stb;
+
     hs32_aic aict (
         .clk(clk), .reset(rst),
         // Bus
         .stb(aic_stb), .ack(aic_ack),
-        .addr(mmio_addr), .dtw(dwrite),
+        .addr(mmio_addr[6:2]), .dtw(dwrite),
         .dtr(aic_dtr), .rw(rw),
         // Interrupt controller
-        .interrupts(inte), .handler(isr),
+        .interrupts(hw_irq | inte), .handler(isr),
         .intrq(irq), .vec(ivec), .nmi(nmi)
     );
+
+    wire[23:0] hw_irq = {
+        gpt_irqr | gpt_irqf,
+        tn_ints,
+        dwb_irq,
+        16'b0
+    };
 
     //===============================//
     // GPIO
     //===============================//
+    
+    wire[31:0] gpt_dtr;
+    wire gpt_ack, gpt_stb, gpt_irqr, gpt_irqf;
 
-    localparam NUM_IO = 32;
+    // IO rise/fall triggers
+    wire[31:0] io_in_sync, io_in_rise, io_in_fall;
+    wire[37:0] io_out_buf, io_oeb_buf;
 
-    // Generate filter block
-    wire[NUM_IO-1:0] io_in_sync, io_in_rise, io_in_fall;
-    dev_filter filter[NUM_IO-1:0](
-        .clk(clk),
-        .rst(rst),
-        .a(io_in[37:6]),
-        .b(io_in_sync),
-        .rise(io_in_rise),
-        .fall(io_in_fall)
+    dev_gpio32 gpio32 (
+        .clk(clk), .reset(rst),
+        .io_in(io_in),
+        .io_out(io_out_buf),
+        .io_oeb(io_oeb_buf),
+        .io_in_sync(io_in_sync),
+        .io_in_rise(io_in_rise),
+        .io_in_fall(io_in_fall),
+        
+        .stb(gpt_stb), .ack(gpt_ack),
+        .rw(rw), .addr(mmio_addr[4:2]),
+        .dwrite(dwrite), .dtr(gpt_dtr),
+
+        .io_irqr(gpt_irqr),
+        .io_irqf(gpt_irqf)
     );
 
     // Assign outputs
-    reg[NUM_IO-1:0] io_dto;
     assign io_out = {
-        6'b0,
-        io_dto[NUM_IO-1:T0_IO_NUM+3],
-        t2_io_oe ? t2_io_out : io_dto[T0_IO_NUM+2],
-        t1_io_oe ? t1_io_out : io_dto[T0_IO_NUM+1],
-        t0_io_oe ? t0_io_out : io_dto[T0_IO_NUM],
-        io_dto[T0_IO_NUM-1:0]
+        io_out_buf[37:T0_IO_NUM+3],
+        t2_io_oe ? t2_io_out : io_out_buf[T0_IO_NUM+2],
+        t1_io_oe ? t1_io_out : io_out_buf[T0_IO_NUM+1],
+        t0_io_oe ? t0_io_out : io_out_buf[T0_IO_NUM],
+        io_out_buf[T0_IO_NUM-1:0]
     };
-
-    // Interrupt enables (rising/falling)
-    reg[NUM_IO-1:0] io_ienr, io_ienf;
-    
-    // Generate rising/falling interrupts
-    wire[NUM_IO-1:0] io_ir, io_if;
-    wire io_irqr = | io_ir;
-    wire io_irqf = | io_if;
-    genvar g_io;
-    generate
-        for(g_io = 0; g_io < NUM_IO; g_io = g_io+1) begin
-            assign io_ir[g_io] = io_ienr[g_io] & io_in_rise[g_io] & io_oeb[g_io];
-            assign io_if[g_io] = io_ienf[g_io] & io_in_fall[g_io] & io_oeb[g_io];
-        end
-    endgenerate
-
-    // Interrupt latches (TODO: set interrupt ack)
-    reg[NUM_IO-1:0] io_iltr, io_iltf;
-    always @(posedge clk) begin
-        if(io_irqr) io_iltr <= io_ir;
-        if(io_irqf) io_iltf <= io_if;
-    end
+    assign io_oeb = io_oeb_buf;
 
     //===============================//
     // Timer
     //===============================//
 
     localparam T0_IO_NUM = 15;
+    wire t0_stb, t1_stb, t2_stb;
+    wire t0_ack, t1_ack, t2_ack;
+    wire[31:0] t0_dtr, t1_dtr, t2_dtr;
+    wire[5:0] tn_ints;
 
-    // Timer 0 (there has to be a better way to do this)
-    wire t0_match_int, t0_io_out, t0_io_oe;
-    reg[7:0] t0_config;
-    reg[15:0] t0_match;
+    // Timer 0
+    wire t0_io_out, t0_io_oe;
     dev_timer #(
         .TIMER_BITS(16)
     ) dev_timer0 (
         .clk(clk), .reset(rst),
-        .clk_source(t0_config[2:0]),
-        .timer_mode(t0_config[4:3]),
-        .output_mode(t0_config[6:5]),
-        .match(t0_match),
-        .int_match(t0_match_int),
+        .int_match(tn_ints[0]),
+        .int_ovf(tn_ints[1]),
         .io(t0_io_out),
         .io_oe(t0_io_oe),
         .io_risen(io_in_rise[T0_IO_NUM]),
-        .io_fallen(io_in_fall[T0_IO_NUM])
+        .io_fallen(io_in_fall[T0_IO_NUM]),
+        .we(rw), .stb(t0_stb), .ack(t0_ack),
+        .addr(mmio_addr[3:2]),
+        .dtw(dwrite), .dtr(t0_dtr)
     );
 
     // Timer 1
-    wire t1_match_int, t1_io_out, t1_io_oe;
-    reg[7:0] t1_config;
-    reg[15:0] t1_match;
+    wire t1_io_out, t1_io_oe, t1_we;
     dev_timer #(
         .TIMER_BITS(16)
     ) dev_timer1 (
         .clk(clk), .reset(rst),
-        .clk_source(t1_config[2:0]),
-        .timer_mode(t1_config[4:3]),
-        .output_mode(t1_config[6:5]),
-        .match(t1_match),
-        .int_match(t1_match_int),
+        .int_match(tn_ints[2]),
+        .int_ovf(tn_ints[3]),
         .io(t1_io_out),
         .io_oe(t1_io_oe),
         .io_risen(io_in_rise[T0_IO_NUM+1]),
-        .io_fallen(io_in_fall[T0_IO_NUM+1])
+        .io_fallen(io_in_fall[T0_IO_NUM+1]),
+        .we(rw), .stb(t1_stb), .ack(t1_ack),
+        .addr(mmio_addr[3:2]),
+        .dtw(dwrite), .dtr(t1_dtr)
     );
 
     // Timer 2
-    wire t2_match_int, t2_io_out, t2_io_oe;
-    reg[7:0] t2_config;
-    reg[31:0] t2_match;
+    wire t2_io_out, t2_io_oe, t2_we;
     dev_timer #(
         .TIMER_BITS(32)
     ) dev_timer2 (
         .clk(clk), .reset(rst),
-        .clk_source(t2_config[2:0]),
-        .timer_mode(t2_config[4:3]),
-        .output_mode(t2_config[6:5]),
-        .match(t2_match),
-        .int_match(t2_match_int),
+        .int_match(tn_ints[4]),
+        .int_ovf(tn_ints[5]),
         .io(t2_io_out),
         .io_oe(t2_io_oe),
         .io_risen(io_in_rise[T0_IO_NUM+2]),
-        .io_fallen(io_in_fall[T0_IO_NUM+2])
+        .io_fallen(io_in_fall[T0_IO_NUM+2]),
+        .we(rw), .stb(t2_stb), .ack(t2_ack),
+        .addr(mmio_addr[3:2]),
+        .dtw(dwrite), .dtr(t2_dtr)
+    );
+
+    //===============================//
+    // Wishbone Memory Mapped
+    //===============================//
+
+    wire dwb_stb, dwb_ack, wbs_dev_ack, dwb_irq;
+    wire[31:0] dwb_dtr, wbs_dev_dtr;
+    dev_wb wb(
+        .clk(clk), .reset(rst),
+
+        .wb_stb(wb_stb), .wb_we(wb_rw),
+        .wb_dat_i(wbs_dat_i), .wb_adr(wbs_adr_i),
+        .wb_ack(wbs_dev_ack),
+        .wb_dat_o(wbs_dev_dtr),
+
+        .stb(dwb_stb), .ack(dwb_ack),
+        .we(rw), .dtr(dwb_dtr),
+        .dtw(dwrite), .addr(mmio_addr[3:2]),
+
+        .intrq(dwb_irq)
     );
 
     //===============================//
     // UART
     //===============================//
 
-    //===============================//
-    // General config table decoder
-    //===============================//
 
-    assign gpt_ack = 1;
-    always @(posedge clk) if(rst) begin
-        io_dto <= 0;
-        io_oeb <= 1;
-        io_ienr <= 0;
-        io_ienf <= 0;
-    end else begin
-        if(gpt_stb && rw) case(mmio_addr)
-        //  0: read only
-            1: io_dto <= dwrite;
-            2: io_oeb <= { 6'b1, dwrite };
-            3: io_ienr <= dwrite;
-            4: io_ienf <= dwrite;
-            default: begin end
-        endcase
-    end
-    always @(*) begin
-        case(mmio_addr)
-            0: gpt_dtr = io_in[31:0];
-            1: gpt_dtr = io_dto;
-            2: gpt_dtr = io_oeb[31:0];
-            3: gpt_dtr = io_ienr;
-            4: gpt_dtr = io_ienf;
-            default: gpt_dtr = 0;
-        endcase
-    end
 
     //===============================//
     // Internal SRAM controller
@@ -408,46 +403,4 @@ module hs32_core1 (
         .dbuf1(cpu_dtr_e0),
         .dbuf0(cpu_dtr_e1)
     );
-
-    //===============================//
-    // SRAM RX/TX Controller
-    //===============================//
-
-    reg sr0_ack, sr1_ack;
-    wire sr0_stb, sr1_stb;
-    assign srx_addr = mmio_addr;
-    assign srx_we = rw;
-    assign srx_dtw = dwrite;
-
-    // Generate signals for sr0
-    reg sr0_bsy;
-    assign sr0_ce = ~(sr0_stb | sr0_bsy);
-    always @(posedge clk) if(rst) begin
-        sr0_bsy <= 0;
-        sr0_ack <= 0;
-    end else begin
-        if(sr0_stb) begin
-            sr0_bsy <= 1;
-            sr0_ack <= 1;
-        end else begin
-            sr0_bsy <= 0;
-            sr0_ack <= 0;
-        end
-    end
-
-    // Generate signals for sr1
-    reg sr1_bsy;
-    assign sr1_ce = ~(sr1_stb | sr1_bsy);
-    always @(posedge clk) if(rst) begin
-        sr1_bsy <= 0;
-        sr1_ack <= 0;
-    end else begin
-        if(sr1_stb) begin
-            sr1_bsy <= 1;
-            sr1_ack <= 1;
-        end else begin
-            sr1_bsy <= 0;
-            sr1_ack <= 0;
-        end
-    end
 endmodule

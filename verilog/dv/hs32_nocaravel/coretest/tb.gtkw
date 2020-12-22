@@ -1,0 +1,408 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Tue Dec 22 01:21:25 2020
+[*]
+[dumpfile] "/data/caravel-hs32core/verilog/dv/hs32_nocaravel/dump.fst"
+[dumpfile_mtime] "Tue Dec 22 01:21:13 2020"
+[dumpfile_size] 14810
+[savefile] "/data/caravel-hs32core/verilog/dv/hs32_nocaravel/tb.gtkw"
+[timestart] 1270
+[size] 1536 801
+[pos] -1 -1
+*-7.106964 1590 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[treeopen] tb.mprj.
+[treeopen] tb.mprj.core1.
+[sst_width] 265
+[signals_width] 283
+[sst_expanded] 1
+[sst_vpaned_height] 224
+@c00200
+-WBS
+@28
+tb.mprj.wb_clk_i
+tb.mprj.wb_rst_i
+tb.mprj.wbs_ack_o
+@22
+tb.mprj.wbs_adr_i[31:0]
+@28
+tb.mprj.wbs_cyc_i
+@22
+tb.mprj.wbs_dat_i[31:0]
+tb.mprj.wbs_dat_o[31:0]
+tb.mprj.wbs_sel_i[3:0]
+@28
+tb.mprj.wbs_stb_i
+tb.mprj.wbs_we_i
+@1401200
+-WBS
+@c00200
+-BUS
+@28
+tb.mprj.core1.ram_ack
+@22
+tb.mprj.core1.ram_addr[31:0]
+@28
+tb.mprj.core1.ram_bsy
+tb.mprj.core1.ram_ce
+@22
+tb.mprj.core1.ram_dread[31:0]
+tb.mprj.core1.ram_dwrite[31:0]
+@28
+tb.mprj.core1.ram_rw
+tb.mprj.core1.ram_stb
+@200
+-
+@22
+tb.mprj.core1.addr[31:0]
+tb.mprj.core1.dread[31:0]
+tb.mprj.core1.dwrite[31:0]
+@28
+tb.mprj.core1.rw
+tb.mprj.core1.stb
+tb.mprj.core1.ack
+@1401200
+-BUS
+@800200
+-Intercon
+@28
+tb.mprj.core1.mmio_conn.clk
+tb.mprj.core1.mmio_conn.reset
+tb.mprj.core1.mmio_conn.i_rw
+tb.mprj.core1.mmio_conn.i_stb
+@22
+tb.mprj.core1.mmio_conn.i_addr[31:0]
+tb.mprj.core1.mmio_conn.i_dtw[31:0]
+tb.mprj.core1.mmio_conn.aict_base[31:0]
+@28
+tb.mprj.core1.mmio_conn.o_ack
+@22
+tb.mprj.core1.mmio_conn.o_dtr[31:0]
+@200
+-
+@22
+tb.mprj.core1.mmio_conn.o_stb[4:0]
+@28
+tb.mprj.core1.mmio_conn.i_ack[4:0]
+@22
+tb.mprj.core1.mmio_conn.i_dtr[159:0]
+tb.mprj.core1.mmio_conn.o_addr[7:0]
+@200
+-
+@28
+tb.mprj.core1.mmio_conn.in_aict
+@29
+tb.mprj.core1.mmio_conn.in_base
+@28
+tb.mprj.core1.mmio_conn.none
+tb.mprj.core1.mmio_conn.sel[4:0]
+@22
+tb.mprj.core1.mmio_conn.r_dtr[31:0]
+@200
+-
+@28
+tb.mprj.core1.mmio_conn.sack
+@22
+tb.mprj.core1.mmio_conn.sdtr[31:0]
+@28
+tb.mprj.core1.mmio_conn.sstb
+@1000200
+-Intercon
+@c00200
+-PQ
+@22
+tb.mprj.core1.core.FETCH.\fifo[0][31:0]
+tb.mprj.core1.core.FETCH.\fifo[1][31:0]
+tb.mprj.core1.core.FETCH.\fifo[2][31:0]
+tb.mprj.core1.core.FETCH.\fifo[3][31:0]
+tb.mprj.core1.core.FETCH.\fifo[4][31:0]
+tb.mprj.core1.core.FETCH.\fifo[5][31:0]
+tb.mprj.core1.core.FETCH.\fifo[6][31:0]
+tb.mprj.core1.core.FETCH.\fifo[7][31:0]
+@1401200
+-PQ
+@c00200
+-BRAM CTL
+@22
+tb.mprj.core1.bram_ctl.i_addr[11:0]
+@28
+tb.mprj.core1.bram_ctl.i_clk
+@22
+tb.mprj.core1.bram_ctl.i_dwrite[31:0]
+@28
+tb.mprj.core1.bram_ctl.i_reset
+tb.mprj.core1.bram_ctl.i_rw
+[color] 3
+tb.mprj.core1.bram_ctl.i_stb
+[color] 3
+tb.mprj.core1.bram_ctl.o_ack
+@22
+tb.mprj.core1.bram_ctl.o_dread[31:0]
+@28
+tb.mprj.core1.bram_ctl.r_bsy
+@200
+-
+@22
+tb.mprj.core1.bram_ctl.r_dread[31:0]
+tb.mprj.core1.bram_ctl.dbuf[31:0]
+tb.mprj.core1.bram_ctl.wbuf[31:0]
+@200
+-
+@22
+tb.mprj.core1.bram_ctl.a0[9:0]
+tb.mprj.core1.bram_ctl.a1[9:0]
+tb.mprj.core1.bram_ctl.a2[9:0]
+tb.mprj.core1.bram_ctl.a3[9:0]
+tb.mprj.core1.bram_ctl.cpu_addr_e[15:0]
+tb.mprj.core1.bram_ctl.cpu_addr_n[15:0]
+tb.mprj.core1.bram_ctl.dbuf0[31:0]
+tb.mprj.core1.bram_ctl.dbuf1[31:0]
+tb.mprj.core1.bram_ctl.dbuf2[31:0]
+tb.mprj.core1.bram_ctl.dbuf3[31:0]
+@1401200
+-BRAM CTL
+@c00200
+-Decode
+@28
+tb.mprj.core1.core.DECODE.clk
+tb.mprj.core1.core.DECODE.reset
+@22
+tb.mprj.core1.core.DECODE.int_line[23:0]
+@28
+[color] 3
+tb.mprj.core1.core.DECODE.reqd
+[color] 3
+tb.mprj.core1.core.DECODE.rdyd
+@200
+-
+@28
+[color] 3
+tb.mprj.core1.core.DECODE.reqe
+[color] 3
+tb.mprj.core1.core.DECODE.rdye
+@200
+-
+@22
+tb.mprj.core1.core.DECODE.instd[31:0]
+@200
+-
+@22
+tb.mprj.core1.core.DECODE.aluop[3:0]
+@28
+tb.mprj.core1.core.DECODE.bank[1:0]
+@22
+tb.mprj.core1.core.DECODE.ctlsig[15:0]
+tb.mprj.core1.core.DECODE.imm[15:0]
+tb.mprj.core1.core.DECODE.rd[3:0]
+tb.mprj.core1.core.DECODE.rm[3:0]
+tb.mprj.core1.core.DECODE.rn[3:0]
+tb.mprj.core1.core.DECODE.shift[4:0]
+@1401200
+-Decode
+@c00200
+-Execute
+@28
+tb.mprj.core1.core.EXEC.clk
+[color] 3
+tb.mprj.core1.core.EXEC.req
+[color] 3
+tb.mprj.core1.core.EXEC.rdy
+@22
+tb.mprj.core1.core.EXEC.state[3:0]
+@28
+tb.mprj.core1.core.EXEC.fault
+tb.mprj.core1.core.EXEC.int_inval
+@c00200
+-Module I/O
+@28
+tb.mprj.core1.core.EXEC.flush
+@22
+tb.mprj.core1.core.EXEC.newpc[31:0]
+@200
+-
+@22
+tb.mprj.core1.core.EXEC.aluop[3:0]
+tb.mprj.core1.core.EXEC.shift[4:0]
+tb.mprj.core1.core.EXEC.imm[15:0]
+tb.mprj.core1.core.EXEC.rd[3:0]
+tb.mprj.core1.core.EXEC.rm[3:0]
+tb.mprj.core1.core.EXEC.rn[3:0]
+@28
+tb.mprj.core1.core.EXEC.ctlsig[15:0]
+tb.mprj.core1.core.EXEC.bank[1:0]
+@200
+-
+@28
+[color] 3
+tb.mprj.core1.core.EXEC.stbm
+[color] 3
+tb.mprj.core1.core.EXEC.ackm
+[color] 3
+tb.mprj.core1.core.EXEC.stlm
+@22
+tb.mprj.core1.core.EXEC.addr[31:0]
+tb.mprj.core1.core.EXEC.dtrm[31:0]
+tb.mprj.core1.core.EXEC.dtwm[31:0]
+@28
+[color] 3
+tb.mprj.core1.core.EXEC.rw_mem
+@200
+-
+@28
+tb.mprj.core1.core.EXEC.intrq
+@1401200
+-Module I/O
+@c00200
+-Internal Bus
+@22
+tb.mprj.core1.core.EXEC.ibus1[31:0]
+tb.mprj.core1.core.EXEC.ibus2[31:0]
+tb.mprj.core1.core.EXEC.obus[31:0]
+tb.mprj.core1.core.EXEC.aluout[31:0]
+@1401200
+-Internal Bus
+@c00200
+-ALU
+@22
+tb.mprj.core1.core.EXEC.alu_nzcv[3:0]
+@28
+tb.mprj.core1.core.EXEC.alu_nzcv_out[3:0]
+tb.mprj.core1.core.EXEC.alu.carry
+@22
+tb.mprj.core1.core.EXEC.alu.i_a[31:0]
+tb.mprj.core1.core.EXEC.alu.i_b[31:0]
+tb.mprj.core1.core.EXEC.alu.i_fl[3:0]
+tb.mprj.core1.core.EXEC.alu.i_op[3:0]
+tb.mprj.core1.core.EXEC.alu.o_fl[3:0]
+tb.mprj.core1.core.EXEC.alu.o_r[31:0]
+@1401200
+-ALU
+@c00200
+-Special Registers
+@22
+tb.mprj.core1.core.EXEC.r_dtrm[31:0]
+tb.mprj.core1.core.EXEC.dtw[31:0]
+tb.mprj.core1.core.EXEC.mar[31:0]
+tb.mprj.core1.core.EXEC.pc_s[31:0]
+tb.mprj.core1.core.EXEC.pc_u[31:0]
+tb.mprj.core1.core.EXEC.lr_i[31:0]
+tb.mprj.core1.core.EXEC.sp_i[31:0]
+tb.mprj.core1.core.EXEC.mcr_s[31:0]
+tb.mprj.core1.core.EXEC.flags[31:0]
+@1401200
+-Special Registers
+@c00200
+-Register Control
+@28
+tb.mprj.core1.core.EXEC.reg_we
+tb.mprj.core1.core.EXEC.reg_we_s
+tb.mprj.core1.core.EXEC.reg_we_u
+@200
+-
+@22
+tb.mprj.core1.core.EXEC.regadra[3:0]
+tb.mprj.core1.core.EXEC.regouta[31:0]
+tb.mprj.core1.core.EXEC.regouta_s[31:0]
+tb.mprj.core1.core.EXEC.regouta_u[31:0]
+@200
+-
+@22
+tb.mprj.core1.core.EXEC.regadrb[3:0]
+tb.mprj.core1.core.EXEC.regoutb[31:0]
+tb.mprj.core1.core.EXEC.regoutb_s[31:0]
+tb.mprj.core1.core.EXEC.regoutb_u[31:0]
+@1401200
+-Register Control
+@c00200
+-Supervisor Regfile
+@22
+tb.mprj.core1.core.EXEC.regfile_s.wadr[3:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[0][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[1][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[2][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[3][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[4][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[5][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[6][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[7][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[8][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[9][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[10][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[11][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[12][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[13][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[14][31:0]
+tb.mprj.core1.core.EXEC.regfile_s.\regs[15][31:0]
+@1401200
+-Supervisor Regfile
+@c00200
+-User Regfile
+@22
+tb.mprj.core1.core.EXEC.regfile_u.wadr[3:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[0][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[1][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[2][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[3][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[4][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[5][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[6][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[7][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[8][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[9][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[10][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[11][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[12][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[13][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[14][31:0]
+tb.mprj.core1.core.EXEC.regfile_u.\regs[15][31:0]
+@1401200
+-User Regfile
+-Execute
+@c00200
+-sram0
+@22
+tb.mprj.sram0.addr0[7:0]
+@28
+tb.mprj.sram0.clk0
+tb.mprj.sram0.csb0
+@22
+tb.mprj.sram0.din0[31:0]
+tb.mprj.sram0.dout0[31:0]
+@28
+tb.mprj.sram0.web0
+tb.mprj.sram0.wmask0[3:0]
+@1401200
+-sram0
+@c00200
+-sram1
+@22
+tb.mprj.sram1.addr0[7:0]
+@28
+tb.mprj.sram1.clk0
+tb.mprj.sram1.csb0
+@22
+tb.mprj.sram1.din0[31:0]
+tb.mprj.sram1.dout0[31:0]
+@28
+tb.mprj.sram1.web0
+@22
+tb.mprj.sram1.wmask0[3:0]
+@1401200
+-sram1
+@c00200
+-sram3
+@22
+tb.mprj.sram2.addr0[7:0]
+@28
+tb.mprj.sram2.clk0
+tb.mprj.sram2.csb0
+@22
+tb.mprj.sram2.din0[31:0]
+tb.mprj.sram2.dout0[31:0]
+@28
+tb.mprj.sram2.web0
+tb.mprj.sram2.wmask0[3:0]
+@1401200
+-sram3
+[pattern_trace] 1
+[pattern_trace] 0

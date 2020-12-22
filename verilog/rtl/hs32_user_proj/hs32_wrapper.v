@@ -76,7 +76,7 @@ module user_project_wrapper (
 
     hs32_core1 core1 (
 `ifdef USE_POWER_PINS
-    `ifdef GL
+    `ifdef GL_SIM
         .VPWR(1'b1),
         .VGND(1'b0),
     `else
@@ -130,6 +130,7 @@ module user_project_wrapper (
         .cpu_dtr_e1(dtr_e1),
 
         // Rx/Tx Buffers
+        /*
         .sr0_dtr(),//sr0_dtr),
         .sr1_dtr(),//sr1_dtr),
         .sr0_ce(),//sr0_ce),
@@ -137,6 +138,7 @@ module user_project_wrapper (
         .srx_addr(),//srx_addr),
         .srx_we(),//srx_we),
         .srx_dtw(),//srx_dtw),
+        */
 
         // Constants
         .zero(zero),

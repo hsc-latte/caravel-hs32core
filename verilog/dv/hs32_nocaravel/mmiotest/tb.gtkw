@@ -1,0 +1,111 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Tue Dec 22 02:52:28 2020
+[*]
+[dumpfile] "/data/caravel-hs32core/verilog/dv/hs32_nocaravel/mmiotest/dump.fst"
+[dumpfile_mtime] "Tue Dec 22 02:49:24 2020"
+[dumpfile_size] 9941
+[savefile] "/data/caravel-hs32core/verilog/dv/hs32_nocaravel/mmiotest/tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] 318 63
+*-9.502302 370 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[treeopen] tb.mprj.
+[treeopen] tb.mprj.core1.
+[sst_width] 314
+[signals_width] 224
+[sst_expanded] 1
+[sst_vpaned_height] 151
+@28
+tb.mprj.core1.clk
+@22
+tb.mprj.core1.io_in[37:0]
+@28
+tb.mprj.core1.io_out[37:0]
+@200
+-
+@800200
+-Bus Master
+@28
+tb.mprj.core1.ack
+tb.mprj.core1.stb
+tb.mprj.core1.rw
+@22
+tb.mprj.core1.addr[31:0]
+tb.mprj.core1.dread[31:0]
+tb.mprj.core1.dwrite[31:0]
+@1000200
+-Bus Master
+@c00200
+-Bus Slaves
+@22
+tb.mprj.core1.mmio_addr[7:0]
+@28
+tb.mprj.core1.aic_ack
+@22
+tb.mprj.core1.aic_dtr[31:0]
+@28
+tb.mprj.core1.aic_stb
+@200
+-
+@28
+tb.mprj.core1.gpt_ack
+@22
+tb.mprj.core1.gpt_dtr[31:0]
+@28
+tb.mprj.core1.gpt_stb
+@200
+-
+@28
+tb.mprj.core1.t0_ack
+@22
+tb.mprj.core1.t0_dtr[31:0]
+@28
+tb.mprj.core1.t0_stb
+@200
+-
+@28
+tb.mprj.core1.t1_ack
+@22
+tb.mprj.core1.t1_dtr[31:0]
+@28
+tb.mprj.core1.t1_stb
+@200
+-
+@28
+tb.mprj.core1.t2_ack
+@22
+tb.mprj.core1.t2_dtr[31:0]
+@28
+tb.mprj.core1.t2_stb
+@1401200
+-Bus Slaves
+@c00200
+-Timers
+@28
+tb.mprj.core1.t0_io_oe
+tb.mprj.core1.t0_io_out
+tb.mprj.core1.t0_match_int
+tb.mprj.core1.t1_io_oe
+tb.mprj.core1.t1_io_out
+tb.mprj.core1.t1_match_int
+tb.mprj.core1.t2_io_oe
+tb.mprj.core1.t2_io_out
+tb.mprj.core1.t2_match_int
+@1401200
+-Timers
+@28
+tb.mprj.core1.dev_timer0.clk
+@22
+tb.mprj.core1.dev_timer0.counter[15:0]
+@28
+tb.mprj.core1.dev_timer0.io
+tb.mprj.core1.dev_timer0.we
+@22
+tb.mprj.core1.dev_timer0.tconfig[6:0]
+tb.mprj.core1.dev_timer0.match[15:0]
+@29
+tb.mprj.core1.dev_timer0.addr[1:0]
+[pattern_trace] 1
+[pattern_trace] 0

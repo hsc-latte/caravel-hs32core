@@ -38,26 +38,17 @@ module dev_intercon (
     input  wire sack,
     input  wire[31:0] sdtr
 );
-    parameter NS = 4;
-    parameter[MASK_LEN*NS-1:0] BASE = {
-        { 2'b00, 8'b0 },
-        { 2'b01, 8'b0 },
-        { 2'b10, 8'b0 },
-        { 2'b11, 8'b0 }
-    };
-    parameter[MASK_LEN*NS-1:0] MASK = {
-        { 2'b11, 8'b0 },
-        { 2'b11, 8'b0 },
-        { 2'b11, 8'b0 },
-        { 2'b11, 8'b0 }
-    };
-    parameter MASK_LEN = 10;
+    parameter NS = 1;
+    parameter[MASK_LEN*NS-1:0] BASE = 0;
+    parameter[MASK_LEN*NS-1:0] MASK = 0;
+    parameter MASK_LEN = 8;
 
     reg[31:0] aict_base;
     reg[31:0] r_dtr;
     wire[NS-1:0] sel;
     wire none = ~(|sel);
     wire in_aict = aict_base[31:MASK_LEN] == i_addr[31:MASK_LEN];
+    wire in_base = in_aict && (i_addr[0+:MASK_LEN] == 0);
 
     // Address decoder
     genvar i;
@@ -79,17 +70,17 @@ module dev_intercon (
         for(j = 0; j < 32 * NS; j = j+1)
             r_dtr[j%32] = r_dtr[j%32] | (sel[j/32] & i_dtr[j]);
     end
-    assign o_dtr = none ? sdtr : i_addr == aict_base ? aict_base : r_dtr;
+    assign o_dtr = none ? sdtr : (in_base ? aict_base : r_dtr);
 
     // Other signals
-    assign o_ack = none ? sack : |(i_ack & sel);
-    assign o_stb = { NS{ i_stb } } & sel;
-    assign sstb = none & i_stb;
+    assign o_ack = none ? sack : (in_base ? 1'b1 : |(i_ack & sel));
+    assign o_stb = { NS{ i_stb & ~in_base } } & sel;
+    assign sstb = none & i_stb & ~in_base;
 
     // AICT base register
     always @(posedge clk) if(reset) begin
         aict_base <= 32'h0000_FF00;
-    end else if(i_addr == aict_base && i_stb && i_rw) begin
+    end else if(in_base && i_stb && i_rw) begin
         aict_base <= i_dtw;
         `ifdef SIM
             $display($time, " AICT moved to %X", i_dtw);

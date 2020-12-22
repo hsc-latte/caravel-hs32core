@@ -1,4 +1,7 @@
-`define DBG1
+`ifdef GL_SIM
+	`define SRAM_LOG_READ
+	`define SRAM_LOG_WRITE
+`endif
 
 `default_nettype none
 
@@ -41,11 +44,13 @@ module tb();
 			repeat (1000) @(posedge clock);
 			// $display("+1000 cycles");
 		end
+`ifndef GL_SIM
 		if(failed) begin
 			$display("%c[1;31m",27);
 			$display("Test 1: Failed (timed out)!");
 			$display("%c[0m",27);
 		end
+`endif
 		$finish;
 	end
 
@@ -71,7 +76,7 @@ module tb();
 		power4 <= 1'b1;
 	end
 
-`ifndef GL
+`ifndef GL_SIM
 	initial begin
 	    // MOV r0 <- 0xCAFE
 		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[0] == 32'hCAFE);
