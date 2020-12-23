@@ -1,5 +1,4 @@
 `ifdef verilator
-    `include "defines.v"
     `include "hs32_user_proj/io_filter.v"
 `endif
 
@@ -8,9 +7,9 @@ module dev_gpio32 (
     input   wire reset,
 
     // External IO
-    input  wire [`MPRJ_IO_PADS-1:0] io_in,
-    output wire [`MPRJ_IO_PADS-1:0] io_out,
-    output wire [`MPRJ_IO_PADS-1:0] io_oeb,
+    input  wire [TOTAL_IO-1:0] io_in,
+    output wire [TOTAL_IO-1:0] io_out,
+    output wire [TOTAL_IO-1:0] io_oeb,
 
     // Filtered signals
     output wire[31:0] io_in_sync,
@@ -29,6 +28,7 @@ module dev_gpio32 (
     output wire io_irqr,
     output wire io_irqf
 );
+    parameter TOTAL_IO = 32;
     localparam NUM_IO = 32;
 
     assign ack = 1;
@@ -46,15 +46,15 @@ module dev_gpio32 (
     io_filter filter[NUM_IO-1:0](
         .clk(clk),
         .rst(reset),
-        .a(io_in[37:6]),
+        .a(io_in[TOTAL_IO-1:(TOTAL_IO-NUM_IO)]),
         .b(io_in_sync),
         .rise(io_in_rise),
         .fall(io_in_fall)
     );
 
     // Assign outputs
-    assign io_out = { cfg[1], 6'b0 };
-    assign io_oeb = { cfg[0], 6'b0 }; // Output when NC
+    assign io_out = { cfg[1], {(TOTAL_IO-NUM_IO){1'b0}} };
+    assign io_oeb = { cfg[0], {(TOTAL_IO-NUM_IO){1'b0}} }; // Output when NC
 
     // Generate rising/falling interrupts
     wire[NUM_IO-1:0] io_ir, io_if;

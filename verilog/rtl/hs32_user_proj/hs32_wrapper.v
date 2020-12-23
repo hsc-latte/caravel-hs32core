@@ -1,3 +1,23 @@
+/**
+ * Copyright (c) 2020 The HSC Core Authors
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License. SPDX-License-Identifier: Apache-2.0
+ * 
+ * @file   hs32_wrapper.v
+ * @author Kevin Dai <kevindai02@outlook.com>
+ * @date   Created on December 16 2020, 12:25 AM
+ */
+
 `ifdef verilator
     `include "defines.v"
     `include "hs32_user_proj/hs32_core1.v"
@@ -12,20 +32,6 @@
 `endif
 
 `default_nettype none
-/*
- *-------------------------------------------------------------
- *
- * user_project_wrapper
- *
- * This wrapper enumerates all of the pins available to the
- * user for the user project.
- *
- * An example user project is provided in this wrapper.  The
- * example should be removed and replaced with the actual
- * user project.
- *
- *-------------------------------------------------------------
- */
 
 module user_project_wrapper (
 `ifdef USE_POWER_PINS

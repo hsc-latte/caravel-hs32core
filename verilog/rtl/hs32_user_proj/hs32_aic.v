@@ -76,7 +76,7 @@ module hs32_aic(
         interrupts[20] ? 20 :
         interrupts[21] ? 21 :
         interrupts[22] ? 22 : 23;
-    assign handler = aict[vec] & (~32'b1111);
+    assign handler = aict[vec] & (~32'b11);
 
     // Calculate table index
     wire[4:0] aict_idx = addr-1;

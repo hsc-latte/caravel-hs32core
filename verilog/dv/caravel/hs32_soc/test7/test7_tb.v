@@ -1,23 +1,27 @@
-`define DBG1
+`ifdef GL_SIM
+	`define SRAM_LOG_READ
+	`define SRAM_LOG_WRITE
+`endif
+
 `define LOG_MEMORY_WRITE
 
 `default_nettype none
-
 `timescale 1 ns / 1 ns
 
 `include "caravel.v"
 `include "spiflash.v"
 
 module tb();
-	parameter TEST_ID = 5;
+	parameter TEST_ID = 7;
+	parameter FILENAME = "test7.hex";
 
 	reg clock;
-  reg RSTB;
+  	reg RSTB;
 	reg power1, power2;
 	reg power3, power4;
 
-  wire gpio;
-  wire [37:0] mprj_io;
+  	wire gpio;
+  	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
 
 	assign mprj_io_0 = mprj_io[7:0];
@@ -32,6 +36,8 @@ module tb();
 		clock = 0;
 	end
 
+	reg failed = 1;
+
 	initial begin
 		$dumpfile("tb.vcd");
 		$dumpvars(0, tb);
@@ -40,16 +46,25 @@ module tb();
 			repeat (1000) @(posedge clock);
 			// $display("+1000 cycles");
 		end
-		//$display("%c[1;31m",27);
-		//$display("Test 1: Failed (timed out)!");
-		//$display("%c[0m",27);
+`ifndef GL_SIM
+		if(failed) begin
+			$display("%c[1;31m",27);
+			$display("Test %d: Failed (timed out)!", TEST_ID);
+			$display("%c[0m",27);
+		end else begin
+			$display("%c[1;32m",27);
+			$display("Test %d: Passed weak cases.", TEST_ID);
+			$display("%c[0m",27);
+		end
+`endif
 		$finish;
 	end
 
 	initial begin
 		RSTB <= 1'b0;
-		#2000;
+		#1000;
 		RSTB <= 1'b1;	    // Release reset
+		#2000;
 	end
 
 	initial begin			// Power-up sequence
@@ -67,10 +82,24 @@ module tb();
 		power4 <= 1'b1;
 	end
 
+`ifndef GL_SIM
 	initial begin
-	    // Test cases go here
-	end
+	    // MOV r0 <- 0xFF00
+		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[0] == 32'hFF00);
+		// LDR r1 <- [r0]
+		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[1] == 32'hFF00);
+		// MOV r2 <- 0x0BA0
+		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[2] == 32'h0BA0);
+		// MOV r3 <- 0x5000
+		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[3] == 32'h5000);
+		// etc...
 
+		// INT 3
+		wait(tb.uut.mprj.core1.core.EXEC.intrq &&
+			tb.uut.mprj.core1.core.EXEC.code == 3 &&
+			tb.uut.mprj.core1.core.EXEC.isr == 32'h0BA0);
+		failed = 0;
+	end
 	always @(*) begin
 		if(tb.uut.mprj.core1.core.EXEC.fault) begin
 			$display("%c[1;31m",27);
@@ -79,6 +108,7 @@ module tb();
 			$finish;
 		end
 	end
+`endif
 
 	always @(mprj_io) begin
 		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
@@ -91,8 +121,8 @@ module tb();
 
 	wire VDD3V3 = power1;
 	wire VDD1V8 = power2;
-	wire USER_VDD3V3 = power3;
-	wire USER_VDD1V8 = power4;
+	wire USER_VDD3V3 = power1;
+	wire USER_VDD1V8 = power2;
 	wire VSS = 1'b0;
 
 	caravel uut (
@@ -121,7 +151,7 @@ module tb();
 	);
 
 	spiflash #(
-		.FILENAME("test7.hex")
+		.FILENAME(FILENAME)
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),
@@ -132,3 +162,14 @@ module tb();
 	);
 endmodule
 `default_nettype wire
+
+module assert(input clk, input test);
+    always @(posedge clk)
+    begin
+        if (test !== 1)
+        begin
+            $display("ASSERTION FAILED in %m");
+            $finish;
+        end
+    end
+endmodule

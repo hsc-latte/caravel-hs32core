@@ -28,7 +28,7 @@ module tb();
 	always #10 wb_clk_i = wb_clk_i === 1'b0;
 
 	// Memory array
-	localparam NUM_INSTR = 10;
+	localparam NUM_INSTR = 9;
 	reg[NUM_INSTR*32-1:0] instr = {
 		// Default Test
 		// { 32'h2400CAFE },
@@ -37,25 +37,16 @@ module tb();
 		// { 32'h14210001 },
 		// { 32'h50000000 }
 
-		// Test 2
-		// { 32'h240003F1 },
-		// { 32'h20100080 },
-		// { 32'h202000A0 },
-		// { 32'h203000C0 },
-		// { 32'h204000E0 },
-		// { 32'h50000000 }
-
-		// Test 7
-		{ 32'h2400FF00 },
-		{ 32'h10100000 },
-		{ 32'h24200BA0 },
-		{ 32'h24305000 },
-		{ 32'h20303800 },
-		{ 32'h30320000 },
-		{ 32'h24400BA1 },
-		{ 32'h34400010 },
-		{ 32'h14500010 },
-		{ 32'h90000003 }
+		// Custom test
+		{ 32'h2400FF00 }, // MOV r0 <- 0xFF00
+		{ 32'h24100019 }, // MOV r1 <- (0x18 | 1)
+		{ 32'h34100010 }, // STR [r0+0x10] <- r1
+		{ 32'h90000003 }, // INT 3
+		{ 32'h2450CAFE }, // MOV r5 <- 0xCAFE
+		{ 32'h50000000 }, // B<0000> 0
+		{ 32'h2440C0DE }, // MOV r4 <- 0xC0DE
+		{ 32'h44EE0004 }, // ADD lr <- lr + 4
+		{ 32'h5F000000 }  // B<1111> 0 (return from interrupt)
 	};
 	
 	// Main block

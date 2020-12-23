@@ -1,3 +1,23 @@
+/**
+ * Copyright (c) 2020 The HSC Core Authors
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License. SPDX-License-Identifier: Apache-2.0
+ * 
+ * @file   dev_timer.v
+ * @author Kevin Dai <kevindai02@outlook.com>
+ * @date   Created on December 17 2020, 12:31 AM
+ */
+
 module dev_timer (
     input   wire clk,
     input   wire reset,
@@ -156,6 +176,17 @@ module dev_timer (
             int_match <= 1;
         end else begin
             int_match <= 0;
+        end
+    end
+
+    // Interrupts, drive: int_ovf
+    always @(posedge clk) if(reset) begin
+        int_ovf <= 0;
+    end else begin
+        if(timer_ovf) begin
+            int_ovf <= 1;
+        end else begin
+            int_ovf <= 0;
         end
     end
 endmodule

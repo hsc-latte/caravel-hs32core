@@ -73,9 +73,7 @@ module tb();
 			state <= 3;
 		end
 		3: begin
-			if(wbs_stb_i) begin
-				wbs_stb_i <= 0;
-			end
+			wbs_stb_i <= 0;
 			if(wbs_ack_o) begin
 				ip <= ip+1;
 				if(ip+1 == NUM_TRANS) begin

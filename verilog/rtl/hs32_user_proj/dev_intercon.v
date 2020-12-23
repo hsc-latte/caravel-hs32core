@@ -17,6 +17,8 @@
 module dev_intercon (
     input   wire clk,
     input   wire reset,
+    // Usermode?
+    input wire userbit,
 
     // Controller interface
     // rw and dtw are connected to all devices
@@ -37,17 +39,20 @@ module dev_intercon (
     output wire sstb,
     input  wire sack,
     input  wire[31:0] sdtr
+
+    // Interrupt (unknown address)
 );
     parameter NS = 1;
     parameter[MASK_LEN*NS-1:0] BASE = 0;
     parameter[MASK_LEN*NS-1:0] MASK = 0;
     parameter MASK_LEN = 8;
+    parameter LIMITS = 12;
 
     reg[31:0] aict_base;
     reg[31:0] r_dtr;
     wire[NS-1:0] sel;
-    wire none = ~(|sel);
-    wire in_aict = aict_base[31:MASK_LEN] == i_addr[31:MASK_LEN];
+    wire none = userbit || (~(|sel));
+    wire in_aict = !userbit && (aict_base[31:MASK_LEN] == i_addr[31:MASK_LEN]);
     wire in_base = in_aict && (i_addr[0+:MASK_LEN] == 0);
 
     // Address decoder
@@ -70,11 +75,13 @@ module dev_intercon (
         for(j = 0; j < 32 * NS; j = j+1)
             r_dtr[j%32] = r_dtr[j%32] | (sel[j/32] & i_dtr[j]);
     end
-    assign o_dtr = none ? sdtr : (in_base ? aict_base : r_dtr);
 
-    // Other signals
+    // Assign outputs
     assign o_ack = none ? sack : (in_base ? 1'b1 : |(i_ack & sel));
     assign o_stb = { NS{ i_stb & ~in_base } } & sel;
+    assign o_dtr = none ? sdtr : (in_base ? aict_base : r_dtr);
+
+    // SRAM select
     assign sstb = none & i_stb & ~in_base;
 
     // AICT base register

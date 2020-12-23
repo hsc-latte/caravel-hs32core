@@ -19,7 +19,7 @@
 .SUFFIXES:
 .SILENT: clean all
 
-PATTERNS = core1test1 core1test2 core1test3 core1test4 core1test5 core1test6 core1test7 core1test8
+PATTERNS = test1 test2 test3 test4 test5 test6 test7 test8
 
 all:  ${PATTERNS}
 	for i in ${PATTERNS}; do \

@@ -42,10 +42,6 @@ module hs32_bram_ctl (
     input  wire [31:0] dbuf3
 );
     parameter addr_width = 12;
-    parameter data0 = "bram0.hex";
-    parameter data1 = "bram1.hex";
-    parameter data2 = "bram2.hex";
-    parameter data3 = "bram3.hex";
 
     // 4 addresses for each bram
     // Selects between current dword and next dword

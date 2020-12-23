@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Tue Dec 22 01:21:25 2020
+[*] Tue Dec 22 23:21:05 2020
 [*]
-[dumpfile] "/data/caravel-hs32core/verilog/dv/hs32_nocaravel/dump.fst"
-[dumpfile_mtime] "Tue Dec 22 01:21:13 2020"
-[dumpfile_size] 14810
-[savefile] "/data/caravel-hs32core/verilog/dv/hs32_nocaravel/tb.gtkw"
-[timestart] 1270
-[size] 1536 801
+[dumpfile] "/data/caravel-hs32core/verilog/dv/hs32_nocaravel/coretest/dump.fst"
+[dumpfile_mtime] "Tue Dec 22 23:18:51 2020"
+[dumpfile_size] 13464
+[savefile] "/data/caravel-hs32core/verilog/dv/hs32_nocaravel/coretest/tb.gtkw"
+[timestart] 0
+[size] 1534 773
 [pos] -1 -1
-*-7.106964 1590 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-9.106964 1190 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb.
 [treeopen] tb.mprj.
 [treeopen] tb.mprj.core1.
@@ -63,7 +63,7 @@ tb.mprj.core1.stb
 tb.mprj.core1.ack
 @1401200
 -BUS
-@800200
+@c00200
 -Intercon
 @28
 tb.mprj.core1.mmio_conn.clk
@@ -81,21 +81,13 @@ tb.mprj.core1.mmio_conn.o_dtr[31:0]
 @200
 -
 @22
-tb.mprj.core1.mmio_conn.o_stb[4:0]
-@28
-tb.mprj.core1.mmio_conn.i_ack[4:0]
-@22
-tb.mprj.core1.mmio_conn.i_dtr[159:0]
 tb.mprj.core1.mmio_conn.o_addr[7:0]
 @200
 -
 @28
 tb.mprj.core1.mmio_conn.in_aict
-@29
 tb.mprj.core1.mmio_conn.in_base
-@28
 tb.mprj.core1.mmio_conn.none
-tb.mprj.core1.mmio_conn.sel[4:0]
 @22
 tb.mprj.core1.mmio_conn.r_dtr[31:0]
 @200
@@ -106,7 +98,7 @@ tb.mprj.core1.mmio_conn.sack
 tb.mprj.core1.mmio_conn.sdtr[31:0]
 @28
 tb.mprj.core1.mmio_conn.sstb
-@1000200
+@1401200
 -Intercon
 @c00200
 -PQ
@@ -212,7 +204,7 @@ tb.mprj.core1.core.EXEC.state[3:0]
 @28
 tb.mprj.core1.core.EXEC.fault
 tb.mprj.core1.core.EXEC.int_inval
-@c00200
+@800200
 -Module I/O
 @28
 tb.mprj.core1.core.EXEC.flush
@@ -250,7 +242,7 @@ tb.mprj.core1.core.EXEC.rw_mem
 -
 @28
 tb.mprj.core1.core.EXEC.intrq
-@1401200
+@1000200
 -Module I/O
 @c00200
 -Internal Bus
@@ -404,5 +396,32 @@ tb.mprj.sram2.web0
 tb.mprj.sram2.wmask0[3:0]
 @1401200
 -sram3
+@800201
+-AICT
+@29
+tb.mprj.core1.aict.ack
+@23
+tb.mprj.core1.aict.addr[4:0]
+tb.mprj.core1.aict.aict_idx[4:0]
+@29
+tb.mprj.core1.aict.clk
+@23
+tb.mprj.core1.aict.dtr[31:0]
+tb.mprj.core1.aict.dtw[31:0]
+tb.mprj.core1.aict.handler[31:0]
+@421
+tb.mprj.core1.aict.i
+@23
+tb.mprj.core1.aict.interrupts[23:0]
+@29
+tb.mprj.core1.aict.intrq
+tb.mprj.core1.aict.nmi
+tb.mprj.core1.aict.reset
+tb.mprj.core1.aict.rw
+tb.mprj.core1.aict.stb
+@23
+tb.mprj.core1.aict.vec[4:0]
+@1000201
+-AICT
 [pattern_trace] 1
 [pattern_trace] 0

@@ -144,7 +144,7 @@ module hs32_core1 (
     assign wbs_dat_o = bus_hold ? dread : wbs_dev_dtr;
     assign cpu_dread = dread;
     assign wbs_ack_o = bus_hold ? ack : wbs_dev_ack;
-    assign cpu_ack = bus_hold ? 0: ack;
+    assign cpu_ack = bus_hold ? 0 : ack;
 
     reg ram_bsy;
     assign ram_ce = ~(ram_stb | ram_bsy);
@@ -159,13 +159,18 @@ module hs32_core1 (
     end
 
     `ifdef SIM
-        //reg bsy;
-        always @(posedge clk) /*if(rst)
+        reg bsy;
+        wire dolog = (stb && ack) || (ack && bsy);
+
+        always @(posedge clk) if(rst)
             bsy <= 0;
-        else if(stb && !bsy) begin
+        else if(stb && !ack) begin
             bsy <= 1;
-        end*/
-        if(ack && stb) begin
+        end else if(ack && bsy) begin
+            bsy <= 0;
+        end
+
+        always @(posedge clk) if(dolog) begin
             `ifdef LOG_MEMORY_WRITE
                 if(rw) $display($time, " Writing [%X] <- %X", addr, dwrite);
             `endif
@@ -198,9 +203,10 @@ module hs32_core1 (
             { 1'b1, 2'b11, 1'b1, 4'b0 },
             { 1'b1, 2'b11, 1'b1, 4'b0 }
         }),
-        .MASK_LEN(8)
+        .MASK_LEN(8),
+        .LIMITS(12)
     ) mmio_conn (
-        .clk(clk), .reset(rst),
+        .clk(clk), .reset(rst), .userbit(userbit),
         
         // Input
         .i_stb(stb), .o_ack(ack),
@@ -246,7 +252,7 @@ module hs32_core1 (
     wire[23:0] hw_irq = {
         gpt_irqr | gpt_irqf,
         tn_ints,
-        dwb_irq,
+        dwb_irq & !bus_hold,
         16'b0
     };
 
@@ -261,7 +267,9 @@ module hs32_core1 (
     wire[31:0] io_in_sync, io_in_rise, io_in_fall;
     wire[37:0] io_out_buf, io_oeb_buf;
 
-    dev_gpio32 gpio32 (
+    dev_gpio32 #(
+        .TOTAL_IO(`MPRJ_IO_PADS)
+    ) gpio32 (
         .clk(clk), .reset(rst),
         .io_in(io_in),
         .io_out(io_out_buf),
