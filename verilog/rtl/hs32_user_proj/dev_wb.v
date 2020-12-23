@@ -44,10 +44,10 @@ module dev_wb (
 );
     reg[31:0] r_adr, r_dtw, r_dtr;
     reg r_we, r_wb_ack;
-    reg[1:0] r_cfg;
+    reg[2:0] r_cfg;
     assign wb_dat_o = r_dtr;
-    assign wb_ack = r_cfg[1] ? r_cfg[0] : r_wb_ack;
-    assign intrq = wb_stb;
+    assign wb_ack = r_cfg[1] ? r_cfg[2] | r_cfg[0] : r_wb_ack;
+    assign intrq = r_cfg[2] ? (~r_cfg[0]) & wb_stb : wb_stb;
     
     // Stores incoming wb req (drives: r_dtw, r_adr, r_wb_ack)
     always @(posedge clk) if(reset) begin
@@ -73,9 +73,11 @@ module dev_wb (
     end else begin
         if(we && stb) case(addr)
             2: r_dtr <= dtw;
-            3: r_cfg <= dtw[1:0];
+            3: r_cfg <= dtw[2:0];
             default: begin end
-        endcase else if(r_cfg[0]) begin
+        endcase else if(r_cfg[0] && !r_cfg[2]) begin
+            r_cfg[0] <= 0;
+        end else if(r_cfg[2] && wb_stb) begin
             r_cfg[0] <= 0;
         end
     end
@@ -85,7 +87,7 @@ module dev_wb (
         0: dtr = r_adr;
         1: dtr = r_dtw;
         2: dtr = r_dtr;
-        3: dtr = { 29'b0, r_we, r_cfg };
+        3: dtr = { 28'b0, r_we, r_cfg };
         default: dtr = 0; // Paranoid default
     endcase
 endmodule

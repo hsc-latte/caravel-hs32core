@@ -9,6 +9,8 @@
 `include "user_project_wrapper.v"
 
 module tb();
+	parameter TEST = 1;
+
 	reg wb_clk_i, wb_rst_i, user_clock2;
 	reg wbs_stb_i = 0, wbs_cyc_i = 0, wbs_we_i = 0;
 	reg [3:0] wbs_sel_i = 0;
@@ -27,17 +29,21 @@ module tb();
 	end
 	always #10 wb_clk_i = wb_clk_i === 1'b0;
 
-	// Memory array
-	localparam NUM_INSTR = 9;
+`define TEST2
+`ifdef TEST1
+	// Default Test
+	localparam NUM_INSTR = 5;
 	reg[NUM_INSTR*32-1:0] instr = {
-		// Default Test
-		// { 32'h2400CAFE },
-		// { 32'h24100005 },
-		// { 32'h34010001 },
-		// { 32'h14210001 },
-		// { 32'h50000000 }
-
-		// Custom test
+		{ 32'h2400CAFE },
+		{ 32'h24100005 },
+		{ 32'h34010001 },
+		{ 32'h14210001 },
+		{ 32'h50000000 }
+	};
+`elsif TEST2
+	// Custom test
+	localparam NUM_INSTR = 8;
+	reg[NUM_INSTR*32-1:0] instr = {
 		{ 32'h2400FF00 }, // MOV r0 <- 0xFF00
 		{ 32'h24100019 }, // MOV r1 <- (0x18 | 1)
 		{ 32'h34100010 }, // STR [r0+0x10] <- r1
@@ -45,9 +51,44 @@ module tb();
 		{ 32'h2450CAFE }, // MOV r5 <- 0xCAFE
 		{ 32'h50000000 }, // B<0000> 0
 		{ 32'h2440C0DE }, // MOV r4 <- 0xC0DE
-		{ 32'h44EE0004 }, // ADD lr <- lr + 4
 		{ 32'h5F000000 }  // B<1111> 0 (return from interrupt)
 	};
+`elsif TEST3
+	// WB test
+	localparam NUM_INSTR = 15;
+	reg[NUM_INSTR*32-1:0] instr = {
+		{ 32'h2400FF00 }, // MOV r0 <- 0xFF00
+		{ 32'h24100021 }, // MOV r1 <- (0x20 | 1)
+		{ 32'h34100040 }, // STR [r0+0x40] <- r1
+		{ 32'h24100006 }, // MOV r1 <- 6
+		{ 32'h341000EC }, // STR [r0+0xEC] <- r1
+		{ 32'h20000800 }, // MOV r0 <- (r0 << 16)
+		{ 32'h10200000 }, // LDR r2 <- [r0]
+		{ 32'h50000000 }, // B<0000> 0
+		{ 32'h24300007 }, // MOV r3 <- 7
+		{ 32'h2440C0DE }, // MOV r4 <- 0xC0DE
+		{ 32'h2450FF00 }, // MOV r5 <- 0xFF00
+		{ 32'h344500E8 }, // STR [r5+0xE8] <- r4
+		{ 32'h343500EC }, // STR [r5+0xEC] <- r3
+		{ 32'h64EE0004 }, // SUB lr <- lr - 4
+		{ 32'h5F000000 }  // B<1111> 0 (return from interrupt)
+	};
+`elsif TEST4
+	// Interrupt Tests
+	localparam NUM_INSTR = 10;
+	reg[NUM_INSTR*32-1:0] instr = {
+		{ 32'h2400FF00 },
+		{ 32'h10100000 },
+		{ 32'h24200BA0 },
+		{ 32'h24305000 },
+		{ 32'h20303800 },
+		{ 32'h30320000 },
+		{ 32'h24400BA1 },
+		{ 32'h34400010 },
+		{ 32'h14500010 },
+		{ 32'h90000003 }
+	};
+`endif
 	
 	// Main block
 	reg[3:0] state = 0;

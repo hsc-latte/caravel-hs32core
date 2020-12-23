@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 package require openlane;
 
 proc insert_diode {args} {
@@ -31,14 +30,14 @@ proc insert_diode {args} {
 
 proc run_flow {args} {
 	set script_dir [file dirname [file normalize [info script]]]
-	set options {
-		{-save_path optional}
-		{-tag optional}
-	}
+	#set options {
+		#{-save_path optional}
+		#{-tag optional}
+	#}
 	set flags {-save}
 	parse_key_args "run_flow" args arg_values $options flags_map $flags -no_consume
-
 	prep -design $script_dir -tag hs32_core1 -overwrite {*}$args
+	set save_path $script_dir/../../
 
 	run_synthesis
 	run_floorplan

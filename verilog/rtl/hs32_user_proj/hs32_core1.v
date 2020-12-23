@@ -138,7 +138,7 @@ module hs32_core1 (
     wire[31:0] addr, dread, dwrite;
     wire rw, stb, ack;
     assign stb      = bus_hold ? wb_stb : cpu_stb;
-    assign addr     = bus_hold ? wbs_adr_i : cpu_addr;
+    assign addr     = bus_hold ? wbs_adr_i & 32'h0FFF_FFFF : cpu_addr;
     assign dwrite   = bus_hold ? wbs_dat_i : cpu_dwrite;
     assign rw       = bus_hold ? wb_rw : cpu_rw;
     assign wbs_dat_o = bus_hold ? dread : wbs_dev_dtr;
@@ -186,18 +186,20 @@ module hs32_core1 (
 
     wire[7:0] mmio_addr;
     dev_intercon #(
-        .NS(6),
+        .NS(7),
         .BASE({
             { 1'b0, 7'b0 },
             { 1'b1, 2'b00, 5'b0 },
             { 1'b1, 2'b01, 1'b0, 4'b0 },
             { 1'b1, 2'b01, 1'b1, 4'b0 },
             { 1'b1, 2'b10, 1'b0, 4'b0 },
-            { 1'b1, 2'b10, 1'b1, 4'b0 }
+            { 1'b1, 2'b10, 1'b1, 4'b0 },
+            { 1'b1, 2'b11, 1'b0, 4'b0 }
         }),
         .MASK({
             { 1'b1, 7'b0 },
             { 1'b1, 2'b11, 5'b0 },
+            { 1'b1, 2'b11, 1'b1, 4'b0 },
             { 1'b1, 2'b11, 1'b1, 4'b0 },
             { 1'b1, 2'b11, 1'b1, 4'b0 },
             { 1'b1, 2'b11, 1'b1, 4'b0 },
@@ -214,13 +216,16 @@ module hs32_core1 (
         .i_rw(rw), .i_dtw(dwrite),
 
         // Devices
-        .i_dtr({ aic_dtr, gpt_dtr, t0_dtr, t1_dtr, t2_dtr, dwb_dtr }),
-        .i_ack({ aic_ack, gpt_ack, t0_ack, t1_ack, t2_ack, dwb_ack }),
-        .o_stb({ aic_stb, gpt_stb, t0_stb, t1_stb, t2_stb, dwb_stb }),
+        .i_dtr({ aic_dtr, gpt_dtr, t0_dtr, t1_dtr, t2_dtr, dwb_dtr, ext_dtr }),
+        .i_ack({ aic_ack, gpt_ack, t0_ack, t1_ack, t2_ack, dwb_ack, ext_ack }),
+        .o_stb({ aic_stb, gpt_stb, t0_stb, t1_stb, t2_stb, dwb_stb, ext_stb }),
         .o_addr(mmio_addr),
 
         // SRAM
-        .sstb(ram_stb), .sack(ram_ack), .sdtr(ram_dread)
+        .sstb(ram_stb), .sack(ram_ack), .sdtr(ram_dread),
+
+        // Buf
+        .estb(ext_dev_stb), .eack(ext_dev_ack), .edtr(ext_dev_dtr)
     );
     assign ram_rw = rw;
     assign ram_addr = addr;
@@ -253,7 +258,8 @@ module hs32_core1 (
         gpt_irqr | gpt_irqf,
         tn_ints,
         dwb_irq & !bus_hold,
-        16'b0
+        ext_irq,
+        15'b0
     };
 
     //===============================//
@@ -376,6 +382,26 @@ module hs32_core1 (
         .dtw(dwrite), .addr(mmio_addr[3:2]),
 
         .intrq(dwb_irq)
+    );
+
+    wire ext_stb, ext_ack, ext_irq;
+    wire ext_dev_stb, ext_dev_ack;
+    wire[31:0] ext_dtr, ext_dev_dtr;
+    dev_wb ext(
+        .clk(clk), .reset(rst),
+
+        .wb_stb(ext_dev_stb),
+        .wb_ack(ext_dev_ack),
+        .wb_we(rw),
+        .wb_dat_i(dwrite),
+        .wb_adr(addr),
+        .wb_dat_o(ext_dev_dtr),
+
+        .stb(ext_stb), .ack(ext_ack),
+        .we(rw), .dtr(ext_dtr),
+        .dtw(dwrite), .addr(mmio_addr[3:2]),
+
+        .intrq(ext_irq)
     );
 
     //===============================//

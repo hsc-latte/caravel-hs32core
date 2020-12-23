@@ -28,12 +28,13 @@ module tb();
 	always #10 wb_clk_i = wb_clk_i === 1'b0;
 
 	// Memory array, { address, data }
-	localparam NUM_TRANS = 4;
+	localparam NUM_TRANS = 5;
 	reg[NUM_TRANS*64-1:0] entries = {
 		{ 32'hFF00, 32'h0000_CA00 },
 		{ 32'hCA84, 32'hFFFF_FFFF },
 		{ 32'hCAA4, 32'h0000_0010 },
-		{ 32'hCAA0, { 25'b0, 2'd1, 2'd1, 3'd1 } } // output, timer, source
+		{ 32'hCAA0, { 25'b0, 2'd1, 2'd1, 3'd1 } }, // output, timer, source
+		{ 32'hFFFF0000, 32'hCAFEBABE }
 	};
 	
 	// Main block

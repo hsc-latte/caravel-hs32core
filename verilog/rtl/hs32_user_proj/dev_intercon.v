@@ -38,9 +38,12 @@ module dev_intercon (
     // SRAM Interface
     output wire sstb,
     input  wire sack,
-    input  wire[31:0] sdtr
+    input  wire[31:0] sdtr,
 
     // Interrupt (unknown address)
+    output wire estb,
+    input  wire eack,
+    input  wire[31:0] edtr
 );
     parameter NS = 1;
     parameter[MASK_LEN*NS-1:0] BASE = 0;
@@ -54,6 +57,7 @@ module dev_intercon (
     wire none = userbit || (~(|sel));
     wire in_aict = !userbit && (aict_base[31:MASK_LEN] == i_addr[31:MASK_LEN]);
     wire in_base = in_aict && (i_addr[0+:MASK_LEN] == 0);
+    wire ext = (|i_addr[31:LIMITS]) & ~in_aict;
 
     // Address decoder
     genvar i;
@@ -77,12 +81,13 @@ module dev_intercon (
     end
 
     // Assign outputs
-    assign o_ack = none ? sack : (in_base ? 1'b1 : |(i_ack & sel));
+    assign o_ack = ext ? eack : none ? sack : (in_base ? 1'b1 : |(i_ack & sel));
     assign o_stb = { NS{ i_stb & ~in_base } } & sel;
-    assign o_dtr = none ? sdtr : (in_base ? aict_base : r_dtr);
+    assign o_dtr = ext ? edtr : none ? sdtr : (in_base ? aict_base : r_dtr);
 
     // SRAM select
-    assign sstb = none & i_stb & ~in_base;
+    assign sstb = ~ext & none & i_stb & ~in_base;
+    assign estb = ext & i_stb & ~in_base;
 
     // AICT base register
     always @(posedge clk) if(reset) begin
