@@ -1,4 +1,4 @@
-# HS32 Example Instruction 5
+# HS32 Example Instruction 7
 
 **Interrupts and AICT**
 
@@ -15,6 +15,14 @@ The hexadecimal format looks like this:
 | ------ | ----------- | ----------- | ----------- | ----------- |
 | I-Type | `oooo_oooo` | `dddd_mmmm` | `iiii_iiii` | `iiii_iiii` |
 | R-Type | `oooo_oooo` | `dddd_mmmm` | `nnnn_ssss` | `sDDb_bxxx` |
+
+## Usage
+
+Use `make` to run test.
+
+Results should match the *Expected result* listed below.
+
+Test will display `Passed all cases.` or `Failed.` message indicating errors.
 
 ## Assembly
 
@@ -54,11 +62,9 @@ INT   0x0003
 
 ## Expected result
 
-- [ ] `R0   = 0x`
-- [ ] `R1   = 0x`
-- [ ] `R2   = 0x`
-- [ ] `R3   = 0x`
-- [ ] `R4   = 0x`
-- [ ] `R5   = 0x`
-- [ ] `R6   = 0x`
-- [ ] `R7   = 0x`
+- [ ] `R0   = 0x0000 FF00`
+- [ ] `R1   = 0x0000 FF00`
+- [ ] `R2   = 0x0000 0BA0`
+- [ ] `R3   = 0x5000 0000`
+- [ ] `R4   = 0x0000 0BA1`
+- [ ] `R5   = 0x0000 0BA1`

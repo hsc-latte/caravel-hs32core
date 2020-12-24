@@ -3,8 +3,6 @@
 	`define SRAM_LOG_WRITE
 `endif
 
-`define LOG_MEMORY_WRITE
-
 `default_nettype none
 `timescale 1 ns / 1 ns
 
@@ -15,13 +13,20 @@ module tb();
 	parameter TEST_ID = 7;
 	parameter FILENAME = "test7.hex";
 
+	function [0:0] implies;
+		input [0:0] p, q;
+		begin
+			implies = (!p) || q;
+		end
+	endfunction
+
 	reg clock;
-  	reg RSTB;
+	reg RSTB;
 	reg power1, power2;
 	reg power3, power4;
 
-  	wire gpio;
-  	wire [37:0] mprj_io;
+	wire gpio;
+	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
 
 	assign mprj_io_0 = mprj_io[7:0];
@@ -48,13 +53,11 @@ module tb();
 		end
 `ifndef GL_SIM
 		if(failed) begin
-			$display("%c[1;31m",27);
-			$display("Test %d: Failed (timed out)!", TEST_ID);
-			$display("%c[0m",27);
+			$display("%c[1;31mTest %0d: Failed. %c[0m", 27, TEST_ID, 27);
+			$finish_and_return(1);
 		end else begin
-			$display("%c[1;32m",27);
-			$display("Test %d: Passed weak cases.", TEST_ID);
-			$display("%c[0m",27);
+			$display("%c[1;32mTest %0d: Passed all cases. %c[0m", 27, TEST_ID, 27);
+			$finish_and_return(0);
 		end
 `endif
 		$finish;
@@ -83,29 +86,51 @@ module tb();
 	end
 
 `ifndef GL_SIM
+	// Weak test cases for debugging
 	initial begin
-	    // MOV r0 <- 0xFF00
 		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[0] == 32'hFF00);
-		// LDR r1 <- [r0]
 		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[1] == 32'hFF00);
-		// MOV r2 <- 0x0BA0
 		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[2] == 32'h0BA0);
-		// MOV r3 <- 0x5000
-		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[3] == 32'h5000);
-		// etc...
-
-		// INT 3
-		wait(tb.uut.mprj.core1.core.EXEC.intrq &&
-			tb.uut.mprj.core1.core.EXEC.code == 3 &&
-			tb.uut.mprj.core1.core.EXEC.isr == 32'h0BA0);
+		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[3] == 32'h50000000);
+		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[4] == 32'h0BA1);
+		wait(tb.uut.mprj.core1.core.EXEC.regfile_s.regs[5] == 32'h0BA1);
 		failed = 0;
+		$display("%c[1;32mTest %0d: Passed weak cases. %c[0m", 27, TEST_ID, 27);
 	end
+
+	// Trigger when register write
+	wire trigger = tb.uut.mprj.core1.core.EXEC.regfile_s.we === 1'b1;
+	reg[31:0] step = 0;
+	always @(posedge clock) if(trigger) step <= step + 1;
+	// Strict assertations for each instruction
+	assert a0(clock, implies(trigger && step == 0,
+		tb.uut.mprj.core1.core.EXEC.regfile_s.wadr == 0 &&
+		tb.uut.mprj.core1.core.EXEC.regfile_s.din == 32'hFF00));
+	assert a1(clock, implies(trigger && step == 1,
+		tb.uut.mprj.core1.core.EXEC.regfile_s.wadr == 1 &&
+		tb.uut.mprj.core1.core.EXEC.regfile_s.din == 32'hFF00));
+	assert a2(clock, implies(trigger && step == 2,
+		tb.uut.mprj.core1.core.EXEC.regfile_s.wadr == 2 &&
+		tb.uut.mprj.core1.core.EXEC.regfile_s.din == 32'h0BA0));
+	assert a3(clock, implies(trigger && step == 3,
+		tb.uut.mprj.core1.core.EXEC.regfile_s.wadr == 3 &&
+		tb.uut.mprj.core1.core.EXEC.regfile_s.din == 32'h5000));
+	assert a4(clock, implies(trigger && step == 4,
+		tb.uut.mprj.core1.core.EXEC.regfile_s.wadr == 3 &&
+		tb.uut.mprj.core1.core.EXEC.regfile_s.din == 32'h50000000));
+	assert a5(clock, implies(trigger && step == 5,
+		tb.uut.mprj.core1.core.EXEC.regfile_s.wadr == 4 &&
+		tb.uut.mprj.core1.core.EXEC.regfile_s.din == 32'h0BA1));
+	assert a6(clock, implies(trigger && step == 6,
+		tb.uut.mprj.core1.core.EXEC.regfile_s.wadr == 5 &&
+		tb.uut.mprj.core1.core.EXEC.regfile_s.din == 32'h0BA1));
+	assert a7(clock, step <= 7);
+
+	// If fault, then test failed
 	always @(*) begin
 		if(tb.uut.mprj.core1.core.EXEC.fault) begin
-			$display("%c[1;31m",27);
-			$display("Test %d: Faulted!", TEST_ID);
-			$display("%c[0m",27);
-			$finish;
+			$display("%c[1;31mTest %0d: Faulted. %c[0m", 27, TEST_ID, 27);
+			$finish_and_return(1);
 		end
 	end
 `endif
@@ -161,15 +186,16 @@ module tb();
 		.io3()			// not used
 	);
 endmodule
-`default_nettype wire
 
 module assert(input clk, input test);
     always @(posedge clk)
     begin
         if (test !== 1)
         begin
-            $display("ASSERTION FAILED in %m");
-            $finish;
+            $display("%c[1;31mAssertation failed in %m %c[0m", 27, 27);
+            $finish_and_return(1);
         end
     end
 endmodule
+
+`default_nettype wire

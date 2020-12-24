@@ -1,6 +1,6 @@
 FIRMWARE_PATH = ../../
 RTL_PATH = ../../../../rtl
-BEHAVIOURAL_MODELS = ../../ 
+BEHAVIOURAL_MODELS = ../../
 VERILOG_PATH = ../../../../
 
 GCC_PATH?=/opt/riscv32i/bin
@@ -35,7 +35,7 @@ endif
 	${GCC_PATH}/${GCC_PREFIX}-gcc -march=rv32imc -mabi=ilp32 -Wl,-Bstatic,-T,$(FIRMWARE_PATH)/sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ $(FIRMWARE_PATH)/start.s $<
 
 %.hex: %.elf
-	${GCC_PATH}/${GCC_PREFIX}-objcopy -O verilog $< $@ 
+	${GCC_PATH}/${GCC_PREFIX}-objcopy -O verilog $< $@
 	# to fix flash base address
 	sed -i 's/@10000000/@00000000/g' $@
 
