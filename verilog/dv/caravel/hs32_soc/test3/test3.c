@@ -7,7 +7,7 @@ void main()
 	reg_la1_ena = 0xFFFFFFFF;    // [63:32]
 	reg_la2_ena = 0xFFFFFFFF;    // [95:64]
 	reg_la3_ena = 0xFFFFFFFF;    // [127:96]
-	
+
 	// Reset and control bus
 	reg_la0_data = 0b01; // [0] is high means reset
 	reg_la0_data = 0b00; // [0] is low means stop reset

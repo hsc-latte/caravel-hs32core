@@ -16,6 +16,14 @@ The hexadecimal format looks like this:
 | I-Type | `oooo_oooo` | `dddd_mmmm` | `iiii_iiii` | `iiii_iiii` |
 | R-Type | `oooo_oooo` | `dddd_mmmm` | `nnnn_ssss` | `sDDb_bxxx` |
 
+## Usage
+
+Use `make` to run test.
+
+Results should match the *Expected result* listed below.
+
+Test will display `Passed all cases.` or `failed` message indicating errors.
+
 ## Assembly
 
 ```assembly
