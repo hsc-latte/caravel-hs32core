@@ -11,224 +11,224 @@ MACRO hs32_core1
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 489.530 0.000 489.810 4.000 ;
+        RECT 467.450 0.000 467.730 4.000 ;
     END
   END cpu_addr_e[0]
   PIN cpu_addr_e[10]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 599.470 0.000 599.750 4.000 ;
+        RECT 577.390 0.000 577.670 4.000 ;
     END
   END cpu_addr_e[10]
   PIN cpu_addr_e[11]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 610.510 0.000 610.790 4.000 ;
+        RECT 588.430 0.000 588.710 4.000 ;
     END
   END cpu_addr_e[11]
   PIN cpu_addr_e[12]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 621.550 0.000 621.830 4.000 ;
+        RECT 599.470 0.000 599.750 4.000 ;
     END
   END cpu_addr_e[12]
   PIN cpu_addr_e[13]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 632.590 0.000 632.870 4.000 ;
+        RECT 610.510 0.000 610.790 4.000 ;
     END
   END cpu_addr_e[13]
   PIN cpu_addr_e[14]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 643.630 0.000 643.910 4.000 ;
+        RECT 621.550 0.000 621.830 4.000 ;
     END
   END cpu_addr_e[14]
   PIN cpu_addr_e[15]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 654.670 0.000 654.950 4.000 ;
+        RECT 632.590 0.000 632.870 4.000 ;
     END
   END cpu_addr_e[15]
   PIN cpu_addr_e[1]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 500.570 0.000 500.850 4.000 ;
+        RECT 478.490 0.000 478.770 4.000 ;
     END
   END cpu_addr_e[1]
   PIN cpu_addr_e[2]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 511.610 0.000 511.890 4.000 ;
+        RECT 489.530 0.000 489.810 4.000 ;
     END
   END cpu_addr_e[2]
   PIN cpu_addr_e[3]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 522.190 0.000 522.470 4.000 ;
+        RECT 500.570 0.000 500.850 4.000 ;
     END
   END cpu_addr_e[3]
   PIN cpu_addr_e[4]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 533.230 0.000 533.510 4.000 ;
+        RECT 511.610 0.000 511.890 4.000 ;
     END
   END cpu_addr_e[4]
   PIN cpu_addr_e[5]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 544.270 0.000 544.550 4.000 ;
+        RECT 522.190 0.000 522.470 4.000 ;
     END
   END cpu_addr_e[5]
   PIN cpu_addr_e[6]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 555.310 0.000 555.590 4.000 ;
+        RECT 533.230 0.000 533.510 4.000 ;
     END
   END cpu_addr_e[6]
   PIN cpu_addr_e[7]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 566.350 0.000 566.630 4.000 ;
+        RECT 544.270 0.000 544.550 4.000 ;
     END
   END cpu_addr_e[7]
   PIN cpu_addr_e[8]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 577.390 0.000 577.670 4.000 ;
+        RECT 555.310 0.000 555.590 4.000 ;
     END
   END cpu_addr_e[8]
   PIN cpu_addr_e[9]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 588.430 0.000 588.710 4.000 ;
+        RECT 566.350 0.000 566.630 4.000 ;
     END
   END cpu_addr_e[9]
   PIN cpu_addr_n[0]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 379.130 1196.000 379.410 1200.000 ;
+        RECT 467.450 1196.000 467.730 1200.000 ;
     END
   END cpu_addr_n[0]
   PIN cpu_addr_n[10]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 489.530 1196.000 489.810 1200.000 ;
+        RECT 577.390 1196.000 577.670 1200.000 ;
     END
   END cpu_addr_n[10]
   PIN cpu_addr_n[11]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 500.570 1196.000 500.850 1200.000 ;
+        RECT 588.430 1196.000 588.710 1200.000 ;
     END
   END cpu_addr_n[11]
   PIN cpu_addr_n[12]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 511.610 1196.000 511.890 1200.000 ;
+        RECT 599.470 1196.000 599.750 1200.000 ;
     END
   END cpu_addr_n[12]
   PIN cpu_addr_n[13]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 522.190 1196.000 522.470 1200.000 ;
+        RECT 610.510 1196.000 610.790 1200.000 ;
     END
   END cpu_addr_n[13]
   PIN cpu_addr_n[14]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 533.230 1196.000 533.510 1200.000 ;
+        RECT 621.550 1196.000 621.830 1200.000 ;
     END
   END cpu_addr_n[14]
   PIN cpu_addr_n[15]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 544.270 1196.000 544.550 1200.000 ;
+        RECT 632.590 1196.000 632.870 1200.000 ;
     END
   END cpu_addr_n[15]
   PIN cpu_addr_n[1]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 390.170 1196.000 390.450 1200.000 ;
+        RECT 478.490 1196.000 478.770 1200.000 ;
     END
   END cpu_addr_n[1]
   PIN cpu_addr_n[2]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 401.210 1196.000 401.490 1200.000 ;
+        RECT 489.530 1196.000 489.810 1200.000 ;
     END
   END cpu_addr_n[2]
   PIN cpu_addr_n[3]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 412.250 1196.000 412.530 1200.000 ;
+        RECT 500.570 1196.000 500.850 1200.000 ;
     END
   END cpu_addr_n[3]
   PIN cpu_addr_n[4]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 423.290 1196.000 423.570 1200.000 ;
+        RECT 511.610 1196.000 511.890 1200.000 ;
     END
   END cpu_addr_n[4]
   PIN cpu_addr_n[5]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 434.330 1196.000 434.610 1200.000 ;
+        RECT 522.190 1196.000 522.470 1200.000 ;
     END
   END cpu_addr_n[5]
   PIN cpu_addr_n[6]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 445.370 1196.000 445.650 1200.000 ;
+        RECT 533.230 1196.000 533.510 1200.000 ;
     END
   END cpu_addr_n[6]
   PIN cpu_addr_n[7]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 456.410 1196.000 456.690 1200.000 ;
+        RECT 544.270 1196.000 544.550 1200.000 ;
     END
   END cpu_addr_n[7]
   PIN cpu_addr_n[8]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 467.450 1196.000 467.730 1200.000 ;
+        RECT 555.310 1196.000 555.590 1200.000 ;
     END
   END cpu_addr_n[8]
   PIN cpu_addr_n[9]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 478.490 1196.000 478.770 1200.000 ;
+        RECT 566.350 1196.000 566.630 1200.000 ;
     END
   END cpu_addr_n[9]
   PIN cpu_dtr_e0[0]
@@ -459,224 +459,224 @@ MACRO hs32_core1
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 841.890 0.000 842.170 4.000 ;
+        RECT 852.930 0.000 853.210 4.000 ;
     END
   END cpu_dtr_e1[0]
   PIN cpu_dtr_e1[10]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 951.830 0.000 952.110 4.000 ;
+        RECT 962.870 0.000 963.150 4.000 ;
     END
   END cpu_dtr_e1[10]
   PIN cpu_dtr_e1[11]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 962.870 0.000 963.150 4.000 ;
+        RECT 973.910 0.000 974.190 4.000 ;
     END
   END cpu_dtr_e1[11]
   PIN cpu_dtr_e1[12]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 973.910 0.000 974.190 4.000 ;
+        RECT 984.950 0.000 985.230 4.000 ;
     END
   END cpu_dtr_e1[12]
   PIN cpu_dtr_e1[13]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 984.950 0.000 985.230 4.000 ;
+        RECT 995.990 0.000 996.270 4.000 ;
     END
   END cpu_dtr_e1[13]
   PIN cpu_dtr_e1[14]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 995.990 0.000 996.270 4.000 ;
+        RECT 1007.030 0.000 1007.310 4.000 ;
     END
   END cpu_dtr_e1[14]
   PIN cpu_dtr_e1[15]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1007.030 0.000 1007.310 4.000 ;
+        RECT 1018.070 0.000 1018.350 4.000 ;
     END
   END cpu_dtr_e1[15]
   PIN cpu_dtr_e1[16]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1018.070 0.000 1018.350 4.000 ;
+        RECT 1029.110 0.000 1029.390 4.000 ;
     END
   END cpu_dtr_e1[16]
   PIN cpu_dtr_e1[17]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1029.110 0.000 1029.390 4.000 ;
+        RECT 1039.690 0.000 1039.970 4.000 ;
     END
   END cpu_dtr_e1[17]
   PIN cpu_dtr_e1[18]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1039.690 0.000 1039.970 4.000 ;
+        RECT 1050.730 0.000 1051.010 4.000 ;
     END
   END cpu_dtr_e1[18]
   PIN cpu_dtr_e1[19]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1050.730 0.000 1051.010 4.000 ;
+        RECT 1061.770 0.000 1062.050 4.000 ;
     END
   END cpu_dtr_e1[19]
   PIN cpu_dtr_e1[1]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 852.930 0.000 853.210 4.000 ;
+        RECT 863.510 0.000 863.790 4.000 ;
     END
   END cpu_dtr_e1[1]
   PIN cpu_dtr_e1[20]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1061.770 0.000 1062.050 4.000 ;
+        RECT 1072.810 0.000 1073.090 4.000 ;
     END
   END cpu_dtr_e1[20]
   PIN cpu_dtr_e1[21]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1072.810 0.000 1073.090 4.000 ;
+        RECT 1083.850 0.000 1084.130 4.000 ;
     END
   END cpu_dtr_e1[21]
   PIN cpu_dtr_e1[22]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1083.850 0.000 1084.130 4.000 ;
+        RECT 1094.890 0.000 1095.170 4.000 ;
     END
   END cpu_dtr_e1[22]
   PIN cpu_dtr_e1[23]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1094.890 0.000 1095.170 4.000 ;
+        RECT 1105.930 0.000 1106.210 4.000 ;
     END
   END cpu_dtr_e1[23]
   PIN cpu_dtr_e1[24]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1105.930 0.000 1106.210 4.000 ;
+        RECT 1116.970 0.000 1117.250 4.000 ;
     END
   END cpu_dtr_e1[24]
   PIN cpu_dtr_e1[25]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1116.970 0.000 1117.250 4.000 ;
+        RECT 1128.010 0.000 1128.290 4.000 ;
     END
   END cpu_dtr_e1[25]
   PIN cpu_dtr_e1[26]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1128.010 0.000 1128.290 4.000 ;
+        RECT 1139.050 0.000 1139.330 4.000 ;
     END
   END cpu_dtr_e1[26]
   PIN cpu_dtr_e1[27]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1139.050 0.000 1139.330 4.000 ;
+        RECT 1150.090 0.000 1150.370 4.000 ;
     END
   END cpu_dtr_e1[27]
   PIN cpu_dtr_e1[28]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1150.090 0.000 1150.370 4.000 ;
+        RECT 1161.130 0.000 1161.410 4.000 ;
     END
   END cpu_dtr_e1[28]
   PIN cpu_dtr_e1[29]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1161.130 0.000 1161.410 4.000 ;
+        RECT 1172.170 0.000 1172.450 4.000 ;
     END
   END cpu_dtr_e1[29]
   PIN cpu_dtr_e1[2]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 863.510 0.000 863.790 4.000 ;
+        RECT 874.550 0.000 874.830 4.000 ;
     END
   END cpu_dtr_e1[2]
   PIN cpu_dtr_e1[30]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1172.170 0.000 1172.450 4.000 ;
+        RECT 1183.210 0.000 1183.490 4.000 ;
     END
   END cpu_dtr_e1[30]
   PIN cpu_dtr_e1[31]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1183.210 0.000 1183.490 4.000 ;
+        RECT 1194.250 0.000 1194.530 4.000 ;
     END
   END cpu_dtr_e1[31]
   PIN cpu_dtr_e1[3]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 874.550 0.000 874.830 4.000 ;
+        RECT 885.590 0.000 885.870 4.000 ;
     END
   END cpu_dtr_e1[3]
   PIN cpu_dtr_e1[4]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 885.590 0.000 885.870 4.000 ;
+        RECT 896.630 0.000 896.910 4.000 ;
     END
   END cpu_dtr_e1[4]
   PIN cpu_dtr_e1[5]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 896.630 0.000 896.910 4.000 ;
+        RECT 907.670 0.000 907.950 4.000 ;
     END
   END cpu_dtr_e1[5]
   PIN cpu_dtr_e1[6]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 907.670 0.000 907.950 4.000 ;
+        RECT 918.710 0.000 918.990 4.000 ;
     END
   END cpu_dtr_e1[6]
   PIN cpu_dtr_e1[7]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 918.710 0.000 918.990 4.000 ;
+        RECT 929.750 0.000 930.030 4.000 ;
     END
   END cpu_dtr_e1[7]
   PIN cpu_dtr_e1[8]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 929.750 0.000 930.030 4.000 ;
+        RECT 940.790 0.000 941.070 4.000 ;
     END
   END cpu_dtr_e1[8]
   PIN cpu_dtr_e1[9]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 940.790 0.000 941.070 4.000 ;
+        RECT 951.830 0.000 952.110 4.000 ;
     END
   END cpu_dtr_e1[9]
   PIN cpu_dtr_n0[0]
@@ -907,448 +907,448 @@ MACRO hs32_core1
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 841.890 1196.000 842.170 1200.000 ;
+        RECT 852.930 1196.000 853.210 1200.000 ;
     END
   END cpu_dtr_n1[0]
   PIN cpu_dtr_n1[10]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 951.830 1196.000 952.110 1200.000 ;
+        RECT 962.870 1196.000 963.150 1200.000 ;
     END
   END cpu_dtr_n1[10]
   PIN cpu_dtr_n1[11]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 962.870 1196.000 963.150 1200.000 ;
+        RECT 973.910 1196.000 974.190 1200.000 ;
     END
   END cpu_dtr_n1[11]
   PIN cpu_dtr_n1[12]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 973.910 1196.000 974.190 1200.000 ;
+        RECT 984.950 1196.000 985.230 1200.000 ;
     END
   END cpu_dtr_n1[12]
   PIN cpu_dtr_n1[13]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 984.950 1196.000 985.230 1200.000 ;
+        RECT 995.990 1196.000 996.270 1200.000 ;
     END
   END cpu_dtr_n1[13]
   PIN cpu_dtr_n1[14]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 995.990 1196.000 996.270 1200.000 ;
+        RECT 1007.030 1196.000 1007.310 1200.000 ;
     END
   END cpu_dtr_n1[14]
   PIN cpu_dtr_n1[15]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1007.030 1196.000 1007.310 1200.000 ;
+        RECT 1018.070 1196.000 1018.350 1200.000 ;
     END
   END cpu_dtr_n1[15]
   PIN cpu_dtr_n1[16]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1018.070 1196.000 1018.350 1200.000 ;
+        RECT 1029.110 1196.000 1029.390 1200.000 ;
     END
   END cpu_dtr_n1[16]
   PIN cpu_dtr_n1[17]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1029.110 1196.000 1029.390 1200.000 ;
+        RECT 1039.690 1196.000 1039.970 1200.000 ;
     END
   END cpu_dtr_n1[17]
   PIN cpu_dtr_n1[18]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1039.690 1196.000 1039.970 1200.000 ;
+        RECT 1050.730 1196.000 1051.010 1200.000 ;
     END
   END cpu_dtr_n1[18]
   PIN cpu_dtr_n1[19]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1050.730 1196.000 1051.010 1200.000 ;
+        RECT 1061.770 1196.000 1062.050 1200.000 ;
     END
   END cpu_dtr_n1[19]
   PIN cpu_dtr_n1[1]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 852.930 1196.000 853.210 1200.000 ;
+        RECT 863.510 1196.000 863.790 1200.000 ;
     END
   END cpu_dtr_n1[1]
   PIN cpu_dtr_n1[20]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1061.770 1196.000 1062.050 1200.000 ;
+        RECT 1072.810 1196.000 1073.090 1200.000 ;
     END
   END cpu_dtr_n1[20]
   PIN cpu_dtr_n1[21]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1072.810 1196.000 1073.090 1200.000 ;
+        RECT 1083.850 1196.000 1084.130 1200.000 ;
     END
   END cpu_dtr_n1[21]
   PIN cpu_dtr_n1[22]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1083.850 1196.000 1084.130 1200.000 ;
+        RECT 1094.890 1196.000 1095.170 1200.000 ;
     END
   END cpu_dtr_n1[22]
   PIN cpu_dtr_n1[23]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1094.890 1196.000 1095.170 1200.000 ;
+        RECT 1105.930 1196.000 1106.210 1200.000 ;
     END
   END cpu_dtr_n1[23]
   PIN cpu_dtr_n1[24]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1105.930 1196.000 1106.210 1200.000 ;
+        RECT 1116.970 1196.000 1117.250 1200.000 ;
     END
   END cpu_dtr_n1[24]
   PIN cpu_dtr_n1[25]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1116.970 1196.000 1117.250 1200.000 ;
+        RECT 1128.010 1196.000 1128.290 1200.000 ;
     END
   END cpu_dtr_n1[25]
   PIN cpu_dtr_n1[26]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1128.010 1196.000 1128.290 1200.000 ;
+        RECT 1139.050 1196.000 1139.330 1200.000 ;
     END
   END cpu_dtr_n1[26]
   PIN cpu_dtr_n1[27]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1139.050 1196.000 1139.330 1200.000 ;
+        RECT 1150.090 1196.000 1150.370 1200.000 ;
     END
   END cpu_dtr_n1[27]
   PIN cpu_dtr_n1[28]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1150.090 1196.000 1150.370 1200.000 ;
+        RECT 1161.130 1196.000 1161.410 1200.000 ;
     END
   END cpu_dtr_n1[28]
   PIN cpu_dtr_n1[29]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1161.130 1196.000 1161.410 1200.000 ;
+        RECT 1172.170 1196.000 1172.450 1200.000 ;
     END
   END cpu_dtr_n1[29]
   PIN cpu_dtr_n1[2]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 863.510 1196.000 863.790 1200.000 ;
+        RECT 874.550 1196.000 874.830 1200.000 ;
     END
   END cpu_dtr_n1[2]
   PIN cpu_dtr_n1[30]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1172.170 1196.000 1172.450 1200.000 ;
+        RECT 1183.210 1196.000 1183.490 1200.000 ;
     END
   END cpu_dtr_n1[30]
   PIN cpu_dtr_n1[31]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 1183.210 1196.000 1183.490 1200.000 ;
+        RECT 1194.250 1196.000 1194.530 1200.000 ;
     END
   END cpu_dtr_n1[31]
   PIN cpu_dtr_n1[3]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 874.550 1196.000 874.830 1200.000 ;
+        RECT 885.590 1196.000 885.870 1200.000 ;
     END
   END cpu_dtr_n1[3]
   PIN cpu_dtr_n1[4]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 885.590 1196.000 885.870 1200.000 ;
+        RECT 896.630 1196.000 896.910 1200.000 ;
     END
   END cpu_dtr_n1[4]
   PIN cpu_dtr_n1[5]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 896.630 1196.000 896.910 1200.000 ;
+        RECT 907.670 1196.000 907.950 1200.000 ;
     END
   END cpu_dtr_n1[5]
   PIN cpu_dtr_n1[6]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 907.670 1196.000 907.950 1200.000 ;
+        RECT 918.710 1196.000 918.990 1200.000 ;
     END
   END cpu_dtr_n1[6]
   PIN cpu_dtr_n1[7]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 918.710 1196.000 918.990 1200.000 ;
+        RECT 929.750 1196.000 930.030 1200.000 ;
     END
   END cpu_dtr_n1[7]
   PIN cpu_dtr_n1[8]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 929.750 1196.000 930.030 1200.000 ;
+        RECT 940.790 1196.000 941.070 1200.000 ;
     END
   END cpu_dtr_n1[8]
   PIN cpu_dtr_n1[9]
     DIRECTION INPUT ;
     PORT
       LAYER met2 ;
-        RECT 940.790 1196.000 941.070 1200.000 ;
+        RECT 951.830 1196.000 952.110 1200.000 ;
     END
   END cpu_dtr_n1[9]
   PIN cpu_dtw_e[0]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 665.710 0.000 665.990 4.000 ;
+        RECT 676.750 0.000 677.030 4.000 ;
     END
   END cpu_dtw_e[0]
   PIN cpu_dtw_e[10]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 775.650 0.000 775.930 4.000 ;
+        RECT 786.690 0.000 786.970 4.000 ;
     END
   END cpu_dtw_e[10]
   PIN cpu_dtw_e[11]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 786.690 0.000 786.970 4.000 ;
+        RECT 797.730 0.000 798.010 4.000 ;
     END
   END cpu_dtw_e[11]
   PIN cpu_dtw_e[12]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 797.730 0.000 798.010 4.000 ;
+        RECT 808.770 0.000 809.050 4.000 ;
     END
   END cpu_dtw_e[12]
   PIN cpu_dtw_e[13]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 808.770 0.000 809.050 4.000 ;
+        RECT 819.810 0.000 820.090 4.000 ;
     END
   END cpu_dtw_e[13]
   PIN cpu_dtw_e[14]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 819.810 0.000 820.090 4.000 ;
+        RECT 830.850 0.000 831.130 4.000 ;
     END
   END cpu_dtw_e[14]
   PIN cpu_dtw_e[15]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 830.850 0.000 831.130 4.000 ;
+        RECT 841.890 0.000 842.170 4.000 ;
     END
   END cpu_dtw_e[15]
   PIN cpu_dtw_e[1]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 676.750 0.000 677.030 4.000 ;
+        RECT 687.790 0.000 688.070 4.000 ;
     END
   END cpu_dtw_e[1]
   PIN cpu_dtw_e[2]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 687.790 0.000 688.070 4.000 ;
+        RECT 698.370 0.000 698.650 4.000 ;
     END
   END cpu_dtw_e[2]
   PIN cpu_dtw_e[3]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 698.370 0.000 698.650 4.000 ;
+        RECT 709.410 0.000 709.690 4.000 ;
     END
   END cpu_dtw_e[3]
   PIN cpu_dtw_e[4]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 709.410 0.000 709.690 4.000 ;
+        RECT 720.450 0.000 720.730 4.000 ;
     END
   END cpu_dtw_e[4]
   PIN cpu_dtw_e[5]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 720.450 0.000 720.730 4.000 ;
+        RECT 731.490 0.000 731.770 4.000 ;
     END
   END cpu_dtw_e[5]
   PIN cpu_dtw_e[6]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 731.490 0.000 731.770 4.000 ;
+        RECT 742.530 0.000 742.810 4.000 ;
     END
   END cpu_dtw_e[6]
   PIN cpu_dtw_e[7]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 742.530 0.000 742.810 4.000 ;
+        RECT 753.570 0.000 753.850 4.000 ;
     END
   END cpu_dtw_e[7]
   PIN cpu_dtw_e[8]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 753.570 0.000 753.850 4.000 ;
+        RECT 764.610 0.000 764.890 4.000 ;
     END
   END cpu_dtw_e[8]
   PIN cpu_dtw_e[9]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 764.610 0.000 764.890 4.000 ;
+        RECT 775.650 0.000 775.930 4.000 ;
     END
   END cpu_dtw_e[9]
   PIN cpu_dtw_n[0]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 665.710 1196.000 665.990 1200.000 ;
+        RECT 676.750 1196.000 677.030 1200.000 ;
     END
   END cpu_dtw_n[0]
   PIN cpu_dtw_n[10]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 775.650 1196.000 775.930 1200.000 ;
+        RECT 786.690 1196.000 786.970 1200.000 ;
     END
   END cpu_dtw_n[10]
   PIN cpu_dtw_n[11]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 786.690 1196.000 786.970 1200.000 ;
+        RECT 797.730 1196.000 798.010 1200.000 ;
     END
   END cpu_dtw_n[11]
   PIN cpu_dtw_n[12]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 797.730 1196.000 798.010 1200.000 ;
+        RECT 808.770 1196.000 809.050 1200.000 ;
     END
   END cpu_dtw_n[12]
   PIN cpu_dtw_n[13]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 808.770 1196.000 809.050 1200.000 ;
+        RECT 819.810 1196.000 820.090 1200.000 ;
     END
   END cpu_dtw_n[13]
   PIN cpu_dtw_n[14]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 819.810 1196.000 820.090 1200.000 ;
+        RECT 830.850 1196.000 831.130 1200.000 ;
     END
   END cpu_dtw_n[14]
   PIN cpu_dtw_n[15]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 830.850 1196.000 831.130 1200.000 ;
+        RECT 841.890 1196.000 842.170 1200.000 ;
     END
   END cpu_dtw_n[15]
   PIN cpu_dtw_n[1]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 676.750 1196.000 677.030 1200.000 ;
+        RECT 687.790 1196.000 688.070 1200.000 ;
     END
   END cpu_dtw_n[1]
   PIN cpu_dtw_n[2]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 687.790 1196.000 688.070 1200.000 ;
+        RECT 698.370 1196.000 698.650 1200.000 ;
     END
   END cpu_dtw_n[2]
   PIN cpu_dtw_n[3]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 698.370 1196.000 698.650 1200.000 ;
+        RECT 709.410 1196.000 709.690 1200.000 ;
     END
   END cpu_dtw_n[3]
   PIN cpu_dtw_n[4]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 709.410 1196.000 709.690 1200.000 ;
+        RECT 720.450 1196.000 720.730 1200.000 ;
     END
   END cpu_dtw_n[4]
   PIN cpu_dtw_n[5]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 720.450 1196.000 720.730 1200.000 ;
+        RECT 731.490 1196.000 731.770 1200.000 ;
     END
   END cpu_dtw_n[5]
   PIN cpu_dtw_n[6]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 731.490 1196.000 731.770 1200.000 ;
+        RECT 742.530 1196.000 742.810 1200.000 ;
     END
   END cpu_dtw_n[6]
   PIN cpu_dtw_n[7]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 742.530 1196.000 742.810 1200.000 ;
+        RECT 753.570 1196.000 753.850 1200.000 ;
     END
   END cpu_dtw_n[7]
   PIN cpu_dtw_n[8]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 753.570 1196.000 753.850 1200.000 ;
+        RECT 764.610 1196.000 764.890 1200.000 ;
     END
   END cpu_dtw_n[8]
   PIN cpu_dtw_n[9]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 764.610 1196.000 764.890 1200.000 ;
+        RECT 775.650 1196.000 775.930 1200.000 ;
     END
   END cpu_dtw_n[9]
   PIN cpu_mask_e[0]
@@ -1411,84 +1411,84 @@ MACRO hs32_core1
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 555.310 1196.000 555.590 1200.000 ;
+        RECT 379.130 1196.000 379.410 1200.000 ;
     END
   END cpu_mask_n[0]
   PIN cpu_mask_n[1]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 566.350 1196.000 566.630 1200.000 ;
+        RECT 390.170 1196.000 390.450 1200.000 ;
     END
   END cpu_mask_n[1]
   PIN cpu_mask_n[2]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 577.390 1196.000 577.670 1200.000 ;
+        RECT 401.210 1196.000 401.490 1200.000 ;
     END
   END cpu_mask_n[2]
   PIN cpu_mask_n[3]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 588.430 1196.000 588.710 1200.000 ;
+        RECT 412.250 1196.000 412.530 1200.000 ;
     END
   END cpu_mask_n[3]
   PIN cpu_mask_n[4]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 599.470 1196.000 599.750 1200.000 ;
+        RECT 423.290 1196.000 423.570 1200.000 ;
     END
   END cpu_mask_n[4]
   PIN cpu_mask_n[5]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 610.510 1196.000 610.790 1200.000 ;
+        RECT 434.330 1196.000 434.610 1200.000 ;
     END
   END cpu_mask_n[5]
   PIN cpu_mask_n[6]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 621.550 1196.000 621.830 1200.000 ;
+        RECT 445.370 1196.000 445.650 1200.000 ;
     END
   END cpu_mask_n[6]
   PIN cpu_mask_n[7]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 632.590 1196.000 632.870 1200.000 ;
+        RECT 456.410 1196.000 456.690 1200.000 ;
     END
   END cpu_mask_n[7]
   PIN cpu_wen_e[0]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 467.450 0.000 467.730 4.000 ;
+        RECT 654.670 0.000 654.950 4.000 ;
     END
   END cpu_wen_e[0]
   PIN cpu_wen_e[1]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 478.490 0.000 478.770 4.000 ;
+        RECT 665.710 0.000 665.990 4.000 ;
     END
   END cpu_wen_e[1]
   PIN cpu_wen_n[0]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 643.630 1196.000 643.910 1200.000 ;
+        RECT 654.670 1196.000 654.950 1200.000 ;
     END
   END cpu_wen_n[0]
   PIN cpu_wen_n[1]
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 654.670 1196.000 654.950 1200.000 ;
+        RECT 665.710 1196.000 665.990 1200.000 ;
     END
   END cpu_wen_n[1]
   PIN io_in[0]
@@ -2356,14 +2356,14 @@ MACRO hs32_core1
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 1194.250 0.000 1194.530 4.000 ;
+        RECT 643.630 0.000 643.910 4.000 ;
     END
   END ram_ce_e
   PIN ram_ce_n
     DIRECTION OUTPUT TRISTATE ;
     PORT
       LAYER met2 ;
-        RECT 1194.250 1196.000 1194.530 1200.000 ;
+        RECT 643.630 1196.000 643.910 1200.000 ;
     END
   END ram_ce_n
   PIN wb_clk_i
@@ -3142,9 +3142,8 @@ MACRO hs32_core1
       LAYER li1 ;
         RECT 5.520 10.795 1194.935 1188.725 ;
       LAYER met1 ;
-        RECT 4.670 4.460 1195.010 1192.000 ;
+        RECT 5.130 4.800 1195.010 1189.280 ;
       LAYER met2 ;
-        RECT 4.690 1195.720 4.870 1196.000 ;
         RECT 5.710 1195.720 15.450 1196.000 ;
         RECT 16.290 1195.720 26.490 1196.000 ;
         RECT 27.330 1195.720 37.530 1196.000 ;
@@ -3254,8 +3253,7 @@ MACRO hs32_core1
         RECT 1172.730 1195.720 1182.930 1196.000 ;
         RECT 1183.770 1195.720 1193.970 1196.000 ;
         RECT 1194.810 1195.720 1194.990 1196.000 ;
-        RECT 4.690 4.280 1194.990 1195.720 ;
-        RECT 4.690 4.000 4.870 4.280 ;
+        RECT 5.160 4.280 1194.990 1195.720 ;
         RECT 5.710 4.000 15.450 4.280 ;
         RECT 16.290 4.000 26.490 4.280 ;
         RECT 27.330 4.000 37.530 4.280 ;
@@ -3366,8 +3364,7 @@ MACRO hs32_core1
         RECT 1183.770 4.000 1193.970 4.280 ;
         RECT 1194.810 4.000 1194.990 4.280 ;
       LAYER met3 ;
-        RECT 3.990 1195.120 1196.000 1195.945 ;
-        RECT 4.400 1193.720 1195.600 1195.120 ;
+        RECT 4.400 1193.720 1195.600 1194.585 ;
         RECT 3.990 1184.920 1196.000 1193.720 ;
         RECT 3.990 1184.240 1195.600 1184.920 ;
         RECT 4.400 1183.520 1195.600 1184.240 ;
@@ -3811,10 +3808,11 @@ MACRO hs32_core1
         RECT 3.990 5.800 1196.000 14.600 ;
         RECT 4.400 4.935 1195.600 5.800 ;
       LAYER met4 ;
-        RECT 15.935 1189.280 1188.345 1195.945 ;
-        RECT 15.935 10.640 20.640 1189.280 ;
-        RECT 23.040 10.640 97.440 1189.280 ;
-        RECT 99.840 10.640 1188.345 1189.280 ;
+        RECT 15.015 10.640 20.640 1188.880 ;
+        RECT 23.040 10.640 97.440 1188.880 ;
+        RECT 99.840 10.640 1179.145 1188.880 ;
+      LAYER met5 ;
+        RECT 165.260 558.500 927.700 760.700 ;
   END
 END hs32_core1
 END LIBRARY
