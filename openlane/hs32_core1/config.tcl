@@ -37,4 +37,4 @@ set ::env(FP_PIN_ORDER_CFG) $script_dir/pin_order.cfg
 set ::env(FP_SIZING) absolute
 set ::env(FP_PDN_CORE_RING) 0
 set ::env(DIE_AREA) "0 0 1200 1200"
-set ::env(PL_TARGET_DENSITY) 0.42
+set ::env(PL_TARGET_DENSITY) 0.40

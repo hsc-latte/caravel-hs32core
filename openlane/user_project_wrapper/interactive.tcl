@@ -10,19 +10,17 @@ init_floorplan
 
 place_io_ol
 
-set ::env(FP_DEF_TEMPATE) $script_dir/../../def/user_project_wrapper_empty.def
+#add_macro_placement core1  300 1000 N
+#add_macro_placement sram0  300 2300 N
+#add_macro_placement sram1  950 2300 N
+#add_macro_placement sram2 1550 2300 N
+#add_macro_placement sram3 2200 2300 N
 
-apply_def_template
-
-#add_macro_placement core0 1550  400 N
-add_macro_placement core1  300 1000 N
-add_macro_placement sram0  300 2300 N
-add_macro_placement sram1  950 2300 N
-add_macro_placement sram2 1550 2300 N
-add_macro_placement sram3 2200 2300 N
-
-#add_macro_placement sram4 1700 1600 S;  # RX buffer for core1
-#add_macro_placement sram5 2250 1600 N;  # RX buffer for core0
+add_macro_placement core1 1400 1200 N
+add_macro_placement sram0 1500 2600 N
+add_macro_placement sram1 2100 2600 N
+add_macro_placement sram2 1500  550 S
+add_macro_placement sram3 2100  550 S
 
 manual_macro_placement f
 

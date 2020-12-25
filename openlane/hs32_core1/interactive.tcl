@@ -30,10 +30,10 @@ proc insert_diode {args} {
 
 proc run_flow {args} {
 	set script_dir [file dirname [file normalize [info script]]]
-	#set options {
-		#{-save_path optional}
-		#{-tag optional}
-	#}
+	set options {
+		{-save_path optional}
+		{-tag optional}
+	}
 	set flags {-save}
 	parse_key_args "run_flow" args arg_values $options flags_map $flags -no_consume
 	prep -design $script_dir -tag hs32_core1 -overwrite {*}$args
@@ -60,26 +60,14 @@ proc run_flow {args} {
 
 	run_magic_spice_export
 
-	if {  [info exists flags_map(-save) ] } {
-		if { [info exists arg_values(-save_path)] } {
-			save_views 	-lef_path $::env(magic_result_file_tag).lef \
-				-def_path $::env(tritonRoute_result_file_tag).def \
-				-gds_path $::env(magic_result_file_tag).gds \
-				-mag_path $::env(magic_result_file_tag).mag \
-				-spice_path $::env(magic_result_file_tag).spice \
-				-verilog_path $::env(CURRENT_NETLIST) \
-				-save_path $arg_values(-save_path) \
-				-tag $::env(RUN_TAG)
-		} else  {
-			save_views 	-lef_path $::env(magic_result_file_tag).lef \
-				-def_path $::env(tritonRoute_result_file_tag).def \
-				-mag_path $::env(magic_result_file_tag).mag \
-				-gds_path $::env(magic_result_file_tag).gds \
-				-spice_path $::env(magic_result_file_tag).spice \
-				-verilog_path $::env(CURRENT_NETLIST) \
-				-tag $::env(RUN_TAG)
-		}
-	}
+	save_views 	-lef_path $::env(magic_result_file_tag).lef \
+		-def_path $::env(tritonRoute_result_file_tag).def \
+		-gds_path $::env(magic_result_file_tag).gds \
+		-mag_path $::env(magic_result_file_tag).mag \
+		-spice_path $::env(magic_result_file_tag).spice \
+		-verilog_path $::env(CURRENT_NETLIST) \
+		-save_path $save_path \
+		-tag $::env(RUN_TAG)
 
 	# Physical verification
 

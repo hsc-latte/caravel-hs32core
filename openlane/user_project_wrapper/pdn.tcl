@@ -27,32 +27,41 @@ pdngen::specify_grid macro {
     connect {}
 }
 
-#pdngen::specify_grid macro {
-#    power_pins $::env(_VDD_NET_NAME)
-#    ground_pins $::env(_GND_NET_NAME)
-#    blockages ""
-#    straps {
-#    }
-#    connect { }
-#}
-
-pdngen::specify_grid macro {
-    power_pins "VPWR"
-    ground_pins "VGND"
-    blockages "li1 met1 met2 met3 met4"
-    straps {
+# Prevent shorting across all power domains
+if { $::env(CONNECT_GRIDS) } {
+    pdngen::specify_grid macro {
+        power_pins "VPWR"
+        ground_pins "VGND"
+        blockages "li1 met1 met2 met3 met4"
+        straps {
+        }
+        connect { { met4_PIN_ver met5 } }
     }
-    connect { { met4_PIN_ver met5 } }
-}
-
-pdngen::specify_grid macro {
-    macro "sram_1rw1r_32_256_8_sky130"
-    power_pins "vdd"
-    ground_pins "gnd"
-    blockages "li1 met1 met2 met3 met4"
-    straps {
+    pdngen::specify_grid macro {
+        macro "sram_1rw1r_32_256_8_sky130"
+        power_pins "vdd"
+        ground_pins "gnd"
+        blockages "li1 met1 met2 met3 met4"
+        straps {
+        }
+        connect { { met4_PIN_ver met5 } }
     }
-    connect { { met4_PIN_ver met5 } }
+} else {
+    pdngen::specify_grid macro {
+        power_pins "VPWR"
+        ground_pins "VGND"
+        blockages "li1 met1 met2 met3 met4"
+        straps { }
+        connect { }
+    }
+    pdngen::specify_grid macro {
+        macro "sram_1rw1r_32_256_8_sky130"
+        power_pins "vdd"
+        ground_pins "gnd"
+        blockages "li1 met1 met2 met3 met4"
+        straps { }
+        connect { }
+    }
 }
 
 set ::halo 15
