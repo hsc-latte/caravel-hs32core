@@ -81,15 +81,22 @@ module hs32_core1 (
     input  wire [31:0] cpu_dtr_e1,
 
     // Can't have constants in wrapper
-    output wire zero,
-    output wire one,
+    output wire zero_n,
+    output wire one_n,
+    output wire zero_e,
+    output wire one_e,
 
     // Chip enable
-    output wire ram_ce
+    output wire ram_ce_n,
+    output wire ram_ce_e
 );
     // Output constants
-    assign zero = 1'b0;
-    assign one = 1'b1;
+    assign zero_n = 1'b0;
+    assign zero_e = 1'b0;
+    assign one_n = 1'b1;
+    assign one_e = 1'b1;
+    assign ram_ce_n = ram_ce;
+    assign ram_ce_e = ram_ce;
 
     // Clock and reset
     // wire clk = (~la_oen[64])? la_data_in[64] : wb_clk_i;
@@ -109,7 +116,9 @@ module hs32_core1 (
     wire iack, fault, userbit;
 
     hs32_cpu #(
-        .IMUL(1), .BARREL_SHIFTER(1), .PREFETCH_SIZE(3)
+        .IMUL(1), .BARREL_SHIFTER(1),
+        .PREFETCH_SIZE(3)
+        ,.LOW_WATER(1)
     ) core (
         .i_clk(clk), .reset(rst),
 
@@ -147,7 +156,7 @@ module hs32_core1 (
     assign cpu_ack = bus_hold ? 0 : ack;
 
     reg ram_bsy;
-    assign ram_ce = ~(ram_stb | ram_bsy);
+    wire ram_ce = ~(ram_stb | ram_bsy);
     always @(posedge clk) if(rst)
         ram_bsy <= 0;
     else begin

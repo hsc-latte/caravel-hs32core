@@ -72,7 +72,10 @@ module dev_wb (
         r_cfg <= 0;
     end else begin
         if(we && stb) case(addr)
-            2: r_dtr <= dtw;
+            2: begin
+                r_dtr <= dtw;
+                r_cfg[0] <= r_cfg[2] ? 1 : r_cfg[0];
+            end
             3: r_cfg <= dtw[2:0];
             default: begin end
         endcase else if(r_cfg[0] && !r_cfg[2]) begin

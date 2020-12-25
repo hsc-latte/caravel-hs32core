@@ -2,6 +2,8 @@
 
 **Interrupts and AICT**
 
+# WARNING: Use Test 7 Instead
+
 The HS32 instruction format looks like this:
 
 | Type   | Wire Format                               |
@@ -16,6 +18,14 @@ The hexadecimal format looks like this:
 | I-Type | `oooo_oooo` | `dddd_mmmm` | `iiii_iiii` | `iiii_iiii` |
 | R-Type | `oooo_oooo` | `dddd_mmmm` | `nnnn_ssss` | `sDDb_bxxx` |
 
+## Usage
+
+Use `make` to run test.
+
+Results should match the *Expected result* listed below.
+
+Test will display `Passed all cases.` or `Failed.` message indicating errors.
+
 ## Assembly
 
 ```assembly
@@ -24,11 +34,11 @@ LDR   R1, R0
 
 MOV   R2, high(COND1)   ; 0x5000
 MOV   R2, R2, 16        ; R2 <- (R2 << 16)
-STR   R2, R0, 01        ; STR     [Rm + imm] <- Rd
+STR   R2, R0, 0x0010    ; STR     [Rm + imm] <- Rd
 
-LDR   R3, R0, 0x0010
+LDR   R3, R0, 0x0010    ; LDR     Rd <- [Rm + imm]
 
-INT
+INT   0x0010            ; This is incorrect implementation of interrupts
 ```
 
 ## Hexadecimal

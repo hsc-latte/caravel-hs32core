@@ -10,3 +10,4 @@ checks/
 *.out
 *.out1
 *.fst
+obj_dir/

@@ -2,6 +2,8 @@
 
 **Branching Test**
 
+# WARNING: Test Incomplete
+
 The HS32 instruction format looks like this:
 
 | Type   | Wire Format                               |

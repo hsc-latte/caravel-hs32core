@@ -29,7 +29,6 @@ module tb();
 	end
 	always #10 wb_clk_i = wb_clk_i === 1'b0;
 
-`define TEST2
 `ifdef TEST1
 	// Default Test
 	localparam NUM_INSTR = 5;
@@ -55,21 +54,23 @@ module tb();
 	};
 `elsif TEST3
 	// WB test
-	localparam NUM_INSTR = 15;
+	localparam NUM_INSTR = 12; // Fake memory access test
+	// Theoretical penalties @40 MHz:
+	// < 4k = 0 cycle penalty (* control *)
+	// > 4k + no HW = +28 cycle penalty (* current method *)
+	// > 4k + HW, aligned = +6 cycle penalty
+	// > 4k + HW, misaligned = +12 cycle penalty
 	reg[NUM_INSTR*32-1:0] instr = {
 		{ 32'h2400FF00 }, // MOV r0 <- 0xFF00
 		{ 32'h24100021 }, // MOV r1 <- (0x20 | 1)
 		{ 32'h34100040 }, // STR [r0+0x40] <- r1
 		{ 32'h24100006 }, // MOV r1 <- 6
 		{ 32'h341000EC }, // STR [r0+0xEC] <- r1
-		{ 32'h20000800 }, // MOV r0 <- (r0 << 16)
-		{ 32'h10200000 }, // LDR r2 <- [r0]
+		{ 32'h20300800 }, // MOV r3 <- (r0 << 16)
+		{ 32'h10230000 }, // LDR r2 <- [r3]
 		{ 32'h50000000 }, // B<0000> 0
-		{ 32'h24300007 }, // MOV r3 <- 7
 		{ 32'h2440C0DE }, // MOV r4 <- 0xC0DE
-		{ 32'h2450FF00 }, // MOV r5 <- 0xFF00
-		{ 32'h344500E8 }, // STR [r5+0xE8] <- r4
-		{ 32'h343500EC }, // STR [r5+0xEC] <- r3
+		{ 32'h344000E8 }, // STR [r0+0xE8] <- r4
 		{ 32'h64EE0004 }, // SUB lr <- lr - 4
 		{ 32'h5F000000 }  // B<1111> 0 (return from interrupt)
 	};
