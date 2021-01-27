@@ -10,6 +10,7 @@ set ::env(DESIGN_NAME) hs32_core1
 set ::env(DESIGN_IS_CORE) 0
 set ::env(GLB_RT_MINLAYER) 2
 set ::env(GLB_RT_MAXLAYER) 5
+set ::env(GLB_RT_OBS) "met5 0 0 1200 1200"
 #set ::env(GLB_RT_ALLOW_CONGESTION) 1
 
 set ::env(SYNTH_STRATEGY) 1
