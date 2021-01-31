@@ -63,13 +63,13 @@ module dev_timer (
     endcase
 
     // Timer scaling
-    reg[9:0] divider;
+    reg[10:0] divider;
     wire scale_clk =
         clk_source == 1 ? 1 :
-        clk_source == 2 ? divider[2] : // scale clk 8
-        clk_source == 3 ? divider[5] : // scale clk 64
-        clk_source == 4 ? divider[7] : // scale clk 256
-        clk_source == 5 ? divider[9] : // scale clk 1024
+        clk_source == 2 ? divider[3] : // scale clk 8
+        clk_source == 3 ? divider[6] : // scale clk 64
+        clk_source == 4 ? divider[8] : // scale clk 256
+        clk_source == 5 ? divider[10] : // scale clk 1024
         clk_source == 6 ? io_risen :
         clk_source == 7 ? io_fallen : 0;
     // !! Check not disabled !! //
@@ -82,7 +82,7 @@ module dev_timer (
         timer_mode == `TIMER_MODE_SPWM ? io_spwm :
         timer_mode == `TIMER_MODE_DPWM ? io_dpwm : io_normal;
     assign io = output_mode == `TIMER_OUTPUT_INV ? ~io_output : io_output;
-    assign io_oe = timer_mode != 0;
+    assign io_oe = output_mode != 0;
 
     // Configuration, drives: match, tconfig
     always @(posedge clk) if(reset) begin
@@ -108,7 +108,11 @@ module dev_timer (
     always @(posedge clk) if(reset || we) begin
         divider <= 0;
     end else begin
-        divider <= divider + 1;
+        if(scale_clk) begin
+            divider <= 0;
+        end else begin
+            divider <= divider + 1;
+        end
     end
 
     // Counter, drives: counter
