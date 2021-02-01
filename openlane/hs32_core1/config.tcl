@@ -26,6 +26,7 @@ set ::env(VERILOG_FILES) "\
 	$script_dir/../../verilog/rtl/hs32_user_proj/dev_timer.v \
 	$script_dir/../../verilog/rtl/hs32_user_proj/dev_wb.v \
 	$script_dir/../../verilog/rtl/hs32_user_proj/dev_intercon.v \
+	$script_dir/../../verilog/rtl/hs32_user_proj/dev_exsram.v \
 	$script_dir/../../verilog/rtl/hs32cpu/cpu/hs32_cpu.v"
 
 set	::env(VERILOG_INCLUDE_DIRS) "\
