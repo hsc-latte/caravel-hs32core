@@ -16,7 +16,7 @@ place_io_ol
 #add_macro_placement sram2 1550 2300 N
 #add_macro_placement sram3 2200 2300 N
 
-add_macro_placement core1 1400 1200 N
+add_macro_placement core1 1300 1200 N
 add_macro_placement sram0 1500 2600 N
 add_macro_placement sram1 2100 2600 N
 add_macro_placement sram2 1500  550 S
