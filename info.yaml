@@ -3,9 +3,9 @@ project:
   description: "Open Source Hardware Processor"
   foundry: "SkyWater"
   git_url: "https://github.com/hsc-latte/caravel-hs32core.git"
-  organization: "HomebrewSiliconClub"
+  organization: "HSC"
   organization_url: "https://github.com/hsc-latte"
-  owner: "HomebrewSiliconClub"
+  owner: "The HSC Team"
   process: "SKY130"
   project_name: "HS32Core"
   tags: 
@@ -14,4 +14,4 @@ project:
   top_level_netlist: "verilog/gl/caravel.v"
   user_level_netlist: "verilog/gl/user_project_wrapper.v"
   version: "1.00"
-  cover_image: "doc/ciic_harness.png"
+  cover_image: "images/CPU-Overview.png"
